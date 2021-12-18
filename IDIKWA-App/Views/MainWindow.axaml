@@ -7,7 +7,8 @@
         Width="700"
         Height="500"
         x:Class="IDIKWA_App.MainWindow"
-        Title="IDIKWA">
+        Title="IDIKWA"
+        Icon="/assets/icons/logo.ico">
   <Window.DataContext>
     <local:MainWindowViewModel />
   </Window.DataContext>
