@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
+    <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
     <Nullable>enable</Nullable>
     <RootNamespace>IDIKWA_App</RootNamespace>
     <ApplicationIcon>assets\icons\logo.ico</ApplicationIcon>
