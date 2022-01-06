@@ -28,12 +28,14 @@ namespace IDIKWA_App
             {
                 this.action = action;
                 parameterAction = null;
+                CanExecuteChanged?.Invoke(this, new EventArgs());
             }
 
             public CustomCommand(Action<object?> action)
             {
                 parameterAction = action;
                 this.action = null;
+                CanExecuteChanged?.Invoke(this, new EventArgs());
             }
 
             public event EventHandler? CanExecuteChanged;

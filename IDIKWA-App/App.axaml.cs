@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using System;
+using System.Globalization;
 
 namespace IDIKWA_App
 {
@@ -8,6 +10,9 @@ namespace IDIKWA_App
     {
         public override void Initialize()
         {
+#if DEBUG
+            CultureInfo.CurrentUICulture = new CultureInfo("fr");
+#endif
             AvaloniaXamlLoader.Load(this);
         }
 

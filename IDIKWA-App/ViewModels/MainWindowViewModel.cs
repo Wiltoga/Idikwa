@@ -1,7 +1,10 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls;
+using NAudio.CoreAudioApi;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,7 @@ namespace IDIKWA_App
     {
         public MainWindowViewModel()
         {
+            Settings = new SettingsViewModel();
             Record = CommandHandler.Create(() =>
             {
                 if (Recording)
@@ -28,6 +32,9 @@ namespace IDIKWA_App
 
         [Reactive]
         public bool Recording { get; set; }
+
+        [Reactive]
+        public SettingsViewModel Settings { get; set; }
 
         public void RunRecord()
         {

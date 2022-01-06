@@ -59,5 +59,50 @@ namespace IDIKWA_App.locales {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Log in.
+        /// </summary>
+        internal static string connection {
+            get {
+                return ResourceManager.GetString("connection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Current configuration :.
+        /// </summary>
+        internal static string currentConfig {
+            get {
+                return ResourceManager.GetString("currentConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Edit.
+        /// </summary>
+        internal static string edit {
+            get {
+                return ResourceManager.GetString("edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Recording....
+        /// </summary>
+        internal static string recording {
+            get {
+                return ResourceManager.GetString("recording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Settings.
+        /// </summary>
+        internal static string settings {
+            get {
+                return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
     }
 }
