@@ -14,6 +14,8 @@ namespace IDIKWA_App
         private int length;
         private int offset;
 
+        private int position;
+
         public TemporaryStream(int cacheSize) : this() => cache = new byte[cacheSize];
 
         public TemporaryStream(Memory<byte> cache) : this() => this.cache = cache;
@@ -34,9 +36,21 @@ namespace IDIKWA_App
 
         public override long Length => length;
 
-        public override long Position { get; set; }
+        public override long Position
+        {
+            get => position;
+            set
+            {
+                if (value < 0)
+                    position = 0;
+                else if (value > length)
+                    position = length;
+                else
+                    position = (int)value;
+            }
+        }
 
-        private int InternalPos => (offset + (int)Position) % cache.Length;
+        private int InternalPos => (offset + position) % cache.Length;
 
         public override void Flush()
         {
@@ -44,7 +58,24 @@ namespace IDIKWA_App
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return 0;
+            var span = new Span<byte>(buffer, offset, count);
+            count = Math.Min(count, length - position);
+
+            var sampleSize = Math.Min(cache.Length - InternalPos, count);
+
+            if (sampleSize < count)
+            {
+                cache.Span.Slice(InternalPos, sampleSize).CopyTo(span);
+                cache.Span.Slice(0, count - sampleSize).CopyTo(span.Slice(sampleSize));
+            }
+            else
+            {
+                cache.Span.Slice(InternalPos, count).CopyTo(span);
+            }
+
+            position += count;
+
+            return count;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -63,13 +94,18 @@ namespace IDIKWA_App
                     Position = length + offset;
                     break;
             }
-            return Position;
+            return position;
         }
 
         public override void SetLength(long value)
         {
-            length = (int)value;
-            Position = Math.Min(Position, length);
+            if (value < 0)
+                length = 0;
+            else if (value > cache.Length)
+                length = cache.Length;
+            else
+                length = (int)value;
+            position = Math.Min(position, length);
         }
 
         public override void Write(byte[] buffer, int offset, int count)
@@ -94,14 +130,14 @@ namespace IDIKWA_App
             {
                 data.CopyTo(cacheSpan.Slice(InternalPos));
             }
-            Position += data.Length;
-            var overflow = (int)Position - cache.Length;
+            position += data.Length;
+            var overflow = position - cache.Length;
             if (overflow > 0)
             {
                 offset += overflow;
-                Position -= overflow;
+                position -= overflow;
             }
-            length = Math.Max(length, (int)Position);
+            length = Math.Max(length, position);
         }
     }
 }
