@@ -26,6 +26,11 @@ namespace IDIKWA_App
             WindowState = WindowState.Minimized;
         }
 
+        private void Maximize(object sender, EventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
         private void Close(object sender, EventArgs e)
         {
             Close();

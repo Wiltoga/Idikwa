@@ -97,6 +97,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Maximize.
+        /// </summary>
+        internal static string maximize {
+            get {
+                return ResourceManager.GetString("maximize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Minimize.
         /// </summary>
         internal static string minimize {

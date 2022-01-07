@@ -1,0 +1,58 @@
+<local:BlankButton xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:i="using:Avalonia.Xaml.Interactivity"
+                   xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+                   xmlns:local="using:IDIKWA_App"
+                   mc:Ignorable="d"
+                   Background="#01000000"
+                   x:Class="IDIKWA_App.Maximize"
+                   ToolTip.Tip="{local:Resx maximize}">
+  <ContentControl
+    VerticalAlignment="Center"
+    HorizontalAlignment="Center"
+    Width="20"
+    Height="20"
+    Margin="2">
+    <i:Interaction.Behaviors>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPointerOver}"
+        Value="True">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Stroke"
+          Value="#afff" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPointerOver}"
+        Value="False">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Stroke"
+          Value="#8fff" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPressed}"
+        Value="True">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Stroke"
+          Value="#fff" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPressed}"
+        Value="False">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Stroke"
+          Value="#afff" />
+      </ia:DataTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <Rectangle
+      Margin="0,4,0,2"
+      Name="shape"
+      Stroke="#8fff"
+      StrokeThickness="2" />
+  </ContentControl>
+</local:BlankButton>

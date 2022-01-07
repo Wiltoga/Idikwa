@@ -129,6 +129,9 @@
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="maximize" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
   <data name="minimize" xml:space="preserve">
     <value>Minimize</value>
   </data>
