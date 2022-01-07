@@ -135,6 +135,7 @@ namespace IDIKWA_App
             if (overflow > 0)
             {
                 offset += overflow;
+                offset %= cache.Length;
                 position -= overflow;
             }
             length = Math.Max(length, position);
