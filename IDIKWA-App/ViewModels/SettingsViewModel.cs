@@ -18,13 +18,24 @@ namespace IDIKWA_App
             DeviceEnumerator = new MMDeviceEnumerator();
             try
             {
-                RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Communications));
                 RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Communications));
             }
             catch (Exception)
             {
             }
+            try
+            {
+                RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Communications));
+            }
+            catch (Exception)
+            {
+            }
             Duration = TimeSpan.FromSeconds(90);
+        }
+
+        ~SettingsViewModel()
+        {
+            DeviceEnumerator.Dispose();
         }
 
         [Reactive]
