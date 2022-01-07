@@ -9,7 +9,10 @@
         Width="700"
         Height="500"
         MinWidth="500"
-        MinHeight="250"
+        MinHeight="300"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="40"
         x:Class="IDIKWA_App.MainWindow"
         Title="IDIKWA"
         Icon="/assets/icons/logo.ico">
@@ -19,99 +22,110 @@
   <Window.DataContext>
     <local:MainWindowViewModel />
   </Window.DataContext>
-  <DockPanel>
-    <Grid
-      DockPanel.Dock="Top">
-      <Image
-        Margin="5"
-        Height="48"
-        VerticalAlignment="Top"
-        HorizontalAlignment="Left"
-        Source="/assets/images/textIcon.png" />
-      <StackPanel
-        VerticalAlignment="Top"
-        Orientation="Horizontal"
-        HorizontalAlignment="Right">
-        <Button
-          Content="{local:Resx settings}" />
-        <Button
-          Content="{local:Resx connection}" />
-      </StackPanel>
-    </Grid>
-    <Grid
-      DockPanel.Dock="Right">
-      <StackPanel
-        Margin="20"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Center">
-        <TextBlock
-          HorizontalAlignment="Center"
-          Text=" "
-          Name="recordingText">
-          <i:Interaction.Behaviors>
-            <ia:DataTriggerBehavior Binding="{Binding Recording}" Value="True">
-              <ia:ChangePropertyAction TargetObject="{Binding #recordingText}" PropertyName="Text" Value="{local:Resx recording}" />
-            </ia:DataTriggerBehavior>
-            <ia:DataTriggerBehavior Binding="{Binding Recording}" Value="False">
-              <ia:ChangePropertyAction TargetObject="{Binding #recordingText}" PropertyName="Text" Value=" " />
-            </ia:DataTriggerBehavior>
-          </i:Interaction.Behaviors>
-        </TextBlock>
-        <local:RecordButton
-          Click="{Binding Record}"
-          Recording="{Binding Recording}"
-          Height="128"
-          Width="128" />
-      </StackPanel>
-    </Grid>
-    <Grid>
-      <StackPanel
-        Margin="5"
-        Orientation="Vertical"
-        VerticalAlignment="Center"
-        HorizontalAlignment="Left">
-        <TextBlock
-          Text="{local:Resx currentConfig}" />
+  <Border
+    BorderBrush="#4fff"
+    BorderThickness="1">
+    <DockPanel>
+      <Grid
+        DockPanel.Dock="Top">
+        <Image
+          IsHitTestVisible="False"
+          Margin="5"
+          Height="48"
+          VerticalAlignment="Top"
+          HorizontalAlignment="Left"
+          Source="/assets/images/textIcon.png" />
         <StackPanel
-          Margin="20,5"
-          Orientation="Vertical"
-          HorizontalAlignment="Left">
-          <StackPanel
-            Orientation="Horizontal">
-            <TextBlock
-              Margin="2"
-              Text="•" />
-            <TextBlock
-              Margin="2"
-              Text="{Binding Path=Settings.Duration, Converter={StaticResource TimeSpanConverter}}" />
-          </StackPanel>
-          <ItemsControl
-            Items="{Binding Path=Settings.RecordingDevices}">
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate>
-                <StackPanel
-                  Orientation="Vertical" />
-              </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <StackPanel
-                  Orientation="Horizontal">
-                  <TextBlock
-                    Margin="2"
-                    Text="•" />
-                  <TextBlock
-                    Margin="2"
-                    Text="{Binding FriendlyName}" />
-                </StackPanel>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-          <local:TextButton
-            Margin="2"
-            Text="{local:Resx edit}" />
+          VerticalAlignment="Top"
+          Orientation="Horizontal"
+          HorizontalAlignment="Right">
+          <Button
+            Content="{local:Resx settings}" />
+          <Button
+            Content="{local:Resx connection}" />
+          <local:Minimize
+            Click="Minimize"
+            Margin="3" />
+          <local:Close
+            Click="Close"
+            Margin="3" />
         </StackPanel>
-      </StackPanel>
-    </Grid>
-  </DockPanel>
+      </Grid>
+      <Grid
+        DockPanel.Dock="Right">
+        <StackPanel
+          Margin="20"
+          HorizontalAlignment="Right"
+          VerticalAlignment="Center">
+          <TextBlock
+            HorizontalAlignment="Center"
+            Text=" "
+            Name="recordingText">
+            <i:Interaction.Behaviors>
+              <ia:DataTriggerBehavior Binding="{Binding Recording}" Value="True">
+                <ia:ChangePropertyAction TargetObject="{Binding #recordingText}" PropertyName="Text" Value="{local:Resx recording}" />
+              </ia:DataTriggerBehavior>
+              <ia:DataTriggerBehavior Binding="{Binding Recording}" Value="False">
+                <ia:ChangePropertyAction TargetObject="{Binding #recordingText}" PropertyName="Text" Value=" " />
+              </ia:DataTriggerBehavior>
+            </i:Interaction.Behaviors>
+          </TextBlock>
+          <local:RecordButton
+            Click="{Binding Record}"
+            Recording="{Binding Recording}"
+            Height="128"
+            Width="128" />
+        </StackPanel>
+      </Grid>
+      <Grid>
+        <StackPanel
+          Margin="5"
+          Orientation="Vertical"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Left">
+          <TextBlock
+            Text="{local:Resx currentConfig}" />
+          <StackPanel
+            Margin="20,5"
+            Orientation="Vertical"
+            HorizontalAlignment="Left">
+            <StackPanel
+              Orientation="Horizontal">
+              <TextBlock
+                Margin="2"
+                Text="•" />
+              <TextBlock
+                Margin="2"
+                Text="{Binding Path=Settings.Duration, Converter={StaticResource TimeSpanConverter}}" />
+            </StackPanel>
+            <ItemsControl
+              Items="{Binding Path=Settings.RecordingDevices}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel
+                    Orientation="Vertical" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel
+                    Orientation="Horizontal">
+                    <TextBlock
+                      Margin="2"
+                      Text="•" />
+                    <TextBlock
+                      Margin="2"
+                      Text="{Binding FriendlyName}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <local:TextButton
+              Margin="2"
+              Text="{local:Resx edit}" />
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </DockPanel>
+  </Border>
 </Window>

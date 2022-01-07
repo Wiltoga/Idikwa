@@ -16,8 +16,14 @@ namespace IDIKWA_App
         {
             RecordingDevices = new ObservableCollection<MMDevice>();
             DeviceEnumerator = new MMDeviceEnumerator();
-            RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Communications));
-            RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Communications));
+            try
+            {
+                RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Communications));
+                RecordingDevices.Add(DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Communications));
+            }
+            catch (Exception)
+            {
+            }
             Duration = TimeSpan.FromSeconds(90);
         }
 

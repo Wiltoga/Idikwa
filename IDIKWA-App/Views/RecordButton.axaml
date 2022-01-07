@@ -7,7 +7,9 @@
              xmlns:local="using:IDIKWA_App"
              mc:Ignorable="d"
              x:Class="IDIKWA_App.RecordButton"
-             d:DesignHeight="120">
+             ToolTip.Tip="{local:Resx startRecord}"
+             d:DesignHeight="120"
+             Cursor="Hand">
   <Button
     Name="mainButton"
     Command="{Binding $parent[UserControl].Click}">

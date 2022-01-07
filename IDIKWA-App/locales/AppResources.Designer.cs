@@ -61,6 +61,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Close.
+        /// </summary>
+        internal static string close {
+            get {
+                return ResourceManager.GetString("close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Log in.
         /// </summary>
         internal static string connection {
@@ -88,6 +97,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Minimize.
+        /// </summary>
+        internal static string minimize {
+            get {
+                return ResourceManager.GetString("minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Recording....
         /// </summary>
         internal static string recording {
@@ -102,6 +120,15 @@ namespace IDIKWA_App.locales {
         internal static string settings {
             get {
                 return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Start recording.
+        /// </summary>
+        internal static string startRecord {
+            get {
+                return ResourceManager.GetString("startRecord", resourceCulture);
             }
         }
     }
