@@ -14,7 +14,7 @@ namespace IDIKWA_App
     {
         private WasapiCapture capture;
 
-        private Pipe pipe;
+        private PipeStream pipe;
 
         public RecorderWaveProvider(MMDevice device)
         {
@@ -22,7 +22,7 @@ namespace IDIKWA_App
                 capture = new WasapiLoopbackCapture(device);
             else
                 capture = new WasapiCapture(device);
-            pipe = new Pipe();
+            pipe = new PipeStream();
             capture.DataAvailable += (sender, e) =>
             {
                 pipe.Write(e.Buffer, 0, e.BytesRecorded);

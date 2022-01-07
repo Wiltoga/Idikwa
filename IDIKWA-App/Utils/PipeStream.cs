@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace IDIKWA_App
 {
-    public class Pipe : Stream
+    public class PipeStream : Stream
     {
         private bool closed;
         private object mutex;
         private Queue<byte> storage;
 
-        public Pipe()
+        public PipeStream()
         {
             storage = new Queue<byte>();
             closed = false;
