@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace IDIKWA_App
 {
-    internal class TemporaryStream : Stream
+    /// <summary>
+    /// Temporary stream that override old values when out of space
+    /// </summary>
+    public class TemporaryStream : Stream
     {
         private Memory<byte> cache;
 
@@ -16,8 +19,16 @@ namespace IDIKWA_App
 
         private int position;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="cacheSize">Size of the internal buffer</param>
         public TemporaryStream(int cacheSize) : this() => cache = new byte[cacheSize];
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="cache">Internal buffer to use</param>
         public TemporaryStream(Memory<byte> cache) : this() => this.cache = cache;
 
         private TemporaryStream()

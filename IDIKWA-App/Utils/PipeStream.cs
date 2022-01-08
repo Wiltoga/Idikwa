@@ -8,12 +8,18 @@ using System.Threading.Tasks;
 
 namespace IDIKWA_App
 {
+    /// <summary>
+    /// Buffered IO stream. Used to push data in the buffer and read it later or from another thread. Read values are automatically deleted.
+    /// </summary>
     public class PipeStream : Stream
     {
         private bool closed;
         private object mutex;
         private Queue<byte> storage;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public PipeStream()
         {
             storage = new Queue<byte>();

@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace IDIKWA_App
 {
+    /// <summary>
+    /// Temporary wave stream that override old audio data when the internal buffer is full
+    /// </summary>
     public class TemporaryWaveStream : WaveStream, IWaveProvider
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="provider">Source of audio data to copy</param>
+        /// <param name="duration">Max duration of the internal buffer</param>
         public TemporaryWaveStream(IWaveProvider provider, TimeSpan duration)
         {
             Mutex = new SemaphoreSlim(1);
@@ -55,6 +63,10 @@ namespace IDIKWA_App
         private IWaveProvider Source { get; }
         private Stream Stream { get; }
 
+        /// <summary>
+        /// Start listening to the audio source and copy the data to the internal buffer.
+        /// </summary>
+        /// <returns>The task handling the listening that finishes when the audio source is finished copying</returns>
         public async Task ListenAsync()
         {
             var bytes = new byte[1024 * 16];

@@ -9,14 +9,23 @@ using System.Threading.Tasks;
 
 namespace IDIKWA_App
 {
+    /// <summary>
+    /// Factory to record and save audio streams
+    /// </summary>
     public class SampleFactory
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public SampleFactory()
         {
             Recorders = new List<RecorderWaveProvider>();
             TemporaryBuffers = new List<(TemporaryWaveStream, Task)>();
         }
 
+        /// <summary>
+        /// Recommended bit rates to save mp3 files
+        /// </summary>
         public int[] RecommendedBitRates { get; } = new[]
         {
             64000,
@@ -27,6 +36,9 @@ namespace IDIKWA_App
             320000
         };
 
+        /// <summary>
+        /// Recommended sample rates to record
+        /// </summary>
         public int[] RecommendedSampleRates { get; } = new[]
         {
             8000,
@@ -40,6 +52,12 @@ namespace IDIKWA_App
         private List<RecorderWaveProvider> Recorders { get; }
         private List<(TemporaryWaveStream, Task)> TemporaryBuffers { get; }
 
+        /// <summary>
+        /// Saves an array of audio sources to an output stream
+        /// </summary>
+        /// <param name="records">List of audio sources</param>
+        /// <param name="output">Output stream to save to</param>
+        /// <param name="bitRate">Bitrate used to encode mp3</param>
         public void Save(IEnumerable<IWaveProvider> records, Stream output, int bitRate)
         {
             var filename = Path.GetTempFileName();
@@ -49,6 +67,12 @@ namespace IDIKWA_App
             File.Delete(filename);
         }
 
+        /// <summary>
+        /// Start recording the given devices
+        /// </summary>
+        /// <param name="devices">List of devices to record</param>
+        /// <param name="format">Wave format to convert to</param>
+        /// <param name="bufferDuration">Duration of the temporary buffer</param>
         public void StartRecord(IEnumerable<MMDevice> devices, WaveFormat format, TimeSpan bufferDuration)
         {
             if (Recorders.Any())
@@ -69,6 +93,10 @@ namespace IDIKWA_App
             }
         }
 
+        /// <summary>
+        /// Stops any recording
+        /// </summary>
+        /// <returns>The list of recorded audio streams</returns>
         public async Task<WaveStream[]> StopRecord()
         {
             foreach (var recorder in Recorders)
