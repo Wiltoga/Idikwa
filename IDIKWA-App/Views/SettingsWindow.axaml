@@ -18,12 +18,21 @@
     <DataTemplate
       DataType="{x:Type local:DeviceViewModel}">
       <CheckBox
-        Margin="0"
+        Padding="5,0"
         IsThreeState="False"
-        IsChecked="{Binding Path=Recording, Mode=TwoWay}"
-        Content="{Binding Path=Device.FriendlyName}" />
+        HorizontalAlignment="Stretch"
+        IsChecked="{Binding Path=Recording, Mode=TwoWay}">
+        <TextBlock
+          Text="{Binding Path=Device.FriendlyName}" />
+      </CheckBox>
     </DataTemplate>
   </Window.DataTemplates>
+  <Window.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+  </Window.Styles>
   <Window.DataContext>
     <local:SettingsViewModel />
   </Window.DataContext>
@@ -41,7 +50,7 @@
             Text="{Binding Source={local:Resx renderDevices}, StringFormat='{}{0} :'}" />
           <ListBox
             Margin="5"
-            MaxHeight="150"
+            MaxHeight="200"
             Items="{Binding RenderDevices}" />
         </DockPanel>
         <DockPanel>
@@ -52,7 +61,7 @@
             Text="{Binding Source={local:Resx captureDevices}, StringFormat='{}{0} :'}" />
           <ListBox
             Margin="5"
-            MaxHeight="150"
+            MaxHeight="200"
             Items="{Binding CaptureDevices}" />
         </DockPanel>
         <DockPanel>

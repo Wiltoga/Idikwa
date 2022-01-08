@@ -20,6 +20,7 @@
   <Window.Resources>
     <local:TimeSpanConverter x:Key="TimeSpanConverter" />
     <local:EqualsConverter x:Key="EqualsConverter" />
+    <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
   </Window.Resources>
   <Window.DataContext>
     <local:MainWindowViewModel />
