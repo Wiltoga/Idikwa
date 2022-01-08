@@ -61,6 +61,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Capture devices.
+        /// </summary>
+        internal static string captureDevices {
+            get {
+                return ResourceManager.GetString("captureDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Close.
         /// </summary>
         internal static string close {
@@ -79,7 +88,7 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Current configuration :.
+        ///   Recherche une chaîne localisée semblable à Current configuration.
         /// </summary>
         internal static string currentConfig {
             get {
@@ -115,11 +124,29 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Output directory.
+        /// </summary>
+        internal static string outputDir {
+            get {
+                return ResourceManager.GetString("outputDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Recording....
         /// </summary>
         internal static string recording {
             get {
                 return ResourceManager.GetString("recording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Render devices.
+        /// </summary>
+        internal static string renderDevices {
+            get {
+                return ResourceManager.GetString("renderDevices", resourceCulture);
             }
         }
         

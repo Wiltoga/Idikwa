@@ -37,5 +37,12 @@ namespace IDIKWA_App
         {
             Close();
         }
+
+        protected override async void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            if (DataContext is MainWindowViewModel viewmodel)
+                await viewmodel.Exit();
+        }
     }
 }

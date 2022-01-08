@@ -27,8 +27,12 @@ namespace IDIKWA_App
                 else
                     RunRecord();
             });
+            EditSettings = CommandHandler.Create(async () => await RunEditSettingsAsync());
             Recording = false;
         }
+
+        [Reactive]
+        public ICommand EditSettings { get; private set; }
 
         [Reactive]
         public ICommand Record { get; private set; }
@@ -44,16 +48,43 @@ namespace IDIKWA_App
 
         private SampleFactory Factory { get; }
 
+        public async Task Exit()
+        {
+            await Factory.StopRecord();
+        }
+
+        public async Task RunEditSettingsAsync()
+        {
+            var dialog = new SettingsWindow()
+            {
+                DataContext = Settings
+            };
+
+            await dialog.ShowDialog(Window);
+        }
+
         public void RunRecord()
         {
-            Factory.StartRecord(Settings.RecordingDevices, WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, Settings.Mono ? 1 : 2), Settings.Duration);
-            Recording = true;
+            try
+            {
+                Factory.StartRecord(Settings.RecordingDevices.Select(device => device.Device), WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, Settings.Mono ? 1 : 2), Settings.Duration);
+                Recording = true;
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public async Task StopRecord()
         {
-            Recording = false;
-            var streams = await Factory.StopRecord();
+            try
+            {
+                var streams = await Factory.StopRecord();
+                Recording = false;
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

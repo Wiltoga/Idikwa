@@ -15,7 +15,8 @@
         ExtendClientAreaTitleBarHeightHint="32"
         x:Class="IDIKWA_App.MainWindow"
         Title="IDIKWA"
-        Icon="/assets/icons/logo.ico">
+        Icon="/assets/icons/logo.ico"
+        WindowStartupLocation="CenterScreen">
   <Window.Resources>
     <local:TimeSpanConverter x:Key="TimeSpanConverter" />
     <local:EqualsConverter x:Key="EqualsConverter" />
@@ -81,6 +82,7 @@
           Orientation="Horizontal"
           HorizontalAlignment="Right">
           <Button
+            Command="{Binding EditSettings}"
             Content="{local:Resx settings}" />
           <Button
             Content="{local:Resx connection}" />
@@ -128,7 +130,7 @@
           VerticalAlignment="Center"
           HorizontalAlignment="Left">
           <TextBlock
-            Text="{local:Resx currentConfig}" />
+            Text="{Binding Source={local:Resx currentConfig}, StringFormat='{}{0} :'}" />
           <StackPanel
             Margin="20,5"
             Orientation="Vertical"
@@ -159,13 +161,14 @@
                       Text="•" />
                     <TextBlock
                       Margin="2"
-                      Text="{Binding FriendlyName}" />
+                      Text="{Binding Path=Device.FriendlyName}" />
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
             <local:TextButton
               Margin="2"
+              Click="{Binding EditSettings}"
               Text="{local:Resx edit}" />
           </StackPanel>
         </StackPanel>
