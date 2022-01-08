@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NAudio.Wave;
 
 namespace IDIKWA_App
 {
@@ -16,11 +17,13 @@ namespace IDIKWA_App
     {
         public MainWindowViewModel()
         {
+            Factory = new SampleFactory();
+            Window = null;
             Settings = SettingsViewModel.Default;
-            Record = CommandHandler.Create(() =>
+            Record = CommandHandler.Create(async () =>
             {
                 if (Recording)
-                    StopRecord();
+                    await StopRecord();
                 else
                     RunRecord();
             });
@@ -36,14 +39,21 @@ namespace IDIKWA_App
         [Reactive]
         public SettingsViewModel Settings { get; set; }
 
+        [Reactive]
+        public Window? Window { get; set; }
+
+        private SampleFactory Factory { get; }
+
         public void RunRecord()
         {
+            Factory.StartRecord(Settings.RecordingDevices, WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, Settings.Mono ? 1 : 2), Settings.Duration);
             Recording = true;
         }
 
-        public void StopRecord()
+        public async Task StopRecord()
         {
             Recording = false;
+            var streams = await Factory.StopRecord();
         }
     }
 }

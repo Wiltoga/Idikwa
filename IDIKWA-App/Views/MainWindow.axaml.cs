@@ -14,6 +14,8 @@ namespace IDIKWA_App
 #if DEBUG
             this.AttachDevTools();
 #endif
+            if (DataContext is MainWindowViewModel viewmodel)
+                viewmodel.Window = this;
         }
 
         private void InitializeComponent()

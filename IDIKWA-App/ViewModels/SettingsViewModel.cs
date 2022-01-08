@@ -42,7 +42,8 @@ namespace IDIKWA_App
                 {
                     Duration = TimeSpan.FromSeconds(90),
                     BitRate = 96000,
-                    SampleRate = 44100
+                    SampleRate = 44100,
+                    Mono = false
                 };
                 try
                 {
@@ -70,6 +71,9 @@ namespace IDIKWA_App
 
         [Reactive]
         public TimeSpan Duration { get; set; }
+
+        [Reactive]
+        public bool Mono { get; set; }
 
         [Reactive]
         public ObservableCollection<MMDevice> RecordingDevices { get; set; }

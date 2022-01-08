@@ -1,4 +1,5 @@
-﻿using Avalonia.Markup.Xaml;
+﻿using Avalonia.Data;
+using Avalonia.Markup.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
