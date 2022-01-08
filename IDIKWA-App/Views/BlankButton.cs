@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using System;
@@ -47,13 +48,18 @@ namespace IDIKWA_App
         protected override void OnPointerPressed(PointerPressedEventArgs e)
         {
             base.OnPointerPressed(e);
-            IsPressed = true;
+            if (e.GetCurrentPoint(this).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
+            {
+                e.Handled = true;
+                IsPressed = true;
+            }
         }
 
         protected override void OnPointerReleased(PointerReleasedEventArgs e)
         {
-            if (IsPressed)
+            if (IsPressed && e.InitialPressMouseButton == MouseButton.Left)
             {
+                e.Handled = true;
                 IsPressed = false;
                 if (Command?.CanExecute(Parameter) is true)
                     Command.Execute(Parameter);
