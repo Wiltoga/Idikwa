@@ -2,6 +2,7 @@
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +17,37 @@ namespace IDIKWA_App
             TemporaryBuffers = new List<(TemporaryWaveStream, Task)>();
         }
 
+        public int[] RecommendedBitRates { get; } = new[]
+        {
+            64000,
+            96000,
+            128000,
+            192000,
+            256000,
+            320000
+        };
+
+        public int[] RecommendedSampleRates { get; } = new[]
+        {
+            8000,
+            11025,
+            22050,
+            32000,
+            44100,
+            48000
+        };
+
         private List<RecorderWaveProvider> Recorders { get; }
         private List<(TemporaryWaveStream, Task)> TemporaryBuffers { get; }
+
+        public void Save(IEnumerable<IWaveProvider> records, Stream output, int bitRate)
+        {
+            var filename = Path.GetTempFileName();
+            MediaFoundationEncoder.EncodeToMp3(new MixingWaveProvider32(records), filename, bitRate);
+            using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.None))
+                fileStream.CopyTo(output);
+            File.Delete(filename);
+        }
 
         public void StartRecord(IEnumerable<MMDevice> devices, WaveFormat format, TimeSpan bufferDuration)
         {
