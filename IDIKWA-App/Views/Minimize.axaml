@@ -22,7 +22,7 @@
         <ia:ChangePropertyAction
           TargetObject="{Binding #shape}"
           PropertyName="Fill"
-          Value="#afff" />
+          Value="#aaf" />
       </ia:DataTriggerBehavior>
       <ia:DataTriggerBehavior
         Binding="{Binding $parent[0].IsPointerOver}"
@@ -38,7 +38,7 @@
         <ia:ChangePropertyAction
           TargetObject="{Binding #shape}"
           PropertyName="Fill"
-          Value="#fff" />
+          Value="#aaaf" />
       </ia:DataTriggerBehavior>
       <ia:DataTriggerBehavior
         Binding="{Binding $parent[0].IsPressed}"
@@ -46,7 +46,7 @@
         <ia:ChangePropertyAction
           TargetObject="{Binding #shape}"
           PropertyName="Fill"
-          Value="#afff" />
+          Value="#aaf" />
       </ia:DataTriggerBehavior>
     </i:Interaction.Behaviors>
     <Rectangle

@@ -86,13 +86,13 @@
             Content="{local:Resx connection}" />
           <local:Minimize
             Click="Minimize"
-            Margin="3,0" />
+            Padding="3,0" />
           <local:Maximize
             Click="Maximize"
-            Margin="3,0" />
+            Padding="3,0" />
           <local:Close
             Click="Close"
-            Margin="3,0" />
+            Padding="3,0" />
         </StackPanel>
       </Grid>
       <Grid
