@@ -117,8 +117,8 @@
           <local:RecordButton
             Click="{Binding Record}"
             Recording="{Binding Recording}"
-            Height="128"
-            Width="128" />
+            Height="196"
+            Width="196" />
         </StackPanel>
       </Grid>
       <Grid>
