@@ -16,7 +16,7 @@ namespace IDIKWA_App
     {
         public MainWindowViewModel()
         {
-            Settings = new SettingsViewModel();
+            Settings = SettingsViewModel.Default;
             Record = CommandHandler.Create(() =>
             {
                 if (Recording)
