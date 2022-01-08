@@ -12,9 +12,9 @@
   <ContentControl
     VerticalAlignment="Center"
     HorizontalAlignment="Center"
-    Width="20"
-    Height="20"
-    Margin="2">
+    Width="16"
+    Height="16"
+    Margin="4">
     <i:Interaction.Behaviors>
       <ia:DataTriggerBehavior
         Binding="{Binding $parent[0].IsPointerOver}"

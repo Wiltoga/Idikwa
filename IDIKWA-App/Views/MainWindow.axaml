@@ -12,7 +12,7 @@
         MinHeight="300"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        ExtendClientAreaTitleBarHeightHint="40"
+        ExtendClientAreaTitleBarHeightHint="32"
         x:Class="IDIKWA_App.MainWindow"
         Title="IDIKWA"
         Icon="/assets/icons/logo.ico">
@@ -64,10 +64,15 @@
     <DockPanel>
       <Grid
         DockPanel.Dock="Top">
+        <Rectangle
+          IsHitTestVisible="False"
+          Height="{Binding $parent[Window].ExtendClientAreaTitleBarHeightHint}"
+          VerticalAlignment="Top"
+          Fill="#1fff" />
         <Image
           IsHitTestVisible="False"
-          Margin="5"
-          Height="48"
+          Margin="5,0"
+          Height="{Binding $parent[Window].ExtendClientAreaTitleBarHeightHint}"
           VerticalAlignment="Top"
           HorizontalAlignment="Left"
           Source="/assets/images/textIcon.png" />
