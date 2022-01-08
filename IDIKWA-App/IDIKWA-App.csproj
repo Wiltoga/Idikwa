@@ -23,9 +23,6 @@
     <PackageReference Include="ReactiveUI.Fody" Version="17.1.9" />
    </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <AvaloniaResource Include="assets\**" />
   </ItemGroup>
   <ItemGroup>
