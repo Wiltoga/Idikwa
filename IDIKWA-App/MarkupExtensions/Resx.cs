@@ -19,7 +19,7 @@ namespace IDIKWA_App
 
         public string? Key { get; set; }
 
-        public override object? ProvideValue(IServiceProvider serviceProvider)
+        public override object? ProvideValue(IServiceProvider? serviceProvider)
         {
             if (Key is null)
                 throw new InvalidOperationException("The resource key can not be null.");

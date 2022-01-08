@@ -3,17 +3,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="using:IDIKWA_App"
+        xmlns:global="using:System.Globalization"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         mc:Ignorable="d"
         x:Class="IDIKWA_App.SettingsWindow"
         Width="600"
         Height="500"
+        d:DesignHeight="1500"
         MinWidth="300"
         MinHeight="400"
         Title="{local:Resx settings}"
         Icon="/assets/icons/logo.ico"
+        d:DataContext="{x:Static local:SettingsViewModel.Default}"
         WindowStartupLocation="CenterOwner">
+  <Window.Resources>
+    <local:ResxConverter x:Key="ResxConverter" />
+  </Window.Resources>
   <Window.DataTemplates>
     <DataTemplate
       DataType="{x:Type local:DeviceViewModel}">
@@ -26,6 +32,11 @@
           Text="{Binding Path=Device.FriendlyName}" />
       </CheckBox>
     </DataTemplate>
+    <DataTemplate
+      DataType="{x:Type global:CultureInfo}">
+      <TextBlock
+        Text="{Binding Name, Converter={StaticResource ResxConverter}}" />
+    </DataTemplate>
   </Window.DataTemplates>
   <Window.Styles>
     <Style Selector="ListBoxItem">
@@ -33,9 +44,6 @@
       <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
   </Window.Styles>
-  <Window.DataContext>
-    <local:SettingsViewModel />
-  </Window.DataContext>
   <DockPanel>
     <ScrollViewer
       HorizontalScrollBarVisibility="Disabled"
@@ -44,33 +52,59 @@
         Orientation="Vertical">
         <DockPanel>
           <TextBlock
-            DockPanel.Dock="Left"
+            DockPanel.Dock="Top"
             Margin="5"
             VerticalAlignment="Center"
             Text="{Binding Source={local:Resx renderDevices}, StringFormat='{}{0} :'}" />
           <ListBox
-            Margin="5"
+            HorizontalAlignment="Left"
+            Margin="5,5,150,5"
             MaxHeight="200"
+            MaxWidth="400"
             Items="{Binding RenderDevices}" />
         </DockPanel>
+        <local:Separator
+          Margin="5" />
         <DockPanel>
           <TextBlock
-            DockPanel.Dock="Left"
+            DockPanel.Dock="Top"
             Margin="5"
             VerticalAlignment="Center"
             Text="{Binding Source={local:Resx captureDevices}, StringFormat='{}{0} :'}" />
           <ListBox
-            Margin="5"
+            HorizontalAlignment="Left"
+            Margin="5,5,150,5"
             MaxHeight="200"
+            MaxWidth="400"
             Items="{Binding CaptureDevices}" />
         </DockPanel>
+        <local:Separator
+          Margin="5" />
         <DockPanel>
           <TextBlock
             DockPanel.Dock="Left"
             Margin="5"
             VerticalAlignment="Center"
             Text="{Binding Source={local:Resx outputDir}, StringFormat='{}{0} :'}" />
+          <TextBox
+            Margin="5"
+            Text="{Binding OutputPath, Mode=TwoWay}" />
         </DockPanel>
+        <local:Separator
+          Margin="5" />
+        <DockPanel>
+          <TextBlock
+            DockPanel.Dock="Left"
+            Margin="5"
+            VerticalAlignment="Center"
+            Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
+          <ComboBox
+            Margin="5"
+            Items="{Binding Cultures}"
+            SelectedItem="{Binding Culture, Mode=TwoWay}" />
+        </DockPanel>
+        <local:Separator
+          Margin="5" />
       </StackPanel>
     </ScrollViewer>
   </DockPanel>

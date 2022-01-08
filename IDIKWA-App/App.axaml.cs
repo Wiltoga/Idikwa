@@ -12,6 +12,7 @@ namespace IDIKWA_App
         {
 #if DEBUG
             CultureInfo.CurrentUICulture = new CultureInfo("fr");
+            CultureInfo.CurrentCulture = new CultureInfo("fr");
 #endif
             AvaloniaXamlLoader.Load(this);
         }

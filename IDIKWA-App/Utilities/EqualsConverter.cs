@@ -10,7 +10,7 @@ namespace IDIKWA_App
 {
     public class EqualsConverter : IMultiValueConverter
     {
-        public object Convert(IList<object> values, Type targetType, object parameter, CultureInfo culture)
+        public virtual object Convert(IList<object> values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values.Any())
             {

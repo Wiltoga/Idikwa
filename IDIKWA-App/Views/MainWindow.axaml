@@ -105,6 +105,7 @@
           HorizontalAlignment="Right"
           VerticalAlignment="Center">
           <TextBlock
+            Margin="5"
             HorizontalAlignment="Center"
             Text=" "
             Name="recordingText">
@@ -118,6 +119,7 @@
             </i:Interaction.Behaviors>
           </TextBlock>
           <local:RecordButton
+            Margin="5"
             Click="{Binding Record}"
             Recording="{Binding Recording}"
             Height="196"
@@ -167,6 +169,17 @@
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <StackPanel
+              IsVisible="{Binding Path=Settings.CanRecord, Converter={StaticResource ReverseBoolConverter}}"
+              Orientation="Horizontal">
+              <TextBlock
+                Margin="2"
+                Text="•" />
+              <TextBlock
+                Margin="2"
+                Foreground="#f44"
+                Text="{local:Resx noDeviceSelected}" />
+            </StackPanel>
             <local:TextButton
               Margin="2"
               Click="{Binding EditSettings}"

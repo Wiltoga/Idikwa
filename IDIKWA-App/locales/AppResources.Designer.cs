@@ -61,7 +61,7 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Capture devices.
+        ///   Recherche une chaîne localisée semblable à Recording devices.
         /// </summary>
         internal static string captureDevices {
             get {
@@ -106,6 +106,33 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à English.
+        /// </summary>
+        internal static string en {
+            get {
+                return ResourceManager.GetString("en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à French.
+        /// </summary>
+        internal static string fr {
+            get {
+                return ResourceManager.GetString("fr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language.
+        /// </summary>
+        internal static string language {
+            get {
+                return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Maximize.
         /// </summary>
         internal static string maximize {
@@ -120,6 +147,15 @@ namespace IDIKWA_App.locales {
         internal static string minimize {
             get {
                 return ResourceManager.GetString("minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No device selected.
+        /// </summary>
+        internal static string noDeviceSelected {
+            get {
+                return ResourceManager.GetString("noDeviceSelected", resourceCulture);
             }
         }
         
@@ -142,7 +178,7 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Render devices.
+        ///   Recherche une chaîne localisée semblable à Playback devices.
         /// </summary>
         internal static string renderDevices {
             get {

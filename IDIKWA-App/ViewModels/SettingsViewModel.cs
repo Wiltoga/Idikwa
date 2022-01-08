@@ -5,6 +5,7 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -17,33 +18,41 @@ namespace IDIKWA_App
     {
         public ReadOnlyObservableCollection<DeviceViewModel> captureDevices;
         public ReadOnlyObservableCollection<DeviceViewModel> renderDevices;
+        private readonly ObservableAsPropertyHelper<bool> canRecord;
         private readonly ReadOnlyObservableCollection<DeviceViewModel> recordingDevices;
 
         public SettingsViewModel()
         {
+            Cultures = new ObservableCollection<CultureInfo>
+            {
+                new CultureInfo("en"),
+                new CultureInfo("fr")
+            };
+            Culture = Cultures.First();
             Devices = new SourceCache<DeviceViewModel, string>(device => device.Device.ID);
             DeviceEnumerator = new MMDeviceEnumerator();
-            DevicesVolume = new Dictionary<string, float>();
-            var shared = Devices.Connect().Publish();
-            shared
+            DevicesConnect = Devices.Connect();
+            DevicesConnect
                 .AutoRefresh(device => device.Recording)
                 .Filter(device => device.Recording)
                 .Bind(out recordingDevices)
                 .Subscribe();
-            shared
+            canRecord = DevicesConnect
+                .AutoRefresh(device => device.Recording)
+                .TrueForAny(device => device.WhenAnyValue(d => d.Recording), recording => recording).ToProperty(this, nameof(CanRecord));
+            DevicesConnect
                 .Filter(device => device.Device.DataFlow == DataFlow.Render)
                 .Bind(out renderDevices)
                 .Subscribe();
-            shared
+            DevicesConnect
                 .Filter(device => device.Device.DataFlow == DataFlow.Capture)
                 .Bind(out captureDevices)
                 .Subscribe();
-            shared.Connect();
             try
             {
                 Devices.Edit(sourceUpdater =>
                     sourceUpdater.AddOrUpdate(DeviceEnumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.Active)
-                    .Select(device => new DeviceViewModel(device, false))));
+                    .Select(device => new DeviceViewModel(device, false, 1))));
             }
             catch (Exception)
             {
@@ -62,6 +71,7 @@ namespace IDIKWA_App
             Duration = model.Duration;
             Mono = model.Mono;
             SampleRate = model.SampleRate;
+            Culture = Cultures.FirstOrDefault(culture => culture.Name == model.Culture) ?? Culture;
             foreach (var device in model.RecordingDevices)
             {
                 var availableDevice = Devices.Items.FirstOrDefault(d => d.Device.ID == device);
@@ -70,7 +80,14 @@ namespace IDIKWA_App
                     availableDevice.Recording = true;
                 }
             }
-            DevicesVolume = model.Volumes;
+            foreach (var device in model.Volumes)
+            {
+                var availableDevice = Devices.Items.FirstOrDefault(d => d.Device.ID == device.Key);
+                if (availableDevice is not null)
+                {
+                    availableDevice.Volume = device.Value;
+                }
+            }
         }
 
         ~SettingsViewModel()
@@ -88,8 +105,10 @@ namespace IDIKWA_App
                     BitRate = 96000,
                     SampleRate = 44100,
                     Mono = false,
-                    OutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "Idikwa")
+                    OutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Idikwa")
                 };
+                var currentCulture = CultureInfo.CurrentCulture;
+                result.Culture = result.Cultures.FirstOrDefault(c => c.Name.ToLower() == currentCulture.Name.Substring(0, 2).ToLower()) ?? result.Culture;
                 try
                 {
                     var defaultDevice = result.Devices.Items.First(d => result.DeviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Communications).ID == d.Device.ID);
@@ -115,14 +134,19 @@ namespace IDIKWA_App
         [Reactive]
         public int BitRate { get; set; }
 
+        public bool CanRecord => canRecord.Value;
+
         public ReadOnlyObservableCollection<DeviceViewModel> CaptureDevices => captureDevices;
 
-        public SourceCache<DeviceViewModel, string> Devices { get; }
+        [Reactive]
+        public CultureInfo Culture { get; set; }
+
+        public ObservableCollection<CultureInfo> Cultures { get; }
 
         [Reactive]
         public TimeSpan Duration { get; set; }
 
-        public Settings Model => new Settings(BitRate, DevicesVolume, Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate);
+        public Settings Model => new Settings(BitRate, Devices.Items.Where(device => device.Volume < 1).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name);
 
         [Reactive]
         public bool Mono { get; set; }
@@ -137,18 +161,8 @@ namespace IDIKWA_App
         public int SampleRate { get; set; }
 
         private MMDeviceEnumerator DeviceEnumerator { get; }
-        private Dictionary<string, float> DevicesVolume { get; }
+        private SourceCache<DeviceViewModel, string> Devices { get; }
 
-        public float GetDeviceVolume(MMDevice device)
-        {
-            if (DevicesVolume.ContainsKey(device.ID))
-                return DevicesVolume[device.ID];
-            return 1;
-        }
-
-        public void SetDeviceVolume(MMDevice device, float volume)
-        {
-            DevicesVolume[device.ID] = volume;
-        }
+        private IObservable<IChangeSet<DeviceViewModel, string>> DevicesConnect { get; }
     }
 }

@@ -11,10 +11,11 @@ namespace IDIKWA_App
 {
     public class DeviceViewModel : ReactiveObject
     {
-        public DeviceViewModel(MMDevice device, bool recording)
+        public DeviceViewModel(MMDevice device, bool recording, float volume)
         {
             Device = device;
             Recording = recording;
+            Volume = volume;
         }
 
         [Reactive]
@@ -22,5 +23,8 @@ namespace IDIKWA_App
 
         [Reactive]
         public bool Recording { get; set; }
+
+        [Reactive]
+        public float Volume { get; set; }
     }
 }
