@@ -62,10 +62,17 @@
             Margin="5"
             VerticalAlignment="Center"
             Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
-          <ComboBox
-            Margin="5"
-            Items="{Binding Cultures}"
-            SelectedItem="{Binding Culture, Mode=TwoWay}" />
+          <StackPanel
+            Orientation="Horizontal">
+            <ComboBox
+              Margin="5"
+              Items="{Binding Cultures}"
+              SelectedItem="{Binding Culture, Mode=TwoWay}" />
+            <local:Icon
+              Classes="dynamic warning"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx requiresRestart}" />
+          </StackPanel>
         </DockPanel>
         <local:Separator
           Margin="5" />

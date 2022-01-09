@@ -232,6 +232,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à This option requires a restart of the software.
+        /// </summary>
+        internal static string requiresRestart {
+            get {
+                return ResourceManager.GetString("requiresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Sample rate.
         /// </summary>
         internal static string sampleRate {

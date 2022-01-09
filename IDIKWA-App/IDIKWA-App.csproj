@@ -32,6 +32,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\Icon.axaml.cs">
+      <DependentUpon>Icon.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="locales\AppResources.fr.resx">

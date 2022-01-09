@@ -1,14 +1,75 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:IDIKWA_App"
-             x:Class="IDIKWA_App.App">
+             x:Class="IDIKWA_App.App"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core">
+  <Application.Resources>
+    <SolidColorBrush
+      x:Key="WindowBackground">#111114</SolidColorBrush>
+  </Application.Resources>
   <Application.Styles>
     <FluentTheme Mode="Dark" />
     <Style
       Selector="Window">
       <Setter
         Property="Background"
-        Value="#111114" />
+        Value="{StaticResource WindowBackground}" />
+    </Style>
+    <Style
+      Selector="local|Icon.dynamic">
+      <Setter
+        Property="IsSelected"
+        Value="{Binding $self.IsPointerOver}" />
+    </Style>
+    <Style
+      Selector="local|Icon.warning">
+      <Setter
+        Property="MainBrush"
+        Value="White" />
+      <Setter
+        Property="SecondaryBrush"
+        Value="{StaticResource WindowBackground}" />
+      <Setter
+        Property="BackgroundData">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="True"
+              StartPoint="2.5,20.5">
+              <LineSegment
+                Point="20.5,20.5" />
+              <LineSegment
+                Point="11.5,2.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+      <Setter
+        Property="ForegroundData">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="11.5,7.5">
+              <LineSegment
+                Point="11.5,14.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="11.5,16.5">
+              <LineSegment
+                Point="11.5,18.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.warning:selected">
+      <Setter
+        Property="MainBrush"
+        Value="#ff4" />
     </Style>
   </Application.Styles>
 </Application>

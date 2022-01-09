@@ -174,6 +174,9 @@
   <data name="renderDevices" xml:space="preserve">
     <value>Périphériques de sortie</value>
   </data>
+  <data name="requiresRestart" xml:space="preserve">
+    <value>Cette option nécéssite de redémarrer le logiciel</value>
+  </data>
   <data name="sampleRate" xml:space="preserve">
     <value>Fréquence</value>
   </data>

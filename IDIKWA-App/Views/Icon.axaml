@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             x:Class="IDIKWA_App.Icon">
+  <Canvas
+    Width="24"
+    Height="24"
+    Background="#01000000">
+    <Path
+      Name="background"
+      Stroke="{Binding $parent[UserControl].MainBrush}"
+      Fill="{Binding $parent[UserControl].SecondaryBrush}"
+      Data="{Binding $parent[UserControl].BackgroundData}"
+      StrokeThickness="1">
+      <i:Interaction.Behaviors>
+        <ia:DataTriggerBehavior
+          Binding="{Binding $parent[UserControl].IsSelected}"
+          Value="True">
+          <ia:ChangePropertyAction
+            TargetObject="{Binding #background}"
+            PropertyName="Fill"
+            Value="{Binding $parent[UserControl].MainBrush}" />
+        </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior
+          Binding="{Binding $parent[UserControl].IsSelected}"
+          Value="False">
+          <ia:ChangePropertyAction
+            TargetObject="{Binding #background}"
+            PropertyName="Fill"
+            Value="{Binding $parent[UserControl].SecondaryBrush}" />
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Path>
+    <Path
+      Name="foreground"
+      Stroke="{Binding $self.Fill}"
+      Fill="{Binding $parent[UserControl].MainBrush}"
+      Data="{Binding $parent[UserControl].ForegroundData}"
+      StrokeThickness="1">
+      <i:Interaction.Behaviors>
+        <ia:DataTriggerBehavior
+          Binding="{Binding $parent[UserControl].IsSelected}"
+          Value="True">
+          <ia:ChangePropertyAction
+            TargetObject="{Binding #foreground}"
+            PropertyName="Fill"
+            Value="{Binding $parent[UserControl].SecondaryBrush}" />
+        </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior
+          Binding="{Binding $parent[UserControl].IsSelected}"
+          Value="False">
+          <ia:ChangePropertyAction
+            TargetObject="{Binding #foreground}"
+            PropertyName="Fill"
+            Value="{Binding $parent[UserControl].MainBrush}" />
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Path>
+  </Canvas>
+</UserControl>
