@@ -105,6 +105,57 @@
         </DockPanel>
         <local:Separator
           Margin="5" />
+        <DockPanel>
+          <TextBlock
+            DockPanel.Dock="Left"
+            Margin="5"
+            VerticalAlignment="Center"
+            Text="{Binding Source={local:Resx duration}, StringFormat='{}{0} :'}" />
+          <StackPanel
+            Orientation="Horizontal">
+            <NumericUpDown
+              Name="minutes"
+              Maximum="5"
+              Minimum="0"
+              Value="{Binding DurationMinutes}"
+              Margin="5">
+              <i:Interaction.Behaviors>
+                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0">
+                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Minimum" Value="1" />
+                </ia:DataTriggerBehavior>
+                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0" ComparisonCondition="NotEqual">
+                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Minimum" Value="0" />
+                </ia:DataTriggerBehavior>
+                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="5">
+                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Maximum" Value="0" />
+                </ia:DataTriggerBehavior>
+                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="5" ComparisonCondition="NotEqual">
+                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Maximum" Value="59" />
+                </ia:DataTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </NumericUpDown>
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text=":" />
+            <NumericUpDown
+              Name="seconds"
+              Maximum="59"
+              Minimum="0"
+              Value="{Binding DurationSeconds}"
+              Increment="15"
+              Margin="5">
+              <i:Interaction.Behaviors>
+                <ia:DataTriggerBehavior Binding="{Binding #seconds.Maximum}" Value="-1" ComparisonCondition="NotEqual">
+                  <ia:CallMethodAction TargetObject="{Binding}" MethodName="DurationMaxChanged" />
+                </ia:DataTriggerBehavior>
+                <ia:DataTriggerBehavior Binding="{Binding #seconds.Minimum}" Value="-1" ComparisonCondition="NotEqual">
+                  <ia:CallMethodAction TargetObject="{Binding}" MethodName="DurationMinChanged" />
+                </ia:DataTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </NumericUpDown>
+          </StackPanel>
+        </DockPanel>
       </StackPanel>
     </ScrollViewer>
   </DockPanel>

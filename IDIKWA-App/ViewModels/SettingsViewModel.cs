@@ -1,4 +1,5 @@
-﻿using DynamicData;
+﻿using Avalonia.Xaml.Interactions.Core;
+using DynamicData;
 using NAudio.CoreAudioApi;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -146,6 +147,26 @@ namespace IDIKWA_App
         [Reactive]
         public TimeSpan Duration { get; set; }
 
+        public int DurationMinutes
+        {
+            get => Duration.Minutes;
+            set
+            {
+                Duration = new TimeSpan(0, value, Duration.Seconds);
+                this.RaisePropertyChanged(nameof(DurationMinutes));
+            }
+        }
+
+        public int DurationSeconds
+        {
+            get => Duration.Seconds;
+            set
+            {
+                Duration = new TimeSpan(0, Duration.Minutes, value);
+                this.RaisePropertyChanged(nameof(DurationSeconds));
+            }
+        }
+
         public Settings Model => new Settings(BitRate, Devices.Items.Where(device => device.Volume < 1).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name);
 
         [Reactive]
@@ -155,14 +176,28 @@ namespace IDIKWA_App
         public string OutputPath { get; set; }
 
         public ReadOnlyObservableCollection<DeviceViewModel> RecordingDevices => recordingDevices;
+
         public ReadOnlyObservableCollection<DeviceViewModel> RenderDevices => renderDevices;
 
         [Reactive]
         public int SampleRate { get; set; }
 
         private MMDeviceEnumerator DeviceEnumerator { get; }
+
         private SourceCache<DeviceViewModel, string> Devices { get; }
 
         private IObservable<IChangeSet<DeviceViewModel, string>> DevicesConnect { get; }
+
+        public void DurationMaxChanged()
+        {
+            if (DurationMinutes == 5)
+                DurationSeconds = 0;
+        }
+
+        public void DurationMinChanged()
+        {
+            if (DurationMinutes == 0 && DurationSeconds == 0)
+                DurationSeconds = 1;
+        }
     }
 }

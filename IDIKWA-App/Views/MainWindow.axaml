@@ -5,6 +5,8 @@
         xmlns:local="using:IDIKWA_App"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:iac="using:Avalonia.Xaml.Interactions.Custom"
+        xmlns:sys="using:System"
         mc:Ignorable="d"
         Width="700"
         Height="500"
@@ -17,6 +19,14 @@
         Title="IDIKWA"
         Icon="/assets/icons/logo.ico"
         WindowStartupLocation="CenterScreen">
+  <Window.Styles>
+    <Style
+      Selector="TextBlock.error">
+      <Setter
+        Property="Foreground"
+        Value="#f44" />
+    </Style>
+  </Window.Styles>
   <Window.Resources>
     <local:TimeSpanConverter x:Key="TimeSpanConverter" />
     <local:EqualsConverter x:Key="EqualsConverter" />
@@ -177,7 +187,7 @@
                 Text="•" />
               <TextBlock
                 Margin="2"
-                Foreground="#f44"
+                Classes="error"
                 Text="{local:Resx noDeviceSelected}" />
             </StackPanel>
             <local:TextButton

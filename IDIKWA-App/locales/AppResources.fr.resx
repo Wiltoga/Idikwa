@@ -129,6 +129,9 @@
   <data name="currentConfig" xml:space="preserve">
     <value>Configuration actuelle</value>
   </data>
+  <data name="duration" xml:space="preserve">
+    <value>Durée</value>
+  </data>
   <data name="edit" xml:space="preserve">
     <value>Modifier</value>
   </data>
