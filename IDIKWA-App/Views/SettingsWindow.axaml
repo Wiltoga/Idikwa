@@ -172,16 +172,6 @@
             DockPanel.Dock="Left"
             Margin="5"
             VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx mono}, StringFormat='{}{0} :'}" />
-          <CheckBox
-            Margin="5"
-            IsChecked="{Binding Mono}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock
-            DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
             Text="{Binding Source={local:Resx sampleRate}, StringFormat='{}{0} :'}" />
           <StackPanel
             Orientation="Horizontal">
