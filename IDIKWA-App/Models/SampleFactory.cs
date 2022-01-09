@@ -21,6 +21,7 @@ namespace IDIKWA_App
         {
             Recorders = new List<RecorderWaveProvider>();
             TemporaryBuffers = new List<(TemporaryWaveStream, Task)>();
+            Generator = new Random();
         }
 
         /// <summary>
@@ -31,9 +32,7 @@ namespace IDIKWA_App
             64000,
             96000,
             128000,
-            192000,
-            256000,
-            320000
+            192000
         };
 
         /// <summary>
@@ -49,6 +48,7 @@ namespace IDIKWA_App
             48000
         };
 
+        private Random Generator { get; }
         private List<RecorderWaveProvider> Recorders { get; }
         private List<(TemporaryWaveStream, Task)> TemporaryBuffers { get; }
 
@@ -60,7 +60,11 @@ namespace IDIKWA_App
         /// <param name="bitRate">Bitrate used to encode mp3</param>
         public void Save(IEnumerable<IWaveProvider> records, Stream output, int bitRate)
         {
-            var filename = Path.GetTempFileName();
+            var tmpPath = Path.Combine(Path.GetTempPath(), "Idikwa");
+            Directory.CreateDirectory(tmpPath);
+            var bytes = new byte[8];
+            Generator.NextBytes(bytes);
+            var filename = Path.Combine(tmpPath, $"{Convert.ToHexString(bytes)}.mp3");
             MediaFoundationEncoder.EncodeToMp3(new MixingWaveProvider32(records), filename, bitRate);
             using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.None))
                 fileStream.CopyTo(output);

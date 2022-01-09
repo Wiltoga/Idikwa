@@ -12,6 +12,8 @@ using System.Windows.Input;
 using NAudio.Wave;
 using System.Collections.Specialized;
 using DynamicData;
+using System.IO;
+using System.Diagnostics;
 
 namespace IDIKWA_App
 {
@@ -87,9 +89,24 @@ namespace IDIKWA_App
             {
                 var streams = await Factory.StopRecord();
                 Recording = false;
+                var filename = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3";
+                Directory.CreateDirectory(Settings.OutputPath);
+                var filepath = Path.Combine(Settings.OutputPath, filename);
+                using (var stream = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+                {
+                    Factory.Save(streams, stream, Settings.BitRate);
+                }
+                new Process
+                {
+                    StartInfo = new ProcessStartInfo("explorer.exe", $"/select,\"{filepath}\"")
+                    {
+                        UseShellExecute = true
+                    }
+                }.Start();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
             }
         }
     }
