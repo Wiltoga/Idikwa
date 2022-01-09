@@ -8,12 +8,15 @@ namespace IDIKWA_App
 {
     public class App : Application
     {
+        public static Settings? InitialSettings { get; private set; }
+
         public override void Initialize()
         {
-#if DEBUG
-            CultureInfo.CurrentUICulture = new CultureInfo("fr");
-            CultureInfo.CurrentCulture = new CultureInfo("fr");
-#endif
+            InitialSettings = SettingsManager.Load();
+            if (InitialSettings is not null)
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo(InitialSettings.Culture);
+            }
             AvaloniaXamlLoader.Load(this);
         }
 

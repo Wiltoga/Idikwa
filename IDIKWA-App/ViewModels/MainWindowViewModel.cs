@@ -21,7 +21,9 @@ namespace IDIKWA_App
         {
             Factory = new SampleFactory();
             Window = null;
-            Settings = SettingsViewModel.Default;
+            Settings = App.InitialSettings is not null
+                ? new SettingsViewModel(App.InitialSettings)
+                : SettingsViewModel.Default;
             Record = CommandHandler.Create(async () =>
             {
                 if (Recording)
@@ -62,6 +64,8 @@ namespace IDIKWA_App
             };
 
             await dialog.ShowDialog(Window);
+
+            SettingsManager.Save(Settings.Model);
         }
 
         public void RunRecord()
