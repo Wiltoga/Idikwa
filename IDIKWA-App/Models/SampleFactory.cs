@@ -26,7 +26,7 @@ namespace IDIKWA_App
         /// <summary>
         /// Recommended bit rates to save mp3 files
         /// </summary>
-        public int[] RecommendedBitRates { get; } = new[]
+        public static int[] RecommendedBitRates { get; } = new[]
         {
             64000,
             96000,
@@ -39,7 +39,7 @@ namespace IDIKWA_App
         /// <summary>
         /// Recommended sample rates to record
         /// </summary>
-        public int[] RecommendedSampleRates { get; } = new[]
+        public static int[] RecommendedSampleRates { get; } = new[]
         {
             8000,
             11025,

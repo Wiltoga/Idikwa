@@ -11,7 +11,7 @@
         Width="600"
         Height="500"
         d:DesignHeight="1500"
-        MinWidth="300"
+        MinWidth="500"
         MinHeight="400"
         Title="{local:Resx settings}"
         Icon="/assets/icons/logo.ico"
@@ -19,6 +19,12 @@
         WindowStartupLocation="CenterOwner">
   <Window.Resources>
     <local:ResxConverter x:Key="ResxConverter" />
+    <local:KiloIntConverter x:Key="KiloIntConverter" />
+    <DataTemplate
+      x:Key="KiloInt">
+      <TextBlock
+        Text="{Binding Converter={StaticResource KiloIntConverter}}" />
+    </DataTemplate>
   </Window.Resources>
   <Window.DataTemplates>
     <DataTemplate
@@ -52,6 +58,19 @@
         Orientation="Vertical">
         <DockPanel>
           <TextBlock
+            DockPanel.Dock="Left"
+            Margin="5"
+            VerticalAlignment="Center"
+            Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
+          <ComboBox
+            Margin="5"
+            Items="{Binding Cultures}"
+            SelectedItem="{Binding Culture, Mode=TwoWay}" />
+        </DockPanel>
+        <local:Separator
+          Margin="5" />
+        <DockPanel>
+          <TextBlock
             DockPanel.Dock="Top"
             Margin="5"
             VerticalAlignment="Center"
@@ -63,8 +82,6 @@
             MaxWidth="400"
             Items="{Binding RenderDevices}" />
         </DockPanel>
-        <local:Separator
-          Margin="5" />
         <DockPanel>
           <TextBlock
             DockPanel.Dock="Top"
@@ -89,19 +106,6 @@
           <TextBox
             Margin="5"
             Text="{Binding OutputPath, Mode=TwoWay}" />
-        </DockPanel>
-        <local:Separator
-          Margin="5" />
-        <DockPanel>
-          <TextBlock
-            DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
-          <ComboBox
-            Margin="5"
-            Items="{Binding Cultures}"
-            SelectedItem="{Binding Culture, Mode=TwoWay}" />
         </DockPanel>
         <local:Separator
           Margin="5" />
@@ -154,6 +158,56 @@
                 </ia:DataTriggerBehavior>
               </i:Interaction.Behaviors>
             </NumericUpDown>
+          </StackPanel>
+        </DockPanel>
+        <DockPanel>
+          <TextBlock
+            DockPanel.Dock="Left"
+            Margin="5"
+            VerticalAlignment="Center"
+            Text="{Binding Source={local:Resx mono}, StringFormat='{}{0} :'}" />
+          <CheckBox
+            Margin="5"
+            IsChecked="{Binding Mono}" />
+        </DockPanel>
+        <DockPanel>
+          <TextBlock
+            DockPanel.Dock="Left"
+            Margin="5"
+            VerticalAlignment="Center"
+            Text="{Binding Source={local:Resx sampleRate}, StringFormat='{}{0} :'}" />
+          <StackPanel
+            Orientation="Horizontal">
+            <ComboBox
+              Margin="5"
+              Items="{x:Static local:SampleFactory.RecommendedSampleRates}"
+              SelectedItem="{Binding SampleRate}"
+              ItemTemplate="{StaticResource KiloInt}" />
+            <TextBlock
+              VerticalAlignment="Center"
+              Margin="5"
+              Text="{local:Resx hz}" />
+          </StackPanel>
+        </DockPanel>
+        <local:Separator
+          Margin="5" />
+        <DockPanel>
+          <TextBlock
+            DockPanel.Dock="Left"
+            Margin="5"
+            VerticalAlignment="Center"
+            Text="{Binding Source={local:Resx bitRate}, StringFormat='{}{0} :'}" />
+          <StackPanel
+            Orientation="Horizontal">
+            <ComboBox
+              Margin="5"
+              Items="{x:Static local:SampleFactory.RecommendedBitRates}"
+              SelectedItem="{Binding BitRate}"
+              ItemTemplate="{StaticResource KiloInt}" />
+            <TextBlock
+              VerticalAlignment="Center"
+              Margin="5"
+              Text="{local:Resx bitPerSec}" />
           </StackPanel>
         </DockPanel>
       </StackPanel>

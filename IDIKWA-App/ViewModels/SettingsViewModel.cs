@@ -103,9 +103,9 @@ namespace IDIKWA_App
                 var result = new SettingsViewModel
                 {
                     Duration = TimeSpan.FromSeconds(90),
-                    BitRate = 96000,
+                    BitRate = 64000,
                     SampleRate = 44100,
-                    Mono = false,
+                    Mono = true,
                     OutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Idikwa")
                 };
                 var currentCulture = CultureInfo.CurrentCulture;

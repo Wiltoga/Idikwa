@@ -61,6 +61,24 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à bit/s.
+        /// </summary>
+        internal static string bitPerSec {
+            get {
+                return ResourceManager.GetString("bitPerSec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bit rate (mp3).
+        /// </summary>
+        internal static string bitRate {
+            get {
+                return ResourceManager.GetString("bitRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Recording devices.
         /// </summary>
         internal static string captureDevices {
@@ -133,6 +151,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hz.
+        /// </summary>
+        internal static string hz {
+            get {
+                return ResourceManager.GetString("hz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Language.
         /// </summary>
         internal static string language {
@@ -156,6 +183,15 @@ namespace IDIKWA_App.locales {
         internal static string minimize {
             get {
                 return ResourceManager.GetString("minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mono.
+        /// </summary>
+        internal static string mono {
+            get {
+                return ResourceManager.GetString("mono", resourceCulture);
             }
         }
         
@@ -192,6 +228,15 @@ namespace IDIKWA_App.locales {
         internal static string renderDevices {
             get {
                 return ResourceManager.GetString("renderDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sample rate.
+        /// </summary>
+        internal static string sampleRate {
+            get {
+                return ResourceManager.GetString("sampleRate", resourceCulture);
             }
         }
         

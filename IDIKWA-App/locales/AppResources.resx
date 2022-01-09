@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="bitPerSec" xml:space="preserve">
+    <value>bit/s</value>
+  </data>
+  <data name="bitRate" xml:space="preserve">
+    <value>Bit rate (mp3)</value>
+  </data>
   <data name="captureDevices" xml:space="preserve">
     <value>Recording devices</value>
   </data>
@@ -141,6 +147,9 @@
   <data name="fr" xml:space="preserve">
     <value>French</value>
   </data>
+  <data name="hz" xml:space="preserve">
+    <value>Hz</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -149,6 +158,9 @@
   </data>
   <data name="minimize" xml:space="preserve">
     <value>Minimize</value>
+  </data>
+  <data name="mono" xml:space="preserve">
+    <value>Mono</value>
   </data>
   <data name="noDeviceSelected" xml:space="preserve">
     <value>No device selected</value>
@@ -161,6 +173,9 @@
   </data>
   <data name="renderDevices" xml:space="preserve">
     <value>Playback devices</value>
+  </data>
+  <data name="sampleRate" xml:space="preserve">
+    <value>Sample rate</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
