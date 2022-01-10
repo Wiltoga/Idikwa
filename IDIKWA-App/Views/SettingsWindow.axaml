@@ -57,18 +57,28 @@
       <StackPanel
         Orientation="Vertical">
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx language}"
+              Classes="dynamic language" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <StackPanel
             Orientation="Horizontal">
             <ComboBox
               Margin="5"
+              VerticalAlignment="Center"
               Items="{Binding Cultures}"
               SelectedItem="{Binding Culture, Mode=TwoWay}" />
             <local:Icon
+              Margin="3,0"
               Classes="dynamic warning"
               VerticalAlignment="Center"
               ToolTip.Tip="{local:Resx requiresRestart}" />
@@ -81,7 +91,10 @@
             DockPanel.Dock="Top"
             Orientation="Horizontal">
             <local:Icon
-              Classes="speaker" />
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx renderDevices}"
+              Classes="dynamic speaker" />
             <TextBlock
               Margin="5"
               VerticalAlignment="Center"
@@ -99,7 +112,10 @@
             DockPanel.Dock="Top"
             Orientation="Horizontal">
             <local:Icon
-              Classes="microphone" />
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx captureDevices}"
+              Classes="dynamic microphone" />
             <TextBlock
               Margin="5"
               VerticalAlignment="Center"
@@ -115,11 +131,19 @@
         <local:Separator
           Margin="5" />
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx outputDir}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx outputDir}"
+              Classes="dynamic folderClosed" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx outputDir}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <Button
             Command="{Binding BrowseOutputDir}"
             Padding="1"
@@ -131,7 +155,7 @@
                 Margin="5,0"
                 IsSelected="{Binding $parent[Button].IsPointerOver}"
                 SecondaryBrush="#414143"
-                Classes="folder" />
+                Classes="folderOpen" />
               <TextBlock
                 VerticalAlignment="Center"
                 Text="{local:Resx browse}"
@@ -145,11 +169,19 @@
         <local:Separator
           Margin="5" />
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx duration}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx duration}"
+              Classes="dynamic chrono" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx duration}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <StackPanel
             Orientation="Horizontal">
             <NumericUpDown
@@ -196,11 +228,19 @@
           </StackPanel>
         </DockPanel>
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx sampleRate}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx sampleRate}"
+              Classes="dynamic sampleRate" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx sampleRate}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <StackPanel
             Orientation="Horizontal">
             <ComboBox
@@ -217,11 +257,19 @@
         <local:Separator
           Margin="5" />
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Left"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx bitRate}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Margin="3,0"
+              VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx bitRate}"
+              Classes="dynamic bitRate" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx bitRate}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <StackPanel
             Orientation="Horizontal">
             <ComboBox
