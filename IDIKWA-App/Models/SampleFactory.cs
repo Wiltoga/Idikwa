@@ -20,7 +20,7 @@ namespace IDIKWA_App
         public SampleFactory()
         {
             Recorders = new List<RecorderWaveProvider>();
-            TemporaryBuffers = new List<(TemporaryWaveStream, Task)>();
+            TemporaryBuffers = new List<(MMDevice, TemporaryWaveStream, Task)>();
             Generator = new Random();
         }
 
@@ -50,7 +50,7 @@ namespace IDIKWA_App
 
         private Random Generator { get; }
         private List<RecorderWaveProvider> Recorders { get; }
-        private List<(TemporaryWaveStream, Task)> TemporaryBuffers { get; }
+        private List<(MMDevice, TemporaryWaveStream, Task)> TemporaryBuffers { get; }
 
         /// <summary>
         /// Saves an array of audio sources to an output stream
@@ -89,7 +89,7 @@ namespace IDIKWA_App
                 var sampler = new MediaFoundationResampler(recorder, format);
                 var buffer = new TemporaryWaveStream(sampler, bufferDuration);
                 Recorders.Add(recorder);
-                TemporaryBuffers.Add((buffer, buffer.ListenAsync()));
+                TemporaryBuffers.Add((device, buffer, buffer.ListenAsync()));
             }
             foreach (var recorder in Recorders)
             {
@@ -101,7 +101,7 @@ namespace IDIKWA_App
         /// Stops any recording
         /// </summary>
         /// <returns>The list of recorded audio streams</returns>
-        public async Task<WaveStream[]> StopRecord()
+        public async Task<(MMDevice, WaveStream)[]> StopRecord()
         {
             foreach (var recorder in Recorders)
             {
@@ -109,10 +109,10 @@ namespace IDIKWA_App
             }
             foreach (var buffer in TemporaryBuffers)
             {
-                await buffer.Item2;
-                buffer.Item1.Seek(0, System.IO.SeekOrigin.Begin);
+                await buffer.Item3;
+                buffer.Item2.Seek(0, SeekOrigin.Begin);
             }
-            var result = TemporaryBuffers.Select(buffer => buffer.Item1).ToArray();
+            var result = TemporaryBuffers.Select(buffer => (buffer.Item1, buffer.Item2 as WaveStream)).ToArray();
             Recorders.Clear();
             TemporaryBuffers.Clear();
             return result;

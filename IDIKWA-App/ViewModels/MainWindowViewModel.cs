@@ -91,20 +91,28 @@ namespace IDIKWA_App
             {
                 var streams = await Factory.StopRecord();
                 Recording = false;
-                var filename = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3";
-                Directory.CreateDirectory(Settings.OutputPath);
-                var filepath = Path.Combine(Settings.OutputPath, filename);
-                using (var stream = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+                //var filename = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3";
+                //Directory.CreateDirectory(Settings.OutputPath);
+                //var filepath = Path.Combine(Settings.OutputPath, filename);
+                //using (var stream = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+                //{
+                //    Factory.Save(streams, stream, Settings.BitRate);
+                //}
+                //new Process
+                //{
+                //    StartInfo = new ProcessStartInfo("explorer.exe", $"/select,\"{filepath}\"")
+                //    {
+                //        UseShellExecute = true
+                //    }
+                //}.Start();
+                var computationStream = streams.First().Item2;
+                if (computationStream.Length / computationStream.WaveFormat.AverageBytesPerSecond < 1)
+                    return;
+                var dialog = new SamplesEditionWindow()
                 {
-                    Factory.Save(streams, stream, Settings.BitRate);
-                }
-                new Process
-                {
-                    StartInfo = new ProcessStartInfo("explorer.exe", $"/select,\"{filepath}\"")
-                    {
-                        UseShellExecute = true
-                    }
-                }.Start();
+                    DataContext = streams.First().Item2.ToSampleProvider()
+                };
+                await dialog.ShowDialog(Window);
             }
             catch (Exception e)
             {

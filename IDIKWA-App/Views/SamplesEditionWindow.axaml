@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="IDIKWA_App.SamplesEditionWindow"
+        xmlns:local="using:IDIKWA_App"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:iac="using:Avalonia.Xaml.Interactions.Custom"
+        xmlns:sys="using:System"
+        xmlns:naudio="using:NAudio.CoreAudioApi"
+        Width="1100"
+        Height="700"
+        MinWidth="600"
+        MinHeight="500"
+        Title="Idikwa"
+        Icon="/assets/icons/logo.ico"
+        WindowStartupLocation="CenterScreen">
+  <StackPanel>
+    <local:SamplesViewer
+      Height="200"
+      Sample="{Binding}"
+      Scale="2"
+      Brush="#4f8" />
+  </StackPanel>
+</Window>
