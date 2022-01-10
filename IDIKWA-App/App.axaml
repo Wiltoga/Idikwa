@@ -357,6 +357,22 @@
         <Setter.Value>
           <PathGeometry>
             <PathFigure
+              StartPoint="1.5,20.5">
+              <LineSegment
+                Point="4.5,9.5" />
+              <LineSegment
+                Point="22.5,9.5" />
+              <LineSegment
+                Point="19.5,20.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
               StartPoint="1.5,3.5">
               <LineSegment
                 Point="8.5,3.5" />
@@ -372,21 +388,6 @@
                 Point="19.5,20.5" />
               <LineSegment
                 Point="1.5,20.5" />
-            </PathFigure>
-          </PathGeometry>
-        </Setter.Value>
-      </Setter>
-      <Setter
-        Property="SecondaryStroke">
-        <Setter.Value>
-          <PathGeometry>
-            <PathFigure
-              IsClosed="False"
-              StartPoint="1.5,20.5">
-              <LineSegment
-                Point="4.5,9.5" />
-              <LineSegment
-                Point="22.5,9.5" />
             </PathFigure>
           </PathGeometry>
         </Setter.Value>
