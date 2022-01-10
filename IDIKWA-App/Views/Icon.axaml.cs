@@ -20,10 +20,14 @@ namespace IDIKWA_App
         public static readonly StyledProperty<Geometry?> TertiaryFillProperty = AvaloniaProperty.Register<Icon, Geometry?>(nameof(TertiaryFill), null);
         public static readonly StyledProperty<Geometry?> TertiaryStrokeProperty = AvaloniaProperty.Register<Icon, Geometry?>(nameof(TertiaryStroke), null);
 
+        static Icon()
+        {
+            IsSelectedProperty.Changed.AddClassHandler<Icon>(OnSelectedChanged);
+        }
+
         public Icon()
         {
             InitializeComponent();
-            IsSelectedProperty.Changed.AddClassHandler<Icon>(OnSelectedChanged);
         }
 
         public bool IsSelected { get => GetValue(IsSelectedProperty); set => SetValue(IsSelectedProperty, value); }
