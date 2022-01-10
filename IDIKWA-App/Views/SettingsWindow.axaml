@@ -16,7 +16,8 @@
         Title="{local:Resx settings}"
         Icon="/assets/icons/logo.ico"
         d:DataContext="{x:Static local:SettingsViewModel.Default}"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
   <Window.Resources>
     <local:ResxConverter x:Key="ResxConverter" />
     <local:KiloIntConverter x:Key="KiloIntConverter" />
