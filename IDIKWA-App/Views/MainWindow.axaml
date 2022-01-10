@@ -93,8 +93,14 @@
           Orientation="Horizontal"
           HorizontalAlignment="Right">
           <Button
+            Padding="2"
             Command="{Binding EditSettings}"
-            Content="{local:Resx settings}" />
+            ToolTip.Tip="{local:Resx settings}">
+            <local:Icon
+              IsSelected="{Binding $parent[Button].IsPointerOver}"
+              SecondaryBrush="#414143"
+              Classes="settings" />
+          </Button>
           <Button
             Content="{local:Resx connection}" />
           <local:Minimize
