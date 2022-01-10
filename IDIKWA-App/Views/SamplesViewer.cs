@@ -43,7 +43,7 @@ namespace IDIKWA_App
             base.Render(context);
             if (AverageSamples is not null)
             {
-                var pen = new Pen(Brush);
+                var pen = new Pen();
                 var geometry = new PathGeometry();
                 var figure = new PathFigure()
                 {
@@ -77,6 +77,11 @@ namespace IDIKWA_App
                 });
                 context.DrawGeometry(Brush, pen, geometry);
             }
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            return new Size(40, 20);
         }
 
         private static void RenderPropertyChanged(SamplesViewer sender, AvaloniaPropertyChangedEventArgs e)
