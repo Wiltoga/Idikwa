@@ -7,6 +7,7 @@
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         xmlns:iac="using:Avalonia.Xaml.Interactions.Custom"
         xmlns:sys="using:System"
+        xmlns:naudio="using:NAudio.CoreAudioApi"
         mc:Ignorable="d"
         Width="700"
         Height="500"
@@ -177,9 +178,37 @@
                     Orientation="Horizontal">
                     <TextBlock
                       Margin="2"
+                      VerticalAlignment="Center"
                       Text="•" />
+                    <local:Icon
+                      Margin="2"
+                      Classes="microphone">
+                      <local:Icon.IsVisible>
+                        <MultiBinding
+                          Converter="{StaticResource EqualsConverter}">
+                          <Binding
+                            Path="Device.DataFlow" />
+                          <Binding
+                            Source="{x:Static naudio:DataFlow.Capture}" />
+                        </MultiBinding>
+                      </local:Icon.IsVisible>
+                    </local:Icon>
+                    <local:Icon
+                      Margin="2"
+                      Classes="speaker">
+                      <local:Icon.IsVisible>
+                        <MultiBinding
+                          Converter="{StaticResource EqualsConverter}">
+                          <Binding
+                            Path="Device.DataFlow" />
+                          <Binding
+                            Source="{x:Static naudio:DataFlow.Render}" />
+                        </MultiBinding>
+                      </local:Icon.IsVisible>
+                    </local:Icon>
                     <TextBlock
                       Margin="2"
+                      VerticalAlignment="Center"
                       Text="{Binding Path=Device.FriendlyName}" />
                   </StackPanel>
                 </DataTemplate>

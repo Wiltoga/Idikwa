@@ -77,11 +77,16 @@
         <local:Separator
           Margin="5" />
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Top"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx renderDevices}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Classes="speaker" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx renderDevices}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <ListBox
             HorizontalAlignment="Left"
             Margin="5,5,150,5"
@@ -90,11 +95,16 @@
             Items="{Binding RenderDevices}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock
+          <StackPanel
             DockPanel.Dock="Top"
-            Margin="5"
-            VerticalAlignment="Center"
-            Text="{Binding Source={local:Resx captureDevices}, StringFormat='{}{0} :'}" />
+            Orientation="Horizontal">
+            <local:Icon
+              Classes="microphone" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx captureDevices}, StringFormat='{}{0} :'}" />
+          </StackPanel>
           <ListBox
             HorizontalAlignment="Left"
             Margin="5,5,150,5"
