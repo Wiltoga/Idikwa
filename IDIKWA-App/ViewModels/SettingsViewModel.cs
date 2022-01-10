@@ -209,7 +209,7 @@ namespace IDIKWA_App
             {
                 var dialog = new OpenFolderDialog();
                 dialog.Directory = OutputPath;
-                dialog.Title = new Resx("browse").ProvideValue(null)?.ToString();
+                dialog.Title = new Resx("outputDir").ProvideValue(null)?.ToString();
                 if (await dialog.ShowAsync(Window) is string dir)
                 {
                     OutputPath = dir;
