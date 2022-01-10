@@ -2,11 +2,16 @@
   <PropertyGroup>
     <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
     <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
+    <OutputType Condition="'$(Configuration)'=='Portable'">WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>IDIKWA_App</RootNamespace>
     <ApplicationIcon>assets\icons\logo.ico</ApplicationIcon>
     <StartupObject />
+    <Configurations>Debug;Release;Portable</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Portable|AnyCPU'">
+    <DefineConstants>PORTABLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Remove=".gitignore" />
