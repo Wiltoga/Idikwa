@@ -43,11 +43,10 @@ namespace IDIKWA_App
             base.Render(context);
             if (AverageSamples is not null)
             {
-                var pen = new Pen();
                 var geometry = new PathGeometry();
                 var figure = new PathFigure()
                 {
-                    StartPoint = new Point(0, Bounds.Height / 2)
+                    StartPoint = new Point(0, (int)(Bounds.Height / 2) + .5f)
                 };
                 figure.Segments = new PathSegments();
                 for (int i = 0; i < AverageSamples.Length; ++i)
@@ -59,10 +58,10 @@ namespace IDIKWA_App
                 }
                 figure.Segments.Add(new LineSegment()
                 {
-                    Point = new Point(Bounds.Width, Bounds.Height / 2)
+                    Point = new Point(Bounds.Width, (int)(Bounds.Height / 2) + .5f)
                 });
                 geometry.Figures.Add(figure);
-                context.DrawGeometry(Brush, pen, geometry);
+                context.DrawGeometry(Brush, new Pen(), geometry);
                 figure.Segments = new PathSegments();
                 for (int i = 0; i < AverageSamples.Length; ++i)
                 {
@@ -73,9 +72,15 @@ namespace IDIKWA_App
                 }
                 figure.Segments.Add(new LineSegment()
                 {
-                    Point = new Point(Bounds.Width, Bounds.Height / 2)
+                    Point = new Point(Bounds.Width, (int)(Bounds.Height / 2) + .5f)
                 });
-                context.DrawGeometry(Brush, pen, geometry);
+                context.DrawGeometry(Brush, new Pen(), geometry);
+                figure.Segments = new PathSegments();
+                figure.Segments.Add(new LineSegment()
+                {
+                    Point = new Point(Bounds.Width, (int)(Bounds.Height / 2) + .5f)
+                });
+                context.DrawGeometry(Brush, new Pen(Brush), geometry);
             }
         }
 
