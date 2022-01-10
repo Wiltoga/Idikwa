@@ -126,6 +126,9 @@
   <data name="browse" xml:space="preserve">
     <value>Parcourir</value>
   </data>
+  <data name="captureDevice" xml:space="preserve">
+    <value>Périphérique d'entrée</value>
+  </data>
   <data name="captureDevices" xml:space="preserve">
     <value>Périphériques d'entrée</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="recording" xml:space="preserve">
     <value>Enregistrement...</value>
+  </data>
+  <data name="renderDevice" xml:space="preserve">
+    <value>Périphérique de sortie</value>
   </data>
   <data name="renderDevices" xml:space="preserve">
     <value>Périphériques de sortie</value>

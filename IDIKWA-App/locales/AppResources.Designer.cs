@@ -88,6 +88,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Recording device.
+        /// </summary>
+        internal static string captureDevice {
+            get {
+                return ResourceManager.GetString("captureDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Recording devices.
         /// </summary>
         internal static string captureDevices {
@@ -228,6 +237,15 @@ namespace IDIKWA_App.locales {
         internal static string recording {
             get {
                 return ResourceManager.GetString("recording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Playback device.
+        /// </summary>
+        internal static string renderDevice {
+            get {
+                return ResourceManager.GetString("renderDevice", resourceCulture);
             }
         }
         

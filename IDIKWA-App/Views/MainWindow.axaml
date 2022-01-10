@@ -181,8 +181,9 @@
                       VerticalAlignment="Center"
                       Text="•" />
                     <local:Icon
+                      ToolTip.Tip="{local:Resx captureDevice}"
                       Margin="2"
-                      Classes="microphone">
+                      Classes="dynamic microphone">
                       <local:Icon.IsVisible>
                         <MultiBinding
                           Converter="{StaticResource EqualsConverter}">
@@ -194,8 +195,9 @@
                       </local:Icon.IsVisible>
                     </local:Icon>
                     <local:Icon
+                      ToolTip.Tip="{local:Resx renderDevice}"
                       Margin="2"
-                      Classes="speaker">
+                      Classes="dynamic speaker">
                       <local:Icon.IsVisible>
                         <MultiBinding
                           Converter="{StaticResource EqualsConverter}">

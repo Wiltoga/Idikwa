@@ -25,7 +25,7 @@
     <Style
       Selector="local|Icon">
       <Setter
-        Property="MainBrush"
+        Property="PrimaryBrush"
         Value="White" />
       <Setter
         Property="SecondaryBrush"
@@ -34,40 +34,56 @@
     <Style
     Selector="local|Icon.speaker">
       <Setter
-        Property="BackgroundData">
+        Property="PrimaryFill">
         <PathGeometry>
           <PathFigure
             StartPoint="4.5,8.5">
             <LineSegment
               Point="10.5,8.5" />
             <LineSegment
-              Point="10.5,15.5" />
-            <LineSegment
-              Point="4.5,15.5" />
-          </PathFigure>
-          <PathFigure
-            StartPoint="10.5,8.5">
-            <LineSegment
               Point="16.5,4.5" />
             <LineSegment
               Point="16.5,19.5" />
             <LineSegment
               Point="10.5,15.5" />
-          </PathFigure>
-          <PathFigure
-            StartPoint="16.5,9.5">
-            <BezierSegment
-              Point1="20.5,9.5"
-              Point2="20.5,14.5"
-              Point3="16.5,14.5" />
+            <LineSegment
+              Point="10.5,15.5" />
+            <LineSegment
+              Point="4.5,15.5" />
           </PathFigure>
         </PathGeometry>
       </Setter>
+      <Setter
+        Property="SecondaryStroke">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="10.5,8.5">
+            <LineSegment
+              Point="10.5,15.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryFill">
+        <PathGeometry>
+          <PathFigure
+            IsClosed="False"
+            StartPoint="17.5,9.5">
+            <BezierSegment
+              Point1="21.5,9.5"
+              Point2="21.5,14.5"
+              Point3="17.5,14.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryBrush"
+        Value="#67f" />
     </Style>
     <Style
     Selector="local|Icon.microphone">
       <Setter
-        Property="BackgroundData">
+        Property="PrimaryFill">
         <PathGeometry>
           <PathFigure
             StartPoint="9.5,2.5">
@@ -96,6 +112,11 @@
               Point2="7.5,2.5"
               Point3="9.5,2.5" />
           </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <PathGeometry>
           <PathFigure
             IsClosed="False"
             StartPoint="12,17.5">
@@ -132,13 +153,13 @@
     <Style
       Selector="local|Icon.settings">
       <Setter
-        Property="BackgroundData"
+        Property="PrimaryFill"
         Value="m 15.086286 4.5467143 -0.696143 -0.209 L 13.833857 1 H 10.166143 L 9.6114286 4.333 C 9.1462857 4.4791429 8.7 4.663 8.2678571 4.8892857 L 5.5178571 2.925 2.925 5.5178571 4.8924286 8.271 4.5467143 8.9137143 4.3377143 9.6098571 1 10.166143 v 3.666143 l 3.333 0.556285 C 4.4775714 14.853714 4.663 15.3 4.8892857 15.732143 L 2.925 18.482143 5.5178571 21.075 8.271 19.107571 8.9121429 19.451714 9.6098571 19.662286 10.166143 23 h 3.666143 l 0.556285 -3.333 c 0.465143 -0.144571 0.911429 -0.33 1.342 -0.556286 l 2.75 1.964286 2.592858 -2.592857 L 19.106 15.729 19.450143 15.087857 19.660714 14.390143 23 13.833857 V 10.166143 L 19.667 9.6114286 C 19.522429 9.1462857 19.337 8.7 19.110714 8.2694286 L 21.075 5.5194286 18.482143 2.9265714 15.729 4.894 Z M 15.476 12 c 0 1.920286 -1.557286 3.476 -3.476 3.476 -1.920286 0 -3.476 -1.557286 -3.476 -3.476 0 -1.918714 1.555714 -3.476 3.476 -3.476 1.920286 0 3.476 1.555714 3.476 3.476 z" />
     </Style>
     <Style
       Selector="local|Icon.folder">
       <Setter
-        Property="BackgroundData">
+        Property="PrimaryFill">
         <Setter.Value>
           <PathGeometry>
             <PathFigure
@@ -162,7 +183,7 @@
         </Setter.Value>
       </Setter>
       <Setter
-        Property="ForegroundData">
+        Property="SecondaryStroke">
         <Setter.Value>
           <PathGeometry>
             <PathFigure
@@ -180,7 +201,7 @@
     <Style
       Selector="local|Icon.warning">
       <Setter
-        Property="BackgroundData">
+        Property="PrimaryFill">
         <Setter.Value>
           <PathGeometry>
             <PathFigure
@@ -195,7 +216,7 @@
         </Setter.Value>
       </Setter>
       <Setter
-        Property="ForegroundData">
+        Property="SecondaryStroke">
         <Setter.Value>
           <PathGeometry>
             <PathFigure
@@ -217,20 +238,32 @@
     <Style
       Selector="local|Icon.warning:selected">
       <Setter
-        Property="MainBrush"
-        Value="#ff4" />
+        Property="PrimaryBrush"
+        Value="#fe5" />
     </Style>
     <Style
       Selector="local|Icon.folder:selected">
       <Setter
-        Property="MainBrush"
+        Property="PrimaryBrush"
         Value="#D8AD6C" />
     </Style>
     <Style
       Selector="local|Icon.settings:selected">
       <Setter
-        Property="MainBrush"
+        Property="PrimaryBrush"
         Value="LightGray" />
+    </Style>
+    <Style
+      Selector="local|Icon.microphone:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="DarkGray" />
+    </Style>
+    <Style
+      Selector="local|Icon.speaker:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="DarkGray" />
     </Style>
   </Application.Styles>
 </Application>
