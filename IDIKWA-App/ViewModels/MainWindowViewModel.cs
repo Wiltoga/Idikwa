@@ -51,6 +51,8 @@ namespace IDIKWA_App
         [Reactive]
         public Window? Window { get; set; }
 
+        public bool WithLogin => false;
+
         private SampleFactory Factory { get; }
 
         public async Task Exit()

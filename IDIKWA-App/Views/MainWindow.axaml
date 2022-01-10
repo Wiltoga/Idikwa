@@ -103,6 +103,7 @@
               Classes="settings" />
           </Button>
           <Button
+            IsVisible="{Binding WithLogin}"
             Content="{local:Resx connection}" />
           <local:Minimize
             Click="Minimize"
