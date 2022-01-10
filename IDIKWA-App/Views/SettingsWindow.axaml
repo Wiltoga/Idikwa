@@ -110,6 +110,24 @@
             Margin="5"
             VerticalAlignment="Center"
             Text="{Binding Source={local:Resx outputDir}, StringFormat='{}{0} :'}" />
+          <Button
+            Command="{Binding BrowseOutputDir}"
+            Padding="1"
+            DockPanel.Dock="Right"
+            Margin="5">
+            <StackPanel
+              Orientation="Horizontal">
+              <local:Icon
+                Margin="5,0"
+                IsSelected="{Binding $parent[Button].IsPointerOver}"
+                SecondaryBrush="#414143"
+                Classes="folder" />
+              <TextBlock
+                VerticalAlignment="Center"
+                Text="{local:Resx browse}"
+                Margin="5" />
+            </StackPanel>
+          </Button>
           <TextBox
             Margin="5"
             Text="{Binding OutputPath, Mode=TwoWay}" />

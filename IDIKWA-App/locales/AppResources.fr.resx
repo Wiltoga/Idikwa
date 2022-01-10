@@ -123,6 +123,9 @@
   <data name="bitRate" xml:space="preserve">
     <value>Débit (mp3)</value>
   </data>
+  <data name="browse" xml:space="preserve">
+    <value>Parcourir</value>
+  </data>
   <data name="captureDevices" xml:space="preserve">
     <value>Périphériques d'entrée</value>
   </data>

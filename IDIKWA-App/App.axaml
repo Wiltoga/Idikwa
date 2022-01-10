@@ -23,6 +23,54 @@
         Value="{Binding $self.IsPointerOver}" />
     </Style>
     <Style
+      Selector="local|Icon.folder">
+      <Setter
+        Property="MainBrush"
+        Value="White" />
+      <Setter
+        Property="SecondaryBrush"
+        Value="{StaticResource WindowBackground}" />
+      <Setter
+        Property="BackgroundData">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              StartPoint="1.5,3.5">
+              <LineSegment
+                Point="8.5,3.5" />
+              <LineSegment
+                Point="11.5,6.5" />
+              <LineSegment
+                Point="19.5,6.5" />
+              <LineSegment
+                Point="19.5,9.5" />
+              <LineSegment
+                Point="22.5,9.5" />
+              <LineSegment
+                Point="19.5,20.5" />
+              <LineSegment
+                Point="1.5,20.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+      <Setter
+        Property="ForegroundData">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="1.5,20.5">
+              <LineSegment
+                Point="4.5,9.5" />
+              <LineSegment
+                Point="22.5,9.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style
       Selector="local|Icon.warning">
       <Setter
         Property="MainBrush"
@@ -70,6 +118,12 @@
       <Setter
         Property="MainBrush"
         Value="#ff4" />
+    </Style>
+    <Style
+      Selector="local|Icon.folder:selected">
+      <Setter
+        Property="MainBrush"
+        Value="#D8AD6C" />
     </Style>
   </Application.Styles>
 </Application>

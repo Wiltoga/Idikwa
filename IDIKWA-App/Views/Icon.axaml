@@ -37,8 +37,8 @@
     </Path>
     <Path
       Name="foreground"
-      Stroke="{Binding $self.Fill}"
-      Fill="{Binding $parent[UserControl].MainBrush}"
+      Stroke="{Binding $parent[UserControl].MainBrush}"
+      Fill="Transparent"
       Data="{Binding $parent[UserControl].ForegroundData}"
       StrokeThickness="1">
       <i:Interaction.Behaviors>
@@ -47,7 +47,7 @@
           Value="True">
           <ia:ChangePropertyAction
             TargetObject="{Binding #foreground}"
-            PropertyName="Fill"
+            PropertyName="Stroke"
             Value="{Binding $parent[UserControl].SecondaryBrush}" />
         </ia:DataTriggerBehavior>
         <ia:DataTriggerBehavior
@@ -55,7 +55,7 @@
           Value="False">
           <ia:ChangePropertyAction
             TargetObject="{Binding #foreground}"
-            PropertyName="Fill"
+            PropertyName="Stroke"
             Value="{Binding $parent[UserControl].MainBrush}" />
         </ia:DataTriggerBehavior>
       </i:Interaction.Behaviors>

@@ -1,4 +1,5 @@
-﻿using Avalonia.Xaml.Interactions.Core;
+﻿using Avalonia.Controls;
+using Avalonia.Xaml.Interactions.Core;
 using DynamicData;
 using NAudio.CoreAudioApi;
 using ReactiveUI;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace IDIKWA_App
 {
@@ -31,6 +33,7 @@ namespace IDIKWA_App
             };
             Culture = Cultures.First();
             Devices = new SourceCache<DeviceViewModel, string>(device => device.Device.ID);
+            BrowseOutputDir = CommandHandler.Create(async () => await RunBrowseOutputDir());
             DeviceEnumerator = new MMDeviceEnumerator();
             DevicesConnect = Devices.Connect();
             DevicesConnect
@@ -132,6 +135,9 @@ namespace IDIKWA_App
         [Reactive]
         public int BitRate { get; set; }
 
+        [Reactive]
+        public ICommand BrowseOutputDir { get; private set; }
+
         public bool CanRecord => canRecord.Value;
 
         public ReadOnlyObservableCollection<DeviceViewModel> CaptureDevices => captureDevices;
@@ -176,6 +182,9 @@ namespace IDIKWA_App
         [Reactive]
         public int SampleRate { get; set; }
 
+        [Reactive]
+        public Window? Window { get; set; }
+
         private MMDeviceEnumerator DeviceEnumerator { get; }
 
         private SourceCache<DeviceViewModel, string> Devices { get; }
@@ -192,6 +201,20 @@ namespace IDIKWA_App
         {
             if (DurationMinutes == 0 && DurationSeconds == 0)
                 DurationSeconds = 1;
+        }
+
+        public async Task RunBrowseOutputDir()
+        {
+            if (Window is not null)
+            {
+                var dialog = new OpenFolderDialog();
+                dialog.Directory = OutputPath;
+                dialog.Title = new Resx("browse").ProvideValue(null)?.ToString();
+                if (await dialog.ShowAsync(Window) is string dir)
+                {
+                    OutputPath = dir;
+                }
+            }
         }
     }
 }

@@ -15,6 +15,13 @@ namespace IDIKWA_App
 #endif
         }
 
+        protected override void OnDataContextChanged(EventArgs e)
+        {
+            base.OnDataContextChanged(e);
+            if (DataContext is SettingsViewModel viewmodel)
+                viewmodel.Window = this;
+        }
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
