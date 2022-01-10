@@ -9,6 +9,7 @@
     <ApplicationIcon>assets\icons\logo.ico</ApplicationIcon>
     <StartupObject />
     <Configurations>Debug;Release;Portable</Configurations>
+    <AssemblyName>Idikwa</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Portable|AnyCPU'">
     <DefineConstants>PORTABLE</DefineConstants>

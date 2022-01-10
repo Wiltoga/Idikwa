@@ -17,7 +17,7 @@
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaTitleBarHeightHint="32"
         x:Class="IDIKWA_App.MainWindow"
-        Title="IDIKWA"
+        Title="Idikwa"
         Icon="/assets/icons/logo.ico"
         WindowStartupLocation="CenterScreen">
   <Window.Styles>
