@@ -60,7 +60,7 @@ namespace IDIKWA_App
             {
                 Devices.Edit(sourceUpdater =>
                     sourceUpdater.AddOrUpdate(DeviceEnumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.Active)
-                    .Select(device => new DeviceViewModel(device, false, 1))));
+                    .Select(device => new DeviceViewModel(device, false, 100))));
             }
             catch (Exception)
             {

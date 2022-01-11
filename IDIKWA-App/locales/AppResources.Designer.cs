@@ -302,5 +302,14 @@ namespace IDIKWA_App.locales {
                 return ResourceManager.GetString("stereo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Volume.
+        /// </summary>
+        internal static string volume {
+            get {
+                return ResourceManager.GetString("volume", resourceCulture);
+            }
+        }
     }
 }

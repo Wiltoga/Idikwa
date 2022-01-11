@@ -198,4 +198,7 @@
   <data name="stereo" xml:space="preserve">
     <value>Stereo</value>
   </data>
+  <data name="volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
 </root>
