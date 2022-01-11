@@ -176,7 +176,13 @@ namespace IDIKWA_App
             }
         }
 
-        public Settings Model => new Settings(BitRate, Devices.Items.Where(device => device.Volume < 1).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name);
+        [Reactive]
+        public float MasterVolume { get; set; }
+
+        public Settings Model => new Settings(BitRate, MasterVolume, Devices.Items.Where(device => device.Volume < 1).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name);
+
+        [Reactive]
+        public bool Mono { get; set; }
 
         [Reactive]
         public string OutputPath { get; set; }

@@ -168,9 +168,6 @@
   <data name="minimize" xml:space="preserve">
     <value>Réduire</value>
   </data>
-  <data name="mono" xml:space="preserve">
-    <value>Mono</value>
-  </data>
   <data name="noDeviceSelected" xml:space="preserve">
     <value>Aucun périphérique sélectionné</value>
   </data>
@@ -197,5 +194,8 @@
   </data>
   <data name="startRecord" xml:space="preserve">
     <value>Démarrer l'enregistrement</value>
+  </data>
+  <data name="stereo" xml:space="preserve">
+    <value>Stéréo</value>
   </data>
 </root>

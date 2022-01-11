@@ -77,7 +77,7 @@ namespace IDIKWA_App
             if (Settings.RecordingDevices.Any() && Settings.Duration > TimeSpan.Zero)
                 try
                 {
-                    Factory.StartRecord(Settings.RecordingDevices.Select(device => device.Device), WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, 1), Settings.Duration);
+                    Factory.StartRecord(Settings.RecordingDevices.Select(device => device.Device), WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, Settings.Mono ? 1 : 2), Settings.Duration);
                     Recording = true;
                 }
                 catch (Exception e)

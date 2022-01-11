@@ -32,6 +32,55 @@
         Value="{StaticResource WindowBackground}" />
     </Style>
     <Style
+    Selector="local|Icon.stereo">
+      <Setter
+        Property="PrimaryFill">
+        <EllipseGeometry
+          Center="11.5,12.5"
+          RadiusX="3"
+          RadiusY="3" />
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="8.5,6.5">
+              <BezierSegment
+                Point1="3.5,8.5"
+                Point2="3.5,16.5"
+                Point3="8.5,18.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="6.5,4.5">
+              <BezierSegment
+                Point1="0.5,7.5"
+                Point2="0.5,17.5"
+                Point3="6.5,20.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="14.5,6.5">
+              <BezierSegment
+                Point1="19.5,8.5"
+                Point2="19.5,16.5"
+                Point3="14.5,18.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="16.5,4.5">
+              <BezierSegment
+                Point1="22.5,7.5"
+                Point2="22.5,17.5"
+                Point3="16.5,20.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style
     Selector="local|Icon.master">
       <Setter
         Property="PrimaryFill">
@@ -532,6 +581,12 @@
       <Setter
         Property="PrimaryBrush"
         Value="#48f" />
+    </Style>
+    <Style
+      Selector="local|Icon.stereo:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#7df" />
     </Style>
   </Application.Styles>
 </Application>

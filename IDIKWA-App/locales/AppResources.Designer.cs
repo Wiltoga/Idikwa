@@ -214,15 +214,6 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mono.
-        /// </summary>
-        internal static string mono {
-            get {
-                return ResourceManager.GetString("mono", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à No device selected.
         /// </summary>
         internal static string noDeviceSelected {
@@ -300,6 +291,15 @@ namespace IDIKWA_App.locales {
         internal static string startRecord {
             get {
                 return ResourceManager.GetString("startRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stereo.
+        /// </summary>
+        internal static string stereo {
+            get {
+                return ResourceManager.GetString("stereo", resourceCulture);
             }
         }
     }
