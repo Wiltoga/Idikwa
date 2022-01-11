@@ -110,7 +110,9 @@ namespace IDIKWA_App
                     return;
                 var dialog = new SamplesEditionWindow()
                 {
-                    DataContext = streams.First().Item2.ToSampleProvider()
+                    DataContext = new SamplesEditionViewModel(
+                        streams
+                            .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)))
                 };
                 await dialog.ShowDialog(Window);
             }

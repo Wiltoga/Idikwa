@@ -18,10 +18,26 @@
         Icon="/assets/icons/logo.ico"
         WindowStartupLocation="CenterScreen">
   <StackPanel>
-    <local:SamplesViewer
-      Height="200"
-      Sample="{Binding}"
-      Scale="2"
-      Brush="#4f8" />
+    <ItemsControl
+      Items="{Binding Records}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate
+          DataType="{x:Type local:RecordViewModel}">
+          <local:SamplesViewer
+            Height="200"
+            Sample="{Binding SourceAsSample}"
+            Scale="{Binding $parent[Window].DataContext.Scale}"
+            Brush="#f84" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <Grid
+      Background="DarkBlue">
+      <local:SamplesViewer
+        Height="200"
+        Sample="{Binding MasterCopy}"
+        Scale="{Binding Scale}"
+        Brush="#4f8" />
+    </Grid>
   </StackPanel>
 </Window>

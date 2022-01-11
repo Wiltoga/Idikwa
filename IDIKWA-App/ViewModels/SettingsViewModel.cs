@@ -19,10 +19,11 @@ namespace IDIKWA_App
 {
     public class SettingsViewModel : ReactiveObject
     {
-        public ReadOnlyObservableCollection<DeviceViewModel> captureDevices;
-        public ReadOnlyObservableCollection<DeviceViewModel> renderDevices;
+        private readonly ReadOnlyObservableCollection<DeviceViewModel> allDevices;
         private readonly ObservableAsPropertyHelper<bool> canRecord;
+        private readonly ReadOnlyObservableCollection<DeviceViewModel> captureDevices;
         private readonly ReadOnlyObservableCollection<DeviceViewModel> recordingDevices;
+        private readonly ReadOnlyObservableCollection<DeviceViewModel> renderDevices;
 
         public SettingsViewModel()
         {
@@ -51,6 +52,9 @@ namespace IDIKWA_App
             DevicesConnect
                 .Filter(device => device.Device.DataFlow == DataFlow.Capture)
                 .Bind(out captureDevices)
+                .Subscribe();
+            DevicesConnect
+                .Bind(out allDevices)
                 .Subscribe();
             try
             {
@@ -131,6 +135,8 @@ namespace IDIKWA_App
                 return result;
             }
         }
+
+        public ReadOnlyObservableCollection<DeviceViewModel> AllDevices => allDevices;
 
         [Reactive]
         public int BitRate { get; set; }
