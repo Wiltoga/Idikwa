@@ -16,28 +16,109 @@
         MinHeight="500"
         Title="Idikwa"
         Icon="/assets/icons/logo.ico"
-        WindowStartupLocation="CenterScreen">
-  <StackPanel>
-    <ItemsControl
-      Items="{Binding Records}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate
-          DataType="{x:Type local:RecordViewModel}">
-          <local:SamplesViewer
-            Height="200"
-            Sample="{Binding SourceAsSample}"
-            Scale="{Binding $parent[Window].DataContext.Scale}"
-            Brush="#f84" />
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
-    <Grid
-      Background="DarkBlue">
-      <local:SamplesViewer
-        Height="200"
-        Sample="{Binding MasterCopy}"
-        Scale="{Binding Scale}"
-        Brush="#4f8" />
-    </Grid>
-  </StackPanel>
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False">
+  <Window.Resources>
+    <local:EqualsConverter x:Key="EqualsConverter" />
+    <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+  </Window.Resources>
+  <DockPanel>
+    <StackPanel>
+      <ItemsControl
+        Items="{Binding Records}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate
+            DataType="{x:Type local:RecordViewModel}">
+            <DockPanel>
+              <DockPanel
+                DockPanel.Dock="Left">
+                <StackPanel
+                  Name="title"
+                  Background="#01000000"
+                  DockPanel.Dock="Top"
+                  Orientation="Horizontal"
+                  ToolTip.Tip="{Binding Origin.Device.FriendlyName}">
+                  <local:Icon
+                    IsSelected="{Binding #title.IsPointerOver}"
+                    Classes="sampleRate"
+                    Margin="2" />
+                  <local:Icon
+                    IsSelected="{Binding #title.IsPointerOver}"
+                    Margin="2"
+                    Classes="microphone">
+                    <local:Icon.IsVisible>
+                      <MultiBinding
+                        Converter="{StaticResource EqualsConverter}">
+                        <Binding
+                          Path="Origin.Device.DataFlow" />
+                        <Binding
+                          Source="{x:Static naudio:DataFlow.Capture}" />
+                      </MultiBinding>
+                    </local:Icon.IsVisible>
+                  </local:Icon>
+                  <local:Icon
+                    Margin="2"
+                    IsSelected="{Binding #title.IsPointerOver}"
+                    Classes="dynamic speaker">
+                    <local:Icon.IsVisible>
+                      <MultiBinding
+                        Converter="{StaticResource EqualsConverter}">
+                        <Binding
+                          Path="Origin.Device.DataFlow" />
+                        <Binding
+                          Source="{x:Static naudio:DataFlow.Render}" />
+                      </MultiBinding>
+                    </local:Icon.IsVisible>
+                  </local:Icon>
+                  <TextBlock
+                    VerticalAlignment="Center"
+                    Width="150"
+                    Margin="2"
+                    Text="{Binding Origin.Device.FriendlyName}" />
+                </StackPanel>
+                <Label
+                  Content="controls" />
+              </DockPanel>
+              <local:SamplesViewer
+                Height="200"
+                Sample="{Binding SourceAsSample}"
+                Scale="{Binding $parent[Window].DataContext.Scale}"
+                Brush="#f84" />
+            </DockPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <DockPanel>
+        <DockPanel
+          DockPanel.Dock="Left">
+          <StackPanel
+            Name="title"
+            Background="#01000000"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal"
+            ToolTip.Tip="{local:Resx master}">
+            <local:Icon
+              Classes="master"
+              IsSelected="{Binding #title.IsPointerOver}"
+              Margin="2" />
+            <TextBlock
+              VerticalAlignment="Center"
+              Width="150"
+              Margin="2"
+              Text="{local:Resx master}" />
+            <!-- Just here to allocate empty space to stay in sync with the above samples -->
+            <local:Icon
+              Margin="2" />
+          </StackPanel>
+          <Label
+            Content="controls" />
+        </DockPanel>
+        <local:SamplesViewer
+          Height="200"
+          Sample="{Binding MasterCopy}"
+          Scale="{Binding Scale}"
+          Brush="#4f8" />
+      </DockPanel>
+    </StackPanel>
+  </DockPanel>
 </Window>

@@ -159,6 +159,9 @@
   <data name="language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="master" xml:space="preserve">
+    <value>Master</value>
+  </data>
   <data name="maximize" xml:space="preserve">
     <value>Maximize</value>
   </data>

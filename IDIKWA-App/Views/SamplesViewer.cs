@@ -112,7 +112,7 @@ namespace IDIKWA_App
                 int samplesRead;
                 while ((samplesRead = Sample.Read(samplesBuffer, 0, samplesBuffer.Length)) > 0)
                     for (int i = 0; i < samplesRead; ++i)
-                        tmpList.Add(Math.Abs(samplesBuffer[i]) * 2);
+                        tmpList.Add(Math.Abs(samplesBuffer[i]));
                 for (int i = 0; i < AverageSamples.Length; ++i)
                 {
                     var samples = tmpList.Count / AverageSamples.Length;

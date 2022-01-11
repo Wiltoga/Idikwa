@@ -32,6 +32,43 @@
         Value="{StaticResource WindowBackground}" />
     </Style>
     <Style
+    Selector="local|Icon.master">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="1.5,7.5">
+            <LineSegment
+              Point="8.5,7.5" />
+            <LineSegment
+              Point="8.5,3.5" />
+            <LineSegment
+              Point="15.5,10.5" />
+            <LineSegment
+              Point="21.5,10.5" />
+            <LineSegment
+              Point="21.5,14.5" />
+            <LineSegment
+              Point="15.5,14.5" />
+            <LineSegment
+              Point="8.5,21.5" />
+            <LineSegment
+              Point="8.5,17.5" />
+            <LineSegment
+              Point="1.5,17.5" />
+            <LineSegment
+              Point="1.5,14.5" />
+            <LineSegment
+              Point="8.5,14.5" />
+            <LineSegment
+              Point="8.5,10.5" />
+            <LineSegment
+              Point="1.5,10.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
     Selector="local|Icon.bitRate">
       <Setter
         Property="PrimaryFill">
@@ -489,6 +526,12 @@
       <Setter
         Property="PrimaryBrush"
         Value="#f12C83" />
+    </Style>
+    <Style
+      Selector="local|Icon.master:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#48f" />
     </Style>
   </Application.Styles>
 </Application>

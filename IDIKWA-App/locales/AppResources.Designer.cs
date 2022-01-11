@@ -187,6 +187,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Master.
+        /// </summary>
+        internal static string master {
+            get {
+                return ResourceManager.GetString("master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Maximize.
         /// </summary>
         internal static string maximize {
