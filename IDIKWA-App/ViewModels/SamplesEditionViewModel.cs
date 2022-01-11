@@ -40,7 +40,7 @@ namespace IDIKWA_App
                     if (abs > highestSample)
                         highestSample = abs;
                 }
-            Scale = 1f / highestSample;
+            Scale = 1.5f / highestSample;
             MasterMemory.Seek(0, SeekOrigin.Begin);
         }
 
