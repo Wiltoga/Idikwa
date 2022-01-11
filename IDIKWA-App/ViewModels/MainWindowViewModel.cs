@@ -114,6 +114,9 @@ namespace IDIKWA_App
                     DataContext = new SamplesEditionViewModel(
                         streams
                             .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)))
+                    {
+                        MasterVolume = Settings.MasterVolume
+                    }
                 };
                 await dialog.ShowDialog(Window);
             }

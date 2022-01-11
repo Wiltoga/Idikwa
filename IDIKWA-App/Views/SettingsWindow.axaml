@@ -21,6 +21,7 @@
   <Window.Resources>
     <local:ResxConverter x:Key="ResxConverter" />
     <local:KiloIntConverter x:Key="KiloIntConverter" />
+    <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
     <DataTemplate
       x:Key="KiloInt">
       <TextBlock
@@ -189,7 +190,7 @@
               Name="minutes"
               Maximum="5"
               Minimum="0"
-              Value="{Binding DurationMinutes}"
+              Value="{Binding DurationMinutes, Mode=TwoWay}"
               Margin="5">
               <i:Interaction.Behaviors>
                 <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0">
@@ -214,7 +215,7 @@
               Name="seconds"
               Maximum="59"
               Minimum="0"
-              Value="{Binding DurationSeconds}"
+              Value="{Binding DurationSeconds, Mode=TwoWay}"
               Increment="15"
               Margin="5">
               <i:Interaction.Behaviors>
@@ -235,6 +236,24 @@
             <local:Icon
               Margin="3,0"
               VerticalAlignment="Center"
+              ToolTip.Tip="{local:Resx stereo}"
+              Classes="dynamic stereo" />
+            <TextBlock
+              Margin="5"
+              VerticalAlignment="Center"
+              Text="{Binding Source={local:Resx stereo}, StringFormat='{}{0} :'}" />
+          </StackPanel>
+          <CheckBox
+            Margin="5"
+            IsChecked="{Binding Mono, Mode=TwoWay, Converter={StaticResource ReverseBoolConverter}}" />
+        </DockPanel>
+        <DockPanel>
+          <StackPanel
+            DockPanel.Dock="Left"
+            Orientation="Horizontal">
+            <local:Icon
+              Margin="3,0"
+              VerticalAlignment="Center"
               ToolTip.Tip="{local:Resx sampleRate}"
               Classes="dynamic sampleRate" />
             <TextBlock
@@ -247,7 +266,7 @@
             <ComboBox
               Margin="5"
               Items="{x:Static local:SampleFactory.RecommendedSampleRates}"
-              SelectedItem="{Binding SampleRate}"
+              SelectedItem="{Binding SampleRate, Mode=TwoWay}"
               ItemTemplate="{StaticResource KiloInt}" />
             <TextBlock
               VerticalAlignment="Center"
@@ -276,7 +295,7 @@
             <ComboBox
               Margin="5"
               Items="{x:Static local:SampleFactory.RecommendedBitRates}"
-              SelectedItem="{Binding BitRate}"
+              SelectedItem="{Binding BitRate, Mode=TwoWay}"
               ItemTemplate="{StaticResource KiloInt}" />
             <TextBlock
               VerticalAlignment="Center"
