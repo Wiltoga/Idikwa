@@ -16,6 +16,7 @@ namespace IDIKWA_App
     {
         public SamplesEditionViewModel(IEnumerable<RecordViewModel> records)
         {
+            MasterVolume = 100;
             Records = new ObservableCollection<RecordViewModel>(records);
             MasterMemory = new MemoryStream();
             var mixer = new MixingWaveProvider32(records.Select(record => record.Source));
@@ -44,6 +45,10 @@ namespace IDIKWA_App
         }
 
         public ISampleProvider MasterCopy { get; }
+
+        [Reactive]
+        public int MasterVolume { get; set; }
+
         public IEnumerable<RecordViewModel> Records { get; }
         public float Scale { get; }
 

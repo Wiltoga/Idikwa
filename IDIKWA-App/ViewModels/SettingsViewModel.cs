@@ -77,6 +77,8 @@ namespace IDIKWA_App
             OutputPath = model.OutputPath;
             Duration = model.Duration;
             SampleRate = model.SampleRate;
+            MasterVolume = model.MasterVolume;
+            Mono = model.Mono;
             Culture = Cultures.FirstOrDefault(culture => culture.Name == model.Culture) ?? Culture;
             foreach (var device in model.RecordingDevices)
             {
@@ -110,6 +112,8 @@ namespace IDIKWA_App
                     Duration = TimeSpan.FromSeconds(90),
                     BitRate = 64000,
                     SampleRate = 44100,
+                    Mono = true,
+                    MasterVolume = 1,
                     OutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Idikwa")
                 };
                 var currentCulture = CultureInfo.CurrentCulture;
@@ -177,9 +181,9 @@ namespace IDIKWA_App
         }
 
         [Reactive]
-        public float MasterVolume { get; set; }
+        public int MasterVolume { get; set; }
 
-        public Settings Model => new Settings(BitRate, MasterVolume, Devices.Items.Where(device => device.Volume < 1).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name);
+        public Settings Model => new Settings(BitRate, MasterVolume, Devices.Items.Where(device => device.Volume < 100).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name);
 
         [Reactive]
         public bool Mono { get; set; }

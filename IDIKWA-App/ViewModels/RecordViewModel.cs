@@ -19,8 +19,8 @@ namespace IDIKWA_App
             Source = source;
             SourceAsSample = Source.ToSampleProvider();
             var volumeManager = new VolumeSampleProvider(SourceAsSample);
-            volumeManager.Volume = Origin.Volume;
-            Origin.WhenAnyValue(o => o.Volume).BindTo(volumeManager, manager => manager.Volume);
+            volumeManager.Volume = Origin.Volume / 100f;
+            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => volumeManager.Volume = value / 100f);
             Output = volumeManager;
             var samples = new float[50000];
             int samplesRead;
