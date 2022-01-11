@@ -80,8 +80,9 @@ namespace IDIKWA_App
                     Factory.StartRecord(Settings.RecordingDevices.Select(device => device.Device), WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, 1), Settings.Duration);
                     Recording = true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                 }
         }
 
