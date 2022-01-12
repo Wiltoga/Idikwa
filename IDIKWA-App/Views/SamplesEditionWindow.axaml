@@ -44,7 +44,6 @@
           <DataTemplate
             DataType="{x:Type local:RecordViewModel}">
             <Grid
-              Name="data"
               Margin="2">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition
@@ -99,11 +98,11 @@
                     Orientation="Horizontal"
                     ToolTip.Tip="{Binding Origin.Device.FriendlyName}">
                     <local:Icon
-                      IsSelected="{Binding #data.IsPointerOver}"
+                      IsSelected="True"
                       Classes="sampleRate"
                       Margin="2" />
                     <local:Icon
-                      IsSelected="{Binding #data.IsPointerOver}"
+                      IsSelected="True"
                       Margin="2"
                       Classes="microphone">
                       <local:Icon.IsVisible>
@@ -118,7 +117,7 @@
                     </local:Icon>
                     <local:Icon
                       Margin="2"
-                      IsSelected="{Binding #data.IsPointerOver}"
+                      IsSelected="True"
                       Classes="dynamic speaker">
                       <local:Icon.IsVisible>
                         <MultiBinding
@@ -165,7 +164,6 @@
     </ScrollViewer>
     <DockPanel
       Grid.Row="1"
-      Name="data"
       Margin="2">
       <Border
         Width="200"
@@ -182,7 +180,7 @@
             ToolTip.Tip="{local:Resx master}">
             <local:Icon
               Classes="master"
-              IsSelected="{Binding #data.IsPointerOver}"
+              IsSelected="True"
               Margin="2" />
             <Label
               VerticalContentAlignment="Center"

@@ -15,26 +15,7 @@
       Stroke="{Binding $parent[UserControl].PrimaryBrush}"
       Fill="{Binding $parent[UserControl].SecondaryBrush}"
       Data="{Binding $parent[UserControl].PrimaryFill}"
-      StrokeThickness="1">
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="True">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #primaryFill}"
-            PropertyName="Fill"
-            Value="{Binding $parent[UserControl].PrimaryBrush}" />
-        </ia:DataTriggerBehavior>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="False">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #primaryFill}"
-            PropertyName="Fill"
-            Value="{Binding $parent[UserControl].SecondaryBrush}" />
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Path>
+      StrokeThickness="1" />
     <Path
       Name="backgroundStroke"
       Stroke="{Binding $parent[UserControl].PrimaryBrush}"
@@ -46,108 +27,24 @@
       Stroke="{Binding $parent[UserControl].PrimaryBrush}"
       Fill="{Binding $parent[UserControl].SecondaryBrush}"
       Data="{Binding $parent[UserControl].SecondaryFill}"
-      StrokeThickness="1">
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="True">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #secondaryFill}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].SecondaryBrush}" />
-        </ia:DataTriggerBehavior>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="False">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #secondaryFill}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].PrimaryBrush}" />
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Path>
+      StrokeThickness="1" />
     <Path
       Name="secondaryStroke"
       Stroke="{Binding $parent[UserControl].PrimaryBrush}"
       Fill="Transparent"
       Data="{Binding $parent[UserControl].SecondaryStroke}"
-      StrokeThickness="1">
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="True">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #secondaryStroke}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].SecondaryBrush}" />
-        </ia:DataTriggerBehavior>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="False">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #secondaryStroke}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].PrimaryBrush}" />
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Path>
+      StrokeThickness="1" />
     <Path
       Name="tertiaryFill"
       Stroke="{Binding $parent[UserControl].PrimaryBrush}"
       Fill="{Binding $parent[UserControl].SecondaryBrush}"
       Data="{Binding $parent[UserControl].TertiaryFill}"
-      StrokeThickness="1">
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="True">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #tertiaryFill}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].TertiaryBrush}" />
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #tertiaryFill}"
-            PropertyName="Fill"
-            Value="{Binding $parent[UserControl].TertiaryBrush}" />
-        </ia:DataTriggerBehavior>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="False">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #tertiaryFill}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].PrimaryBrush}" />
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #tertiaryFill}"
-            PropertyName="Fill"
-            Value="{Binding $parent[UserControl].SecondaryBrush}" />
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Path>
+      StrokeThickness="1" />
     <Path
       Name="tertiaryStroke"
       Stroke="{Binding $parent[UserControl].PrimaryBrush}"
       Fill="Transparent"
       Data="{Binding $parent[UserControl].TertiaryStroke}"
-      StrokeThickness="1">
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="True">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #tertiaryStroke}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].TertiaryBrush}" />
-        </ia:DataTriggerBehavior>
-        <ia:DataTriggerBehavior
-          Binding="{Binding $parent[UserControl].IsSelected}"
-          Value="False">
-          <ia:ChangePropertyAction
-            TargetObject="{Binding #tertiaryStroke}"
-            PropertyName="Stroke"
-            Value="{Binding $parent[UserControl].PrimaryBrush}" />
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Path>
+      StrokeThickness="1" />
   </Canvas>
 </UserControl>

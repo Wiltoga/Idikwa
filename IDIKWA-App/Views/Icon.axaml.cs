@@ -1,5 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
+using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
@@ -44,9 +46,35 @@ namespace IDIKWA_App
         private static void OnSelectedChanged(Icon sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is true)
+            {
                 sender.PseudoClasses.Add(":selected");
+                var primaryFill = sender.FindControl<Shape>("primaryFill");
+                primaryFill[!Shape.FillProperty] = new Binding(nameof(PrimaryBrush), BindingMode.OneWay) { Source = sender };
+                var secondaryFill = sender.FindControl<Shape>("secondaryFill");
+                secondaryFill[!Shape.StrokeProperty] = new Binding(nameof(SecondaryBrush), BindingMode.OneWay) { Source = sender };
+                var secondaryStroke = sender.FindControl<Shape>("secondaryStroke");
+                secondaryStroke[!Shape.StrokeProperty] = new Binding(nameof(SecondaryBrush), BindingMode.OneWay) { Source = sender };
+                var tertiaryFill = sender.FindControl<Shape>("tertiaryFill");
+                tertiaryFill[!Shape.StrokeProperty] = new Binding(nameof(TertiaryBrush), BindingMode.OneWay) { Source = sender };
+                tertiaryFill[!Shape.FillProperty] = new Binding(nameof(TertiaryBrush), BindingMode.OneWay) { Source = sender };
+                var tertiaryStroke = sender.FindControl<Shape>("tertiaryStroke");
+                tertiaryStroke[!Shape.StrokeProperty] = new Binding(nameof(TertiaryBrush), BindingMode.OneWay) { Source = sender };
+            }
             else
+            {
                 sender.PseudoClasses.Remove(":selected");
+                var primaryFill = sender.FindControl<Shape>("primaryFill");
+                primaryFill[!Shape.FillProperty] = new Binding(nameof(SecondaryBrush), BindingMode.OneWay) { Source = sender };
+                var secondaryFill = sender.FindControl<Shape>("secondaryFill");
+                secondaryFill[!Shape.StrokeProperty] = new Binding(nameof(PrimaryBrush), BindingMode.OneWay) { Source = sender };
+                var secondaryStroke = sender.FindControl<Shape>("secondaryStroke");
+                secondaryStroke[!Shape.StrokeProperty] = new Binding(nameof(PrimaryBrush), BindingMode.OneWay) { Source = sender };
+                var tertiaryFill = sender.FindControl<Shape>("tertiaryFill");
+                tertiaryFill[!Shape.StrokeProperty] = new Binding(nameof(PrimaryBrush), BindingMode.OneWay) { Source = sender };
+                tertiaryFill[!Shape.FillProperty] = new Binding(nameof(SecondaryBrush), BindingMode.OneWay) { Source = sender };
+                var tertiaryStroke = sender.FindControl<Shape>("tertiaryStroke");
+                tertiaryStroke[!Shape.StrokeProperty] = new Binding(nameof(PrimaryBrush), BindingMode.OneWay) { Source = sender };
+            }
         }
 
         private void InitializeComponent()
