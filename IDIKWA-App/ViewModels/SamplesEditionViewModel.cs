@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using DynamicData;
+using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -14,6 +15,8 @@ namespace IDIKWA_App
 {
     public class SamplesEditionViewModel : ReactiveObject
     {
+        private ReadOnlyObservableCollection<object> allRecords;
+
         public SamplesEditionViewModel(IEnumerable<RecordViewModel> records)
         {
             MasterVolume = 100;
@@ -31,6 +34,8 @@ namespace IDIKWA_App
             MasterMemory.Seek(0, SeekOrigin.Begin);
             var masterSource = new RawSourceWaveStream(MasterMemory, mixer.WaveFormat);
             MasterCopy = masterSource.ToSampleProvider();
+            AverageMaster = RecordViewModel.GetAverage(MasterCopy);
+            MasterMemory.Seek(0, SeekOrigin.Begin);
             int samplesRead;
             var samples = new float[50000];
             var highestSample = 0f;
@@ -46,7 +51,38 @@ namespace IDIKWA_App
             Duration = masterSource.TotalTime;
             LeftBound = TimeSpan.Zero;
             RightBound = Duration;
+            var allRecords = new SourceCache<object, int>(o => o.GetHashCode());
+            allRecords.Connect()
+                .Filter(this.WhenAnyValue(o => o.Filter))
+                /*.Sort(Comparer<object>.Create((left, right) =>
+                {
+                    if (left is SamplesEditionViewModel)
+                        return 1;
+                    else if (right is SamplesEditionViewModel)
+                        return -1;
+                    else
+                        return Records.IndexOf((RecordViewModel)left).CompareTo((RecordViewModel)right);
+                }))*/
+                .Bind(out this.allRecords)
+                .Subscribe();
+            this.WhenAnyValue(o => o.Advanced).Subscribe(adv =>
+            {
+                if (adv)
+                    Filter = item => true;
+                else
+                    Filter = item => item is SamplesEditionViewModel;
+            });
+            Filter = item => item is SamplesEditionViewModel;
+            allRecords.Edit(updater => updater.AddOrUpdate(Records));
+            allRecords.Edit(updater => updater.AddOrUpdate(this));
         }
+
+        [Reactive]
+        public bool Advanced { get; set; }
+
+        public ReadOnlyObservableCollection<object> AllRecords => allRecords;
+
+        public float[] AverageMaster { get; }
 
         [Reactive]
         public TimeSpan Duration { get; set; }
@@ -65,6 +101,10 @@ namespace IDIKWA_App
         public TimeSpan RightBound { get; set; }
 
         public float Scale { get; }
+
+        [Reactive]
+        private Func<object, bool> Filter { get; set; }
+
         private Stream MasterMemory { get; }
     }
 }
