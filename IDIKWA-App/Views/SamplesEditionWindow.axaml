@@ -43,7 +43,7 @@
       BoundsBrush="#8df"
       CursorBrush="Red"
       GraduationBrush="#5fff"
-      Duration="0:5:00"
+      Duration="{Binding Duration}"
       Width="{Binding #masterSamples.Bounds.Width}" />
     <ScrollViewer
       Grid.Row="1"

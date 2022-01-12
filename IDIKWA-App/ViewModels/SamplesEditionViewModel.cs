@@ -29,7 +29,8 @@ namespace IDIKWA_App
                 source.Source.Seek(0, SeekOrigin.Begin);
             }
             MasterMemory.Seek(0, SeekOrigin.Begin);
-            MasterCopy = new RawSourceWaveStream(MasterMemory, mixer.WaveFormat).ToSampleProvider();
+            var masterSource = new RawSourceWaveStream(MasterMemory, mixer.WaveFormat);
+            MasterCopy = masterSource.ToSampleProvider();
             int samplesRead;
             var samples = new float[50000];
             var highestSample = 0f;
@@ -42,7 +43,16 @@ namespace IDIKWA_App
                 }
             Scale = 1.5f / highestSample;
             MasterMemory.Seek(0, SeekOrigin.Begin);
+            Duration = masterSource.TotalTime;
+            LeftBound = TimeSpan.Zero;
+            RightBound = Duration;
         }
+
+        [Reactive]
+        public TimeSpan Duration { get; set; }
+
+        [Reactive]
+        public TimeSpan LeftBound { get; set; }
 
         public ISampleProvider MasterCopy { get; }
 
@@ -50,14 +60,11 @@ namespace IDIKWA_App
         public int MasterVolume { get; set; }
 
         public IEnumerable<RecordViewModel> Records { get; }
+
+        [Reactive]
+        public TimeSpan RightBound { get; set; }
+
         public float Scale { get; }
-
-        [Reactive]
-        public TimeSpan Skip { get; set; }
-
-        [Reactive]
-        public TimeSpan Take { get; set; }
-
         private Stream MasterMemory { get; }
     }
 }
