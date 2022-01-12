@@ -56,33 +56,21 @@
                 BorderBrush="#3fff"
                 BorderThickness="1"
                 Grid.Column="1">
-                <Border.Background>
-                  <VisualBrush
-                    DestinationRect="0,0,40,40"
-                    TileMode="Tile">
-                    <VisualBrush.Visual>
-                      <Canvas
-                        Width="40"
-                        Height="40">
-                        <Rectangle
-                          Width="1"
-                          Height="40"
-                          Fill="#5fff" />
-                        <Rectangle
-                          Width="40"
-                          Canvas.Top="19.5"
-                          Height="1"
-                          Fill="#5fff" />
-                      </Canvas>
-                    </VisualBrush.Visual>
-                  </VisualBrush>
-                </Border.Background>
-                <local:SamplesViewer
-                  MinHeight="150"
+                <Grid>
+                  <local:GridPattern
+                    Background="#1fff"
+                    AlignmentX="Right"
+                    AlignmentY="Center"
+                    Stroke="#5fff"
+                    PatternWidth="40"
+                    PatternHeight="40" />
+                  <local:SamplesViewer
+                    MinHeight="150"
                   ClipToBounds="True"
                   Sample="{Binding SourceAsSample}"
                   Scale="{Binding $parent[Window].DataContext.Scale}"
                   Brush="#f84" />
+                </Grid>
               </Border>
               <Border
                 Width="200"
@@ -215,35 +203,21 @@
         Margin="2"
         BorderBrush="#3fff"
         BorderThickness="1">
-        <Border.Background>
-          <VisualBrush
+        <Grid>
+          <local:GridPattern
+            Background="#1fff"
+            AlignmentX="Right"
             AlignmentY="Center"
-            AlignmentX="Center"
-            DestinationRect="0,0,40,40"
-            TileMode="Tile">
-            <VisualBrush.Visual>
-              <Canvas
-                Width="40"
-                Height="40">
-                <Rectangle
-                  Width="1"
-                  Height="40"
-                  Fill="#5fff" />
-                <Rectangle
-                  Width="40"
-                  Canvas.Top="19.5"
-                  Height="1"
-                  Fill="#5fff" />
-              </Canvas>
-            </VisualBrush.Visual>
-          </VisualBrush>
-        </Border.Background>
-        <local:SamplesViewer
-          MinHeight="150"
-          Sample="{Binding MasterCopy}"
-          Scale="{Binding Scale}"
-          ClipToBounds="True"
-          Brush="#4f8" />
+            Stroke="#5fff"
+            PatternWidth="40"
+            PatternHeight="40" />
+          <local:SamplesViewer
+            MinHeight="150"
+            Sample="{Binding MasterCopy}"
+            Scale="{Binding Scale}"
+            ClipToBounds="True"
+            Brush="#4f8" />
+        </Grid>
       </Border>
     </DockPanel>
   </Grid>
