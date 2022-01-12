@@ -60,6 +60,7 @@
       CursorBrush="Red"
       GraduationBrush="#5fff"
       Duration="{Binding Duration}"
+      TimeCursor="{Binding CurrentPosition}"
       MaxCursorHeight="{Binding #samplesList.Bounds.Height}"
       LeftBound="{Binding LeftBound, Mode=TwoWay}"
       RightBound="{Binding RightBound, Mode=TwoWay}"
@@ -272,9 +273,35 @@
         Orientation="Horizontal"
         HorizontalAlignment="Center">
         <Button
-          Content="start/stop" />
+          Command="{Binding StartStop}">
+          <Grid>
+            <local:Icon
+              IsVisible="{Binding Playing, Converter={StaticResource ReverseBoolConverter}}"
+              ToolTip.Tip="{local:Resx start}"
+              IsSelected="{Binding $parent[Button].IsPointerOver}"
+              Classes="button start" />
+            <local:Icon
+              IsVisible="{Binding Playing}"
+              ToolTip.Tip="{local:Resx stop}"
+              IsSelected="{Binding $parent[Button].IsPointerOver}"
+              Classes="button stop" />
+          </Grid>
+        </Button>
         <Button
-          Content="play/pause" />
+          Command="{Binding PlayPause}">
+          <Grid>
+            <local:Icon
+              IsVisible="{Binding Playing, Converter={StaticResource ReverseBoolConverter}}"
+              ToolTip.Tip="{local:Resx play}"
+              IsSelected="{Binding $parent[Button].IsPointerOver}"
+              Classes="button play" />
+            <local:Icon
+              IsVisible="{Binding Playing}"
+              ToolTip.Tip="{local:Resx pause}"
+              IsSelected="{Binding $parent[Button].IsPointerOver}"
+              Classes="button pause" />
+          </Grid>
+        </Button>
       </StackPanel>
       <CheckBox
         DockPanel.Dock="Left"

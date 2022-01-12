@@ -9,16 +9,32 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace IDIKWA_App
 {
     public class SamplesEditionViewModel : ReactiveObject
     {
-        private ReadOnlyObservableCollection<object> allRecords;
+        private CancellationTokenSource? PositionUpdaterTokenSource;
 
         public SamplesEditionViewModel(IEnumerable<RecordViewModel> records)
         {
+            PlayPause = CommandHandler.Create(() =>
+            {
+                if (Playing)
+                    Pause();
+                else
+                    Play();
+            });
+            StartStop = CommandHandler.Create(() =>
+            {
+                if (Playing)
+                    Stop();
+                else
+                    Start();
+            });
             MasterVolume = 100;
             Records = new ObservableCollection<RecordViewModel>(records);
             MasterMemory = new MemoryStream();
@@ -51,36 +67,23 @@ namespace IDIKWA_App
             Duration = masterSource.TotalTime;
             LeftBound = TimeSpan.Zero;
             RightBound = Duration;
-            var allRecords = new SourceCache<object, int>(o => o.GetHashCode());
-            allRecords.Connect()
-                .Filter(this.WhenAnyValue(o => o.Filter))
-                /*.Sort(Comparer<object>.Create((left, right) =>
-                {
-                    if (left is SamplesEditionViewModel)
-                        return 1;
-                    else if (right is SamplesEditionViewModel)
-                        return -1;
-                    else
-                        return Records.IndexOf((RecordViewModel)left).CompareTo((RecordViewModel)right);
-                }))*/
-                .Bind(out this.allRecords)
-                .Subscribe();
-            this.WhenAnyValue(o => o.Advanced).Subscribe(adv =>
+            CurrentPosition = TimeSpan.Zero;
+            this.WhenAnyValue(o => o.MasterVolume).Subscribe(value =>
             {
-                if (adv)
-                    Filter = item => true;
-                else
-                    Filter = item => item is SamplesEditionViewModel;
+                foreach (var record in Records)
+                {
+                    record.Player.Volume = value / 100f;
+                }
             });
-            Filter = item => item is SamplesEditionViewModel;
-            allRecords.Edit(updater => updater.AddOrUpdate(Records));
-            allRecords.Edit(updater => updater.AddOrUpdate(this));
         }
 
         [Reactive]
         public bool Advanced { get; set; }
 
         public float[] AverageMaster { get; }
+
+        [Reactive]
+        public TimeSpan CurrentPosition { get; set; }
 
         [Reactive]
         public TimeSpan Duration { get; set; }
@@ -93,6 +96,9 @@ namespace IDIKWA_App
         [Reactive]
         public int MasterVolume { get; set; }
 
+        [Reactive]
+        public bool Playing { get; set; }
+
         public IEnumerable<RecordViewModel> Records { get; }
 
         [Reactive]
@@ -100,9 +106,83 @@ namespace IDIKWA_App
 
         public float Scale { get; }
 
-        [Reactive]
-        private Func<object, bool> Filter { get; set; }
-
         private Stream MasterMemory { get; }
+        private ICommand PlayPause { get; }
+
+        private ICommand StartStop { get; }
+
+        public void Pause()
+        {
+            StopPlayers();
+            Playing = false;
+        }
+
+        public void Play()
+        {
+            if (CurrentPosition < LeftBound)
+                CurrentPosition = LeftBound;
+            else if (CurrentPosition > RightBound)
+                CurrentPosition = LeftBound;
+            SetPlayers(CurrentPosition);
+            StartPlayers();
+            Playing = true;
+        }
+
+        public void Start()
+        {
+            CurrentPosition = LeftBound;
+            SetPlayers(CurrentPosition);
+            StartPlayers();
+            Playing = true;
+        }
+
+        public void Stop()
+        {
+            CurrentPosition = LeftBound;
+            StopPlayers();
+            Playing = false;
+        }
+
+        private void SetPlayers(TimeSpan time)
+        {
+            foreach (var record in Records)
+            {
+                record.InitPlayer(time);
+                record.Player.Volume = MasterVolume / 100f;
+            }
+        }
+
+        private void StartPlayers()
+        {
+            PositionUpdaterTokenSource = new CancellationTokenSource();
+            Task.Run(() =>
+            {
+                while (!PositionUpdaterTokenSource.IsCancellationRequested)
+                {
+                    var record = Records.First();
+                    CurrentPosition = record.CurrentTime;
+                    if (CurrentPosition > RightBound)
+                        Stop();
+                    else
+                    if (record.Player.PlaybackState == PlaybackState.Stopped)
+                        Stop();
+                    Thread.Sleep(10);
+                }
+            }, PositionUpdaterTokenSource.Token);
+            foreach (var record in Records)
+            {
+                record.Player.Play();
+            }
+        }
+
+        private void StopPlayers()
+        {
+            PositionUpdaterTokenSource?.Cancel();
+            foreach (var record in Records)
+            {
+                if (record.Player.PlaybackState != PlaybackState.Stopped)
+                    record.Player.Stop();
+            }
+        }
     }
 }

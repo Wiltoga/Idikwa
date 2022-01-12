@@ -177,6 +177,12 @@
   <data name="outputDir" xml:space="preserve">
     <value>Dossier de sortie</value>
   </data>
+  <data name="pause" xml:space="preserve">
+    <value>Mettre en pause</value>
+  </data>
+  <data name="play" xml:space="preserve">
+    <value>Jouer</value>
+  </data>
   <data name="recording" xml:space="preserve">
     <value>Enregistrement...</value>
   </data>
@@ -195,11 +201,17 @@
   <data name="settings" xml:space="preserve">
     <value>Paramètres</value>
   </data>
+  <data name="start" xml:space="preserve">
+    <value>Jouer depuis le début</value>
+  </data>
   <data name="startRecord" xml:space="preserve">
     <value>Démarrer l'enregistrement</value>
   </data>
   <data name="stereo" xml:space="preserve">
     <value>Stéréo</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>Arrêter</value>
   </data>
   <data name="volume" xml:space="preserve">
     <value>Volume</value>

@@ -19,11 +19,11 @@ namespace IDIKWA_App
         {
             Origin = origin;
             Source = source;
+            Player = new WasapiOut();
             SourceAsSample = Source.ToSampleProvider();
-            var volumeManager = new VolumeSampleProvider(SourceAsSample);
-            volumeManager.Volume = Origin.Volume / 100f;
-            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => volumeManager.Volume = value / 100f);
-            Output = volumeManager;
+            Output = new VolumeSampleProvider(SourceAsSample);
+            Output.Volume = Origin.Volume / 100f;
+            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => Output.Volume = value / 100f);
             var samples = new float[50000];
             int samplesRead;
             AverageSamples = new float[TotalSampleReduction];
@@ -41,21 +41,20 @@ namespace IDIKWA_App
             AverageSamples = GetAverage(SourceAsSample);
             Source.Seek(0, System.IO.SeekOrigin.Begin);
 
-            var samplesBuffer = new float[10000 * SourceAsSample.WaveFormat.Channels];
-            samplesRead = 0;
+            Player.Init(Output);
         }
 
         public float[] AverageSamples { get; }
 
+        public TimeSpan CurrentTime => Source.CurrentTime;
         public float HighestSample { get; }
 
         public DeviceViewModel Origin { get; }
 
-        public ISampleProvider Output { get; }
-
+        public WasapiOut Player { get; set; }
         public WaveStream Source { get; }
-
         public ISampleProvider SourceAsSample { get; }
+        private VolumeSampleProvider Output { get; set; }
 
         public static float[] GetAverage(ISampleProvider samplesProvider)
         {
@@ -74,6 +73,17 @@ namespace IDIKWA_App
                 result[i] = tmpList.GetRange(offset, samples).Average();
             }
             return result;
+        }
+
+        public void InitPlayer(TimeSpan time)
+        {
+            Source.Seek(0, System.IO.SeekOrigin.Begin);
+            var offset = new OffsetSampleProvider(SourceAsSample) { SkipOver = time };
+            Output = new VolumeSampleProvider(offset);
+            Output.Volume = Origin.Volume / 100f;
+            Player.Dispose();
+            Player = new WasapiOut();
+            Player.Init(Output);
         }
     }
 }
