@@ -80,8 +80,6 @@ namespace IDIKWA_App
         [Reactive]
         public bool Advanced { get; set; }
 
-        public ReadOnlyObservableCollection<object> AllRecords => allRecords;
-
         public float[] AverageMaster { get; }
 
         [Reactive]

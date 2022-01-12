@@ -24,6 +24,7 @@ namespace IDIKWA_App
         public static readonly DirectPropertyBase<bool> IsDraggingProperty = AvaloniaProperty.RegisterDirect<TimeSelection, bool>(nameof(IsDragging), o => o.IsDragging);
         public static readonly StyledPropertyBase<TimeSpan> LeftBoundProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(LeftBound), TimeSpan.Zero);
         public static readonly StyledPropertyBase<Rectangle?> LeftRectangleProperty = AvaloniaProperty.Register<TimeSelection, Rectangle?>(nameof(LeftRectangle), null);
+        public static readonly StyledPropertyBase<double> MaxCursorHeightProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(MaxCursorHeight), double.PositiveInfinity);
         public static readonly StyledPropertyBase<TimeSpan> RightBoundProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(RightBound), TimeSpan.Zero);
         public static readonly StyledPropertyBase<Rectangle?> RightRectangleProperty = AvaloniaProperty.Register<TimeSelection, Rectangle?>(nameof(RightRectangle), null);
         public static readonly StyledPropertyBase<TimeSpan> TimeCursorProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(TimeCursor), TimeSpan.Zero);
@@ -43,6 +44,7 @@ namespace IDIKWA_App
             TimeCursorProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             LeftRectangleProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             RightRectangleProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
+            MaxCursorHeightProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             HeaderSizeProperty.Changed.AddClassHandler<TimeSelection>(MeasurePropertyChanged);
         }
 
@@ -64,6 +66,7 @@ namespace IDIKWA_App
 
         public TimeSpan LeftBound { get => GetValue(LeftBoundProperty); set => SetValue(LeftBoundProperty, value); }
         public Rectangle? LeftRectangle { get => GetValue(LeftRectangleProperty); set => SetValue(LeftRectangleProperty, value); }
+        public double MaxCursorHeight { get => GetValue(MaxCursorHeightProperty); set => SetValue(MaxCursorHeightProperty, value); }
         public TimeSpan RightBound { get => GetValue(RightBoundProperty); set => SetValue(RightBoundProperty, value); }
         public Rectangle? RightRectangle { get => GetValue(RightRectangleProperty); set => SetValue(RightRectangleProperty, value); }
         Type IStyleable.StyleKey => typeof(TimeSelection);
@@ -72,6 +75,7 @@ namespace IDIKWA_App
         public override void Render(DrawingContext context)
         {
             base.Render(context);
+            var maxheight = Math.Min(Bounds.Height, HeaderSize + MaxCursorHeight);
             var gradutionPen = new Pen(GraduationBrush);
             var boundsPen = new Pen(BoundsBrush);
             var cursorPen = new Pen(CursorBrush);
@@ -114,7 +118,7 @@ namespace IDIKWA_App
             {
                 var x = TimeCursor / Duration * Bounds.Width;
                 x = (int)x - .5;
-                context.DrawLine(cursorPen, new Point(x, HeaderSize + 2), new Point(x, Bounds.Height - 2));
+                context.DrawLine(cursorPen, new Point(x, HeaderSize + 2), new Point(x, maxheight - 2));
             }
             {
                 var x = LeftBound / Duration * Bounds.Width;
@@ -145,7 +149,7 @@ namespace IDIKWA_App
                 line.Segments = new PathSegments();
                 line.Segments.Add(new LineSegment()
                 {
-                    Point = new Point(x, Bounds.Height - 2)
+                    Point = new Point(x, maxheight - 2)
                 });
                 var grip1 = new PathFigure()
                 {
@@ -241,7 +245,7 @@ namespace IDIKWA_App
                 line.Segments = new PathSegments();
                 line.Segments.Add(new LineSegment()
                 {
-                    Point = new Point(x, Bounds.Height - 2)
+                    Point = new Point(x, maxheight - 2)
                 });
                 var grip1 = new PathFigure()
                 {

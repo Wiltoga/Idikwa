@@ -33,9 +33,11 @@
         Height="auto" />
     </Grid.RowDefinitions>
     <Grid
+      VerticalAlignment="Top"
       Margin="205,0,5,0"
       ZIndex="1"
-      Grid.Row="1">
+      Grid.Row="1"
+      Height="{Binding #samplesList.Bounds.Height}">
       <Rectangle
         IsHitTestVisible="False"
         Name="leftRectangle"
@@ -58,25 +60,100 @@
       CursorBrush="Red"
       GraduationBrush="#5fff"
       Duration="{Binding Duration}"
+      MaxCursorHeight="{Binding #samplesList.Bounds.Height}"
       LeftBound="{Binding LeftBound, Mode=TwoWay}"
       RightBound="{Binding RightBound, Mode=TwoWay}"
       LeftRectangle="{Binding #leftRectangle}"
       RightRectangle="{Binding #rightRectangle}" />
     <ScrollViewer
+      Name="samplesList"
+      VerticalAlignment="Top"
       Margin="0,2"
       Grid.Row="1"
       VerticalScrollBarVisibility="Auto"
       HorizontalScrollBarVisibility="Disabled">
-      <DockPanel>
+      <StackPanel
+        VerticalAlignment="Top"
+        Orientation="Vertical">
+        <DockPanel
+         Margin="2">
+          <Border
+            Width="200"
+            Margin="2"
+            BorderBrush="#3fff"
+            BorderThickness="1"
+            Background="#1fff"
+            DockPanel.Dock="Left">
+            <DockPanel>
+              <StackPanel
+                Background="#000"
+                DockPanel.Dock="Top"
+                Orientation="Horizontal"
+                ToolTip.Tip="{local:Resx master}">
+                <local:Icon
+                  Classes="master"
+                  IsSelected="True"
+                  Margin="2" />
+                <Label
+                  VerticalContentAlignment="Center"
+                  Padding="2"
+                  Content="{local:Resx master}" />
+                <!-- Just here to allocate empty space to stay in sync with the above samples -->
+                <local:Icon
+                  Margin="2" />
+              </StackPanel>
+              <StackPanel
+                Orientation="Horizontal">
+                <Slider
+                  TickPlacement="BottomRight"
+                  TickFrequency="10"
+                  Margin="2"
+                  Orientation="Vertical"
+                  Minimum="0"
+                  Maximum="100"
+                  Value="{Binding MasterVolume}" />
+                <TextBlock
+                  VerticalAlignment="Center"
+                  Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
+                  Margin="2" />
+                <TextBlock
+                  VerticalAlignment="Center"
+                  Margin="2"
+                  Text="{Binding MasterVolume, StringFormat='{}{0}%'}" />
+              </StackPanel>
+            </DockPanel>
+          </Border>
+          <Border
+            Margin="2"
+            BorderBrush="#3fff"
+            BorderThickness="1">
+            <Grid>
+              <local:GridPattern
+                Background="#1fff"
+                AlignmentX="Right"
+                AlignmentY="Center"
+                Stroke="#5fff"
+                PatternWidth="40"
+                PatternHeight="40" />
+              <local:SamplesViewer
+                MinHeight="150"
+                AverageSamples="{Binding AverageMaster}"
+                Scale="{Binding Scale}"
+                ClipToBounds="True"
+                Brush="#4f8" />
+            </Grid>
+          </Border>
+        </DockPanel>
         <ItemsControl
-          Items="{Binding AllRecords}">
+          IsVisible="{Binding Advanced}"
+          Items="{Binding Records}">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <UniformGrid
-                Columns="1" />
+              <StackPanel
+                Orientation="Vertical" />
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
-          <ItemsControl.DataTemplates>
+          <ItemsControl.ItemTemplate>
             <DataTemplate
               DataType="{x:Type local:RecordViewModel}">
               <Grid
@@ -183,90 +260,38 @@
                 </Border>
               </Grid>
             </DataTemplate>
-            <DataTemplate
-              DataType="{x:Type local:SamplesEditionViewModel}">
-              <DockPanel
-               Margin="2">
-                <Border
-                  Width="200"
-                  Margin="2"
-                  BorderBrush="#3fff"
-                  BorderThickness="1"
-                  Background="#1fff"
-                  DockPanel.Dock="Left">
-                  <DockPanel>
-                    <StackPanel
-                      Background="#000"
-                      DockPanel.Dock="Top"
-                      Orientation="Horizontal"
-                      ToolTip.Tip="{local:Resx master}">
-                      <local:Icon
-                        Classes="master"
-                        IsSelected="True"
-                        Margin="2" />
-                      <Label
-                        VerticalContentAlignment="Center"
-                        Padding="2"
-                        Content="{local:Resx master}" />
-                      <!-- Just here to allocate empty space to stay in sync with the above samples -->
-                      <local:Icon
-                        Margin="2" />
-                    </StackPanel>
-                    <StackPanel
-                      Orientation="Horizontal">
-                      <Slider
-                        TickPlacement="BottomRight"
-                        TickFrequency="10"
-                        Margin="2"
-                        Orientation="Vertical"
-                        Minimum="0"
-                        Maximum="100"
-                        Value="{Binding MasterVolume}" />
-                      <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
-                        Margin="2" />
-                      <TextBlock
-                        VerticalAlignment="Center"
-                        Margin="2"
-                        Text="{Binding MasterVolume, StringFormat='{}{0}%'}" />
-                    </StackPanel>
-                  </DockPanel>
-                </Border>
-                <Border
-                  Margin="2"
-                  BorderBrush="#3fff"
-                  BorderThickness="1">
-                  <Grid>
-                    <local:GridPattern
-                      Background="#1fff"
-                      AlignmentX="Right"
-                      AlignmentY="Center"
-                      Stroke="#5fff"
-                      PatternWidth="40"
-                      PatternHeight="40" />
-                    <local:SamplesViewer
-                      MinHeight="150"
-                      AverageSamples="{Binding AverageMaster}"
-                      Scale="{Binding Scale}"
-                      ClipToBounds="True"
-                      Brush="#4f8" />
-                  </Grid>
-                </Border>
-              </DockPanel>
-            </DataTemplate>
-          </ItemsControl.DataTemplates>
+          </ItemsControl.ItemTemplate>
         </ItemsControl>
-      </DockPanel>
+      </StackPanel>
     </ScrollViewer>
     <DockPanel
       Grid.Row="2">
-      <Label
-        Background="Gray"
-        Content="controls" />
+      <StackPanel
+        DockPanel.Dock="Top"
+        Margin="20"
+        Orientation="Horizontal"
+        HorizontalAlignment="Center">
+        <Button
+          Content="start/stop" />
+        <Button
+          Content="play/pause" />
+      </StackPanel>
       <CheckBox
-        Content="advanced"
+        DockPanel.Dock="Left"
+        Margin="20"
+        Content="{local:Resx advanced}"
         IsChecked="{Binding Advanced, Mode=TwoWay}" />
+      <StackPanel
+        Margin="5,20"
+        HorizontalAlignment="Right"
+        Orientation="Horizontal">
+        <Button
+          Margin="5"
+          Content="Cancel" />
+        <Button
+          Margin="5"
+          Content="Save" />
+      </StackPanel>
     </DockPanel>
   </Grid>
 </Window>

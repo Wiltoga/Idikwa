@@ -61,6 +61,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Advanced.
+        /// </summary>
+        internal static string advanced {
+            get {
+                return ResourceManager.GetString("advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à bit/s.
         /// </summary>
         internal static string bitPerSec {
