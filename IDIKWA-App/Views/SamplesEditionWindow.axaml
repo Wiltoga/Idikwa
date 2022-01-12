@@ -25,11 +25,28 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition
+        MinHeight="{Binding #timeSelection.HeaderSize}"
+        Height="auto" />
+      <RowDefinition
         Height="*" />
       <RowDefinition
         Height="auto" />
+      <RowDefinition
+        Height="auto" />
     </Grid.RowDefinitions>
+    <local:TimeSelection
+      Name="timeSelection"
+      Grid.RowSpan="3"
+      HorizontalAlignment="Right"
+      Margin="5,2"
+      BackgroundBrush="#1fff"
+      BoundsBrush="#8df"
+      CursorBrush="Red"
+      GraduationBrush="#5fff"
+      Duration="0:5:00"
+      Width="{Binding #masterSamples.Bounds.Width}" />
     <ScrollViewer
+      Grid.Row="1"
       VerticalScrollBarVisibility="Auto"
       HorizontalScrollBarVisibility="Disabled">
       <ItemsControl
@@ -151,7 +168,7 @@
       </ItemsControl>
     </ScrollViewer>
     <DockPanel
-      Grid.Row="1"
+      Grid.Row="2"
       Margin="2">
       <Border
         Width="200"
@@ -212,6 +229,7 @@
             PatternWidth="40"
             PatternHeight="40" />
           <local:SamplesViewer
+            Name="masterSamples"
             MinHeight="150"
             Sample="{Binding MasterCopy}"
             Scale="{Binding Scale}"
@@ -219,6 +237,12 @@
             Brush="#4f8" />
         </Grid>
       </Border>
+    </DockPanel>
+    <DockPanel
+      Grid.Row="4">
+      <Label
+        Background="Gray"
+        Content="controls" />
     </DockPanel>
   </Grid>
 </Window>
