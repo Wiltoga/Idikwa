@@ -1,4 +1,5 @@
-﻿using DynamicData;
+﻿using Avalonia.Controls;
+using DynamicData;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using ReactiveUI;
@@ -21,13 +22,23 @@ namespace IDIKWA_App
 
         public SamplesEditionViewModel(IEnumerable<RecordViewModel> records)
         {
-            PlayPause = CommandHandler.Create(() =>
+            TimeSpan lowest = records.First().Source.TotalTime;
+            foreach (var item in records)
             {
-                if (Playing)
-                    Pause();
-                else
-                    Play();
-            });
+                if (lowest > item.Source.TotalTime)
+                    lowest = item.Source.TotalTime;
+            }
+            foreach (var item in records)
+            {
+                item.Source.SetLength((long)(item.Source.WaveFormat.AverageBytesPerSecond * lowest.TotalSeconds));
+            }
+            PlayPause = CommandHandler.Create(() =>
+        {
+            if (Playing)
+                Pause();
+            else
+                Play();
+        });
             StartStop = CommandHandler.Create(() =>
             {
                 if (Playing)
@@ -51,7 +62,7 @@ namespace IDIKWA_App
             var masterSource = new RawSourceWaveStream(MasterMemory, mixer.WaveFormat);
             MasterCopy = masterSource.ToSampleProvider();
             AverageMaster = RecordViewModel.GetAverage(MasterCopy);
-            MasterMemory.Seek(0, SeekOrigin.Begin);
+            masterSource.CurrentTime = TimeSpan.Zero;
             int samplesRead;
             var samples = new float[50000];
             var highestSample = 0f;
@@ -63,7 +74,7 @@ namespace IDIKWA_App
                         highestSample = abs;
                 }
             Scale = 1.5f / highestSample;
-            MasterMemory.Seek(0, SeekOrigin.Begin);
+            masterSource.CurrentTime = TimeSpan.Zero;
             Duration = masterSource.TotalTime;
             LeftBound = TimeSpan.Zero;
             RightBound = Duration;
@@ -107,6 +118,7 @@ namespace IDIKWA_App
         public float Scale { get; }
 
         private Stream MasterMemory { get; }
+
         private ICommand PlayPause { get; }
 
         private ICommand StartStop { get; }

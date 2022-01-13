@@ -97,6 +97,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Cancel.
+        /// </summary>
+        internal static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Recording device.
         /// </summary>
         internal static string captureDevice {
@@ -300,6 +309,24 @@ namespace IDIKWA_App.locales {
         internal static string sampleRate {
             get {
                 return ResourceManager.GetString("sampleRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save.
+        /// </summary>
+        internal static string save {
+            get {
+                return ResourceManager.GetString("save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save as....
+        /// </summary>
+        internal static string saveAs {
+            get {
+                return ResourceManager.GetString("saveAs", resourceCulture);
             }
         }
         

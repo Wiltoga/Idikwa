@@ -102,5 +102,10 @@ namespace IDIKWA_App
 
             return readBytes;
         }
+
+        public override void SetLength(long length)
+        {
+            Stream.SetLength(length);
+        }
     }
 }

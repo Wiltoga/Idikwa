@@ -129,6 +129,9 @@
   <data name="browse" xml:space="preserve">
     <value>Parcourir</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
   <data name="captureDevice" xml:space="preserve">
     <value>Périphérique d'entrée</value>
   </data>
@@ -197,6 +200,12 @@
   </data>
   <data name="sampleRate" xml:space="preserve">
     <value>Fréquence</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="saveAs" xml:space="preserve">
+    <value>Enregistrer sous...</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>Paramètres</value>

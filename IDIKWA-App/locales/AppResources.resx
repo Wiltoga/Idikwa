@@ -129,6 +129,9 @@
   <data name="browse" xml:space="preserve">
     <value>Browse</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="captureDevice" xml:space="preserve">
     <value>Recording device</value>
   </data>
@@ -197,6 +200,12 @@
   </data>
   <data name="sampleRate" xml:space="preserve">
     <value>Sample rate</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="saveAs" xml:space="preserve">
+    <value>Save as...</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
