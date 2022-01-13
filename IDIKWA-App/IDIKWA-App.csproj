@@ -2,11 +2,17 @@
   <PropertyGroup>
     <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
     <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
+    <OutputType Condition="'$(Configuration)'=='Portable'">WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>IDIKWA_App</RootNamespace>
     <ApplicationIcon>assets\icons\logo.ico</ApplicationIcon>
     <StartupObject />
+    <Configurations>Debug;Release;Portable</Configurations>
+    <AssemblyName>Idikwa</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Portable|AnyCPU'">
+    <DefineConstants>PORTABLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Remove=".gitignore" />
@@ -16,8 +22,10 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.10" />
     <PackageReference Include="DynamicData" Version="7.4.3" />
     <PackageReference Include="NAudio" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="ReactiveUI" Version="17.1.9" />
     <PackageReference Include="ReactiveUI.Fody" Version="17.1.9" />
    </ItemGroup>
@@ -29,6 +37,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Icon.axaml.cs">
+      <DependentUpon>Icon.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

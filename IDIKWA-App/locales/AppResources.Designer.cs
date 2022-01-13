@@ -59,5 +59,347 @@ namespace IDIKWA_App.locales {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Advanced.
+        /// </summary>
+        internal static string advanced {
+            get {
+                return ResourceManager.GetString("advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à All files.
+        /// </summary>
+        internal static string allFiles {
+            get {
+                return ResourceManager.GetString("allFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à bit/s.
+        /// </summary>
+        internal static string bitPerSec {
+            get {
+                return ResourceManager.GetString("bitPerSec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bit rate (mp3).
+        /// </summary>
+        internal static string bitRate {
+            get {
+                return ResourceManager.GetString("bitRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Browse.
+        /// </summary>
+        internal static string browse {
+            get {
+                return ResourceManager.GetString("browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Cancel.
+        /// </summary>
+        internal static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Recording device.
+        /// </summary>
+        internal static string captureDevice {
+            get {
+                return ResourceManager.GetString("captureDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Recording devices.
+        /// </summary>
+        internal static string captureDevices {
+            get {
+                return ResourceManager.GetString("captureDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Close.
+        /// </summary>
+        internal static string close {
+            get {
+                return ResourceManager.GetString("close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Log in.
+        /// </summary>
+        internal static string connection {
+            get {
+                return ResourceManager.GetString("connection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Current configuration.
+        /// </summary>
+        internal static string currentConfig {
+            get {
+                return ResourceManager.GetString("currentConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Duration.
+        /// </summary>
+        internal static string duration {
+            get {
+                return ResourceManager.GetString("duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Edit.
+        /// </summary>
+        internal static string edit {
+            get {
+                return ResourceManager.GetString("edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à English.
+        /// </summary>
+        internal static string en {
+            get {
+                return ResourceManager.GetString("en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à French.
+        /// </summary>
+        internal static string fr {
+            get {
+                return ResourceManager.GetString("fr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hz.
+        /// </summary>
+        internal static string hz {
+            get {
+                return ResourceManager.GetString("hz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language.
+        /// </summary>
+        internal static string language {
+            get {
+                return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Master.
+        /// </summary>
+        internal static string master {
+            get {
+                return ResourceManager.GetString("master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Maximize.
+        /// </summary>
+        internal static string maximize {
+            get {
+                return ResourceManager.GetString("maximize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Minimize.
+        /// </summary>
+        internal static string minimize {
+            get {
+                return ResourceManager.GetString("minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à mp3 files.
+        /// </summary>
+        internal static string mp3Files {
+            get {
+                return ResourceManager.GetString("mp3Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No device selected.
+        /// </summary>
+        internal static string noDeviceSelected {
+            get {
+                return ResourceManager.GetString("noDeviceSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Output directory.
+        /// </summary>
+        internal static string outputDir {
+            get {
+                return ResourceManager.GetString("outputDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pause.
+        /// </summary>
+        internal static string pause {
+            get {
+                return ResourceManager.GetString("pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Play.
+        /// </summary>
+        internal static string play {
+            get {
+                return ResourceManager.GetString("play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Recording....
+        /// </summary>
+        internal static string recording {
+            get {
+                return ResourceManager.GetString("recording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Playback device.
+        /// </summary>
+        internal static string renderDevice {
+            get {
+                return ResourceManager.GetString("renderDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Playback devices.
+        /// </summary>
+        internal static string renderDevices {
+            get {
+                return ResourceManager.GetString("renderDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à This option requires a restart of the software.
+        /// </summary>
+        internal static string requiresRestart {
+            get {
+                return ResourceManager.GetString("requiresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sample rate.
+        /// </summary>
+        internal static string sampleRate {
+            get {
+                return ResourceManager.GetString("sampleRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save.
+        /// </summary>
+        internal static string save {
+            get {
+                return ResourceManager.GetString("save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save as....
+        /// </summary>
+        internal static string saveAs {
+            get {
+                return ResourceManager.GetString("saveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Settings.
+        /// </summary>
+        internal static string settings {
+            get {
+                return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Play from the beginning.
+        /// </summary>
+        internal static string start {
+            get {
+                return ResourceManager.GetString("start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Start recording.
+        /// </summary>
+        internal static string startRecord {
+            get {
+                return ResourceManager.GetString("startRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stereo.
+        /// </summary>
+        internal static string stereo {
+            get {
+                return ResourceManager.GetString("stereo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stop.
+        /// </summary>
+        internal static string stop {
+            get {
+                return ResourceManager.GetString("stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Volume.
+        /// </summary>
+        internal static string volume {
+            get {
+                return ResourceManager.GetString("volume", resourceCulture);
+            }
+        }
     }
 }

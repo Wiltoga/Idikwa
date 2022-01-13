@@ -112,9 +112,123 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="allFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="bitPerSec" xml:space="preserve">
+    <value>bit/s</value>
+  </data>
+  <data name="bitRate" xml:space="preserve">
+    <value>Bit rate (mp3)</value>
+  </data>
+  <data name="browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="captureDevice" xml:space="preserve">
+    <value>Recording device</value>
+  </data>
+  <data name="captureDevices" xml:space="preserve">
+    <value>Recording devices</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="connection" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="currentConfig" xml:space="preserve">
+    <value>Current configuration</value>
+  </data>
+  <data name="duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="en" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="fr" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="hz" xml:space="preserve">
+    <value>Hz</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="maximize" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="minimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="mp3Files" xml:space="preserve">
+    <value>mp3 files</value>
+  </data>
+  <data name="noDeviceSelected" xml:space="preserve">
+    <value>No device selected</value>
+  </data>
+  <data name="outputDir" xml:space="preserve">
+    <value>Output directory</value>
+  </data>
+  <data name="pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="play" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="recording" xml:space="preserve">
+    <value>Recording...</value>
+  </data>
+  <data name="renderDevice" xml:space="preserve">
+    <value>Playback device</value>
+  </data>
+  <data name="renderDevices" xml:space="preserve">
+    <value>Playback devices</value>
+  </data>
+  <data name="requiresRestart" xml:space="preserve">
+    <value>This option requires a restart of the software</value>
+  </data>
+  <data name="sampleRate" xml:space="preserve">
+    <value>Sample rate</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="saveAs" xml:space="preserve">
+    <value>Save as...</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="start" xml:space="preserve">
+    <value>Play from the beginning</value>
+  </data>
+  <data name="startRecord" xml:space="preserve">
+    <value>Start recording</value>
+  </data>
+  <data name="stereo" xml:space="preserve">
+    <value>Stereo</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
 </root>

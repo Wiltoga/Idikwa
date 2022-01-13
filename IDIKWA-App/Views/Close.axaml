@@ -1,0 +1,57 @@
+<local:BlankButton xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:i="using:Avalonia.Xaml.Interactivity"
+                   xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+                   xmlns:local="using:IDIKWA_App"
+                   mc:Ignorable="d"
+                   Background="#01000000"
+                   x:Class="IDIKWA_App.Close"
+                   ToolTip.Tip="{local:Resx close}">
+  <ContentControl
+    VerticalAlignment="Center"
+    HorizontalAlignment="Center"
+    Width="16"
+    Height="16"
+    Margin="4">
+    <i:Interaction.Behaviors>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPointerOver}"
+        Value="True">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#f22" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPointerOver}"
+        Value="False">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#8fff" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPressed}"
+        Value="True">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#af22" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPressed}"
+        Value="False">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#f22" />
+      </ia:DataTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <Polygon
+      Name="shape"
+      Fill="#8fff"
+      Points="2,0 8,6 14,0 16,2 10,8 16,14 14,16 8,10 2,16 0,14 6,8 0,2" />
+  </ContentControl>
+</local:BlankButton>

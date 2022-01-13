@@ -1,0 +1,58 @@
+<local:BlankButton xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:i="using:Avalonia.Xaml.Interactivity"
+                   xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+                   xmlns:local="using:IDIKWA_App"
+                   mc:Ignorable="d"
+                   Background="#01000000"
+                   x:Class="IDIKWA_App.Minimize"
+                   ToolTip.Tip="{local:Resx minimize}">
+  <ContentControl
+    VerticalAlignment="Center"
+    HorizontalAlignment="Center"
+    Width="16"
+    Height="16"
+    Margin="4">
+    <i:Interaction.Behaviors>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPointerOver}"
+        Value="True">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#aaf" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPointerOver}"
+        Value="False">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#8fff" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPressed}"
+        Value="True">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#aaaf" />
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior
+        Binding="{Binding $parent[0].IsPressed}"
+        Value="False">
+        <ia:ChangePropertyAction
+          TargetObject="{Binding #shape}"
+          PropertyName="Fill"
+          Value="#aaf" />
+      </ia:DataTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <Rectangle
+      Name="shape"
+      VerticalAlignment="Center"
+      Fill="#8fff"
+      Height="2" />
+  </ContentControl>
+</local:BlankButton>

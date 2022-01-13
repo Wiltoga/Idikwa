@@ -112,9 +112,123 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="advanced" xml:space="preserve">
+    <value>Avancé</value>
+  </data>
+  <data name="allFiles" xml:space="preserve">
+    <value>Tous les fichiers</value>
+  </data>
+  <data name="bitPerSec" xml:space="preserve">
+    <value>bit/s</value>
+  </data>
+  <data name="bitRate" xml:space="preserve">
+    <value>Débit (mp3)</value>
+  </data>
+  <data name="browse" xml:space="preserve">
+    <value>Parcourir</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="captureDevice" xml:space="preserve">
+    <value>Périphérique d'entrée</value>
+  </data>
+  <data name="captureDevices" xml:space="preserve">
+    <value>Périphériques d'entrée</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="connection" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="currentConfig" xml:space="preserve">
+    <value>Configuration actuelle</value>
+  </data>
+  <data name="duration" xml:space="preserve">
+    <value>Durée</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="en" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
+  <data name="fr" xml:space="preserve">
+    <value>Français</value>
+  </data>
+  <data name="hz" xml:space="preserve">
+    <value>Hz</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="master" xml:space="preserve">
+    <value>Principal</value>
+  </data>
+  <data name="maximize" xml:space="preserve">
+    <value>Agrandir</value>
+  </data>
+  <data name="minimize" xml:space="preserve">
+    <value>Réduire</value>
+  </data>
+  <data name="mp3Files" xml:space="preserve">
+    <value>Fichiers mp3</value>
+  </data>
+  <data name="noDeviceSelected" xml:space="preserve">
+    <value>Aucun périphérique sélectionné</value>
+  </data>
+  <data name="outputDir" xml:space="preserve">
+    <value>Dossier de sortie</value>
+  </data>
+  <data name="pause" xml:space="preserve">
+    <value>Mettre en pause</value>
+  </data>
+  <data name="play" xml:space="preserve">
+    <value>Jouer</value>
+  </data>
+  <data name="recording" xml:space="preserve">
+    <value>Enregistrement...</value>
+  </data>
+  <data name="renderDevice" xml:space="preserve">
+    <value>Périphérique de sortie</value>
+  </data>
+  <data name="renderDevices" xml:space="preserve">
+    <value>Périphériques de sortie</value>
+  </data>
+  <data name="requiresRestart" xml:space="preserve">
+    <value>Cette option nécéssite de redémarrer le logiciel</value>
+  </data>
+  <data name="sampleRate" xml:space="preserve">
+    <value>Fréquence</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="saveAs" xml:space="preserve">
+    <value>Enregistrer sous...</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="start" xml:space="preserve">
+    <value>Jouer depuis le début</value>
+  </data>
+  <data name="startRecord" xml:space="preserve">
+    <value>Démarrer l'enregistrement</value>
+  </data>
+  <data name="stereo" xml:space="preserve">
+    <value>Stéréo</value>
+  </data>
+  <data name="stop" xml:space="preserve">
+    <value>Arrêter</value>
+  </data>
+  <data name="volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
 </root>

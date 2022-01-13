@@ -1,7 +1,816 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="IDIKWA_App.App">
-    <Application.Styles>
-        <FluentTheme Mode="Light"/>
-    </Application.Styles>
+             xmlns:local="using:IDIKWA_App"
+             x:Class="IDIKWA_App.App"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core">
+  <Application.Resources>
+    <SolidColorBrush
+      x:Key="WindowBackground">#111114</SolidColorBrush>
+  </Application.Resources>
+  <Application.Styles>
+    <FluentTheme Mode="Dark" />
+    <Style
+      Selector="Window">
+      <Setter
+        Property="Background"
+        Value="{StaticResource WindowBackground}" />
+    </Style>
+    <Style
+      Selector="local|Icon.dynamic">
+      <Setter
+        Property="IsSelected"
+        Value="{Binding $self.IsPointerOver}" />
+    </Style>
+    <Style
+      Selector="local|Icon">
+      <Setter
+        Property="PrimaryBrush"
+        Value="White" />
+      <Setter
+        Property="SecondaryBrush"
+        Value="{StaticResource WindowBackground}" />
+    </Style>
+    <Style
+      Selector="local|Icon.button">
+      <Setter
+        Property="SecondaryBrush"
+        Value="#414143" />
+    </Style>
+    <Style
+      Selector="local|Icon.down">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="7.5,9.5">
+            <LineSegment
+              Point="15.5,9.5" />
+            <LineSegment
+              Point="11.5,13.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.saveAs">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="3.5,3.5">
+            <LineSegment
+              Point="3.5,21.5" />
+            <LineSegment
+              Point="20.5,21.5" />
+            <LineSegment
+              Point="20.5,7.5" />
+            <LineSegment
+              Point="16.5,3.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="SecondaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="7.5,3.5">
+            <LineSegment
+              Point="14.5,3.5" />
+            <LineSegment
+              Point="14.5,9.5" />
+            <LineSegment
+              Point="7.5,9.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="12.5,20.5">
+            <LineSegment
+              Point="13.5,17.5" />
+            <LineSegment
+              Point="19.5,11.5" />
+            <LineSegment
+              Point="21.5,13.5" />
+            <LineSegment
+              Point="15.5,19.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryBrush"
+        Value="White" />
+    </Style>
+    <Style
+      Selector="local|Icon.save">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="3.5,3.5">
+            <LineSegment
+              Point="3.5,21.5" />
+            <LineSegment
+              Point="20.5,21.5" />
+            <LineSegment
+              Point="20.5,7.5" />
+            <LineSegment
+              Point="16.5,3.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="SecondaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="7.5,3.5">
+            <LineSegment
+              Point="14.5,3.5" />
+            <LineSegment
+              Point="14.5,9.5" />
+            <LineSegment
+              Point="7.5,9.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.stop">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="4.5,4.5">
+            <LineSegment
+              Point="20.5,4.5" />
+            <LineSegment
+              Point="20.5,20.5" />
+            <LineSegment
+              Point="4.5,20.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.pause">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="5.5,2.5">
+            <LineSegment
+              Point="10.5,2.5" />
+            <LineSegment
+              Point="10.5,20.5" />
+            <LineSegment
+              Point="5.5,20.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="19.5,2.5">
+            <LineSegment
+              Point="14.5,2.5" />
+            <LineSegment
+              Point="14.5,20.5" />
+            <LineSegment
+              Point="19.5,20.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.start">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="8.5,2.5">
+            <LineSegment
+              Point="20.5,11.5" />
+            <LineSegment
+              Point="8.5,20.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="2.5,2.5">
+            <LineSegment
+              Point="5.5,2.5" />
+            <LineSegment
+              Point="5.5,20.5" />
+            <LineSegment
+              Point="2.5,20.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.play">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="4.5,2.5">
+            <LineSegment
+              Point="20.5,11.5" />
+            <LineSegment
+              Point="4.5,20.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.stereo">
+      <Setter
+        Property="PrimaryFill">
+        <EllipseGeometry
+          Center="11.5,12.5"
+          RadiusX="3"
+          RadiusY="3" />
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="8.5,6.5">
+              <BezierSegment
+                Point1="3.5,8.5"
+                Point2="3.5,16.5"
+                Point3="8.5,18.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="6.5,4.5">
+              <BezierSegment
+                Point1="0.5,7.5"
+                Point2="0.5,17.5"
+                Point3="6.5,20.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="14.5,6.5">
+              <BezierSegment
+                Point1="19.5,8.5"
+                Point2="19.5,16.5"
+                Point3="14.5,18.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="16.5,4.5">
+              <BezierSegment
+                Point1="22.5,7.5"
+                Point2="22.5,17.5"
+                Point3="16.5,20.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.master">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="1.5,7.5">
+            <LineSegment
+              Point="8.5,7.5" />
+            <LineSegment
+              Point="8.5,3.5" />
+            <LineSegment
+              Point="15.5,10.5" />
+            <LineSegment
+              Point="21.5,10.5" />
+            <LineSegment
+              Point="21.5,14.5" />
+            <LineSegment
+              Point="15.5,14.5" />
+            <LineSegment
+              Point="8.5,21.5" />
+            <LineSegment
+              Point="8.5,17.5" />
+            <LineSegment
+              Point="1.5,17.5" />
+            <LineSegment
+              Point="1.5,14.5" />
+            <LineSegment
+              Point="8.5,14.5" />
+            <LineSegment
+              Point="8.5,10.5" />
+            <LineSegment
+              Point="1.5,10.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.bitRate">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="2.5,2.5">
+            <LineSegment
+              Point="6.5,2.5" />
+            <LineSegment
+              Point="6.5,6.5" />
+            <LineSegment
+              Point="10.5,6.5" />
+            <LineSegment
+              Point="10.5,10.5" />
+            <LineSegment
+              Point="14.5,10.5" />
+            <LineSegment
+              Point="14.5,14.5" />
+            <LineSegment
+              Point="18.5,14.5" />
+            <LineSegment
+              Point="18.5,18.5" />
+            <LineSegment
+              Point="22.5,18.5" />
+            <LineSegment
+              Point="22.5,22.5" />
+            <LineSegment
+              Point="2.5,22.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="6.5,14.5">
+            <LineSegment
+              Point="10.5,14.5" />
+            <LineSegment
+              Point="10.5,18.5" />
+            <LineSegment
+              Point="6.5,18.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="14.5,2.5">
+            <LineSegment
+              Point="18.5,2.5" />
+            <LineSegment
+              Point="18.5,6.5" />
+            <LineSegment
+              Point="14.5,6.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="18.5,10.5">
+            <LineSegment
+              Point="22.5,10.5" />
+            <LineSegment
+              Point="22.5,14.5" />
+            <LineSegment
+              Point="18.5,14.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.language">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="9.5,1.5">
+            <LineSegment
+              Point="14.5,1.5" />
+            <LineSegment
+              Point="20.5,22.5" />
+            <LineSegment
+              Point="17.5,22.5" />
+            <LineSegment
+              Point="15.2,15.5" />
+            <LineSegment
+              Point="8.8,15.5" />
+            <LineSegment
+              Point="6.5,22.5" />
+            <LineSegment
+              Point="3.5,22.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="11.8,4.5">
+            <LineSegment
+              Point="12.2,4.5" />
+            <LineSegment
+              Point="14.6,12.5" />
+            <LineSegment
+              Point="9.3,12.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.sampleRate">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            IsClosed="False"
+            StartPoint="2.5,12.5">
+            <LineSegment
+              Point="6.5,12.5" />
+            <LineSegment
+              Point="8.5,4.5" />
+            <LineSegment
+              Point="10.5,20.5" />
+            <LineSegment
+              Point="13.5,6.5" />
+            <LineSegment
+              Point="15.5,16.5" />
+            <LineSegment
+              Point="17.5,12.5" />
+            <LineSegment
+              Point="21.5,12.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.chrono">
+      <Setter
+        Property="TertiaryBrush"
+        Value="Red" />
+      <Setter
+        Property="PrimaryFill">
+        <EllipseGeometry
+          Center="12.5,13.5"
+          RadiusX="9"
+          RadiusY="9" />
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="12.5,4.5">
+            <LineSegment
+              Point="12.5,1" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="9.5,1.5">
+            <LineSegment
+              Point="15.5,1.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryStroke">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="12.5,13.5">
+            <LineSegment
+              Point="14.5,8.5" />
+          </PathFigure>
+          <PathFigure
+            StartPoint="12.5,13.5">
+            <LineSegment
+              Point="6.5,15.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.folderClosed">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="1.5,3.5">
+            <LineSegment
+              Point="10.5,3.5" />
+            <LineSegment
+              Point="13.5,6.5" />
+            <LineSegment
+              Point="21.5,6.5" />
+            <LineSegment
+              Point="21.5,20.5" />
+            <LineSegment
+              Point="1.5,20.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="SecondaryStroke">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="1.5,6.5">
+            <LineSegment
+              Point="21.5,6.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+    Selector="local|Icon.speaker">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="4.5,8.5">
+            <LineSegment
+              Point="10.5,8.5" />
+            <LineSegment
+              Point="16.5,4.5" />
+            <LineSegment
+              Point="16.5,19.5" />
+            <LineSegment
+              Point="10.5,15.5" />
+            <LineSegment
+              Point="10.5,15.5" />
+            <LineSegment
+              Point="4.5,15.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="SecondaryStroke">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="10.5,8.5">
+            <LineSegment
+              Point="10.5,15.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryFill">
+        <PathGeometry>
+          <PathFigure
+            IsClosed="False"
+            StartPoint="17.5,9.5">
+            <BezierSegment
+              Point1="21.5,9.5"
+              Point2="21.5,14.5"
+              Point3="17.5,14.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="TertiaryBrush"
+        Value="#67f" />
+    </Style>
+    <Style
+    Selector="local|Icon.microphone">
+      <Setter
+        Property="PrimaryFill">
+        <PathGeometry>
+          <PathFigure
+            StartPoint="9.5,2.5">
+            <LineSegment
+              Point="14.5,2.5" />
+            <BezierSegment
+              Point1="14.5,2.5"
+              Point2="16.5,2.5"
+              Point3="16.5,4.5" />
+            <LineSegment
+              Point="16.5,15.5" />
+            <BezierSegment
+              Point1="16.5,15.5"
+              Point2="16.5,17.5"
+              Point3="14.5,17.5" />
+            <LineSegment
+              Point="9.5,17.5" />
+            <BezierSegment
+              Point1="9.5,17.5"
+              Point2="7.5,17.5"
+              Point3="7.5,15.5" />
+            <LineSegment
+              Point="7.5,4.5" />
+            <BezierSegment
+              Point1="7.5,4.5"
+              Point2="7.5,2.5"
+              Point3="9.5,2.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <PathGeometry>
+          <PathFigure
+            IsClosed="False"
+            StartPoint="12,17.5">
+            <LineSegment
+              Point="12,22.5" />
+          </PathFigure>
+          <PathFigure
+            IsClosed="False"
+            StartPoint="7.5,22.5">
+            <LineSegment
+              Point="16.5,22.5" />
+          </PathFigure>
+          <PathFigure
+            IsClosed="False"
+            StartPoint="4.5,14.5">
+            <LineSegment
+              Point="4.5,15.5" />
+            <BezierSegment
+              Point1="4.5,15.5"
+              Point2="4.5,19.5"
+              Point3="8.5,19.5" />
+            <LineSegment
+              Point="15.5,19.5" />
+            <BezierSegment
+              Point1="15.5,19.5"
+              Point2="19.5,19.5"
+              Point3="19.5,15.5" />
+            <LineSegment
+              Point="19.5,14.5" />
+          </PathFigure>
+        </PathGeometry>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.settings">
+      <Setter
+        Property="PrimaryFill"
+        Value="m 15.086286 4.5467143 -0.696143 -0.209 L 13.833857 1 H 10.166143 L 9.6114286 4.333 C 9.1462857 4.4791429 8.7 4.663 8.2678571 4.8892857 L 5.5178571 2.925 2.925 5.5178571 4.8924286 8.271 4.5467143 8.9137143 4.3377143 9.6098571 1 10.166143 v 3.666143 l 3.333 0.556285 C 4.4775714 14.853714 4.663 15.3 4.8892857 15.732143 L 2.925 18.482143 5.5178571 21.075 8.271 19.107571 8.9121429 19.451714 9.6098571 19.662286 10.166143 23 h 3.666143 l 0.556285 -3.333 c 0.465143 -0.144571 0.911429 -0.33 1.342 -0.556286 l 2.75 1.964286 2.592858 -2.592857 L 19.106 15.729 19.450143 15.087857 19.660714 14.390143 23 13.833857 V 10.166143 L 19.667 9.6114286 C 19.522429 9.1462857 19.337 8.7 19.110714 8.2694286 L 21.075 5.5194286 18.482143 2.9265714 15.729 4.894 Z M 15.476 12 c 0 1.920286 -1.557286 3.476 -3.476 3.476 -1.920286 0 -3.476 -1.557286 -3.476 -3.476 0 -1.918714 1.555714 -3.476 3.476 -3.476 1.920286 0 3.476 1.555714 3.476 3.476 z" />
+    </Style>
+    <Style
+      Selector="local|Icon.folderOpen">
+      <Setter
+        Property="PrimaryFill">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              StartPoint="1.5,20.5">
+              <LineSegment
+                Point="4.5,9.5" />
+              <LineSegment
+                Point="22.5,9.5" />
+              <LineSegment
+                Point="19.5,20.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+      <Setter
+        Property="PrimaryStroke">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              StartPoint="1.5,3.5">
+              <LineSegment
+                Point="8.5,3.5" />
+              <LineSegment
+                Point="11.5,6.5" />
+              <LineSegment
+                Point="19.5,6.5" />
+              <LineSegment
+                Point="19.5,9.5" />
+              <LineSegment
+                Point="22.5,9.5" />
+              <LineSegment
+                Point="19.5,20.5" />
+              <LineSegment
+                Point="1.5,20.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.warning">
+      <Setter
+        Property="PrimaryFill">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="True"
+              StartPoint="2.5,20.5">
+              <LineSegment
+                Point="20.5,20.5" />
+              <LineSegment
+                Point="11.5,2.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+      <Setter
+        Property="SecondaryStroke">
+        <Setter.Value>
+          <PathGeometry>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="11.5,7.5">
+              <LineSegment
+                Point="11.5,14.5" />
+            </PathFigure>
+            <PathFigure
+              IsClosed="False"
+              StartPoint="11.5,16.5">
+              <LineSegment
+                Point="11.5,18.5" />
+            </PathFigure>
+          </PathGeometry>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style
+      Selector="local|Icon.warning:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#fe5" />
+    </Style>
+    <Style
+      Selector="local|Icon.folderOpen:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#D8AD6C" />
+    </Style>
+    <Style
+      Selector="local|Icon.settings:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="LightGray" />
+    </Style>
+    <Style
+      Selector="local|Icon.microphone:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="DarkGray" />
+    </Style>
+    <Style
+      Selector="local|Icon.speaker:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="DarkGray" />
+    </Style>
+    <Style
+      Selector="local|Icon.folderClosed:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#D8AD6C" />
+    </Style>
+    <Style
+      Selector="local|Icon.sampleRate:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#6f8" />
+    </Style>
+    <Style
+      Selector="local|Icon.chrono:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#ddd" />
+    </Style>
+    <Style
+      Selector="local|Icon.language:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#68f" />
+    </Style>
+    <Style
+      Selector="local|Icon.bitRate:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#f12C83" />
+    </Style>
+    <Style
+      Selector="local|Icon.master:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#48f" />
+    </Style>
+    <Style
+      Selector="local|Icon.stereo:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#7df" />
+    </Style>
+    <Style
+      Selector="local|Icon.play:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#96D693" />
+    </Style>
+    <Style
+      Selector="local|Icon.start:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#96D693" />
+    </Style>
+    <Style
+      Selector="local|Icon.pause:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#85C6FF" />
+    </Style>
+    <Style
+      Selector="local|Icon.stop:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#FF4534" />
+    </Style>
+    <Style
+      Selector="local|Icon.save:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#7AC1FF" />
+    </Style>
+    <Style
+      Selector="local|Icon.saveAs:selected">
+      <Setter
+        Property="PrimaryBrush"
+        Value="#7AC1FF" />
+    </Style>
+  </Application.Styles>
 </Application>

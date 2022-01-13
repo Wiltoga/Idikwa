@@ -3,13 +3,238 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="using:IDIKWA_App"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:iac="using:Avalonia.Xaml.Interactions.Custom"
+        xmlns:sys="using:System"
+        xmlns:naudio="using:NAudio.CoreAudioApi"
         mc:Ignorable="d"
         Width="700"
         Height="500"
+        MinWidth="500"
+        MinHeight="300"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="32"
         x:Class="IDIKWA_App.MainWindow"
-        Title="IDIKWA"
-        Icon="/assets/icons/logo.ico">
+        Title="Idikwa"
+        Icon="/assets/icons/logo.ico"
+        WindowStartupLocation="CenterScreen">
+  <Window.Styles>
+    <Style
+      Selector="TextBlock.error">
+      <Setter
+        Property="Foreground"
+        Value="#f44" />
+    </Style>
+  </Window.Styles>
+  <Window.Resources>
+    <local:TimeSpanConverter x:Key="TimeSpanConverter" />
+    <local:EqualsConverter x:Key="EqualsConverter" />
+    <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+  </Window.Resources>
   <Window.DataContext>
     <local:MainWindowViewModel />
   </Window.DataContext>
+  <Border
+    Name="mainBorder"
+    BorderBrush="#4fff"
+    BorderThickness="1">
+    <i:Interaction.Behaviors>
+      <ia:DataTriggerBehavior Value="True">
+        <ia:DataTriggerBehavior.Binding>
+          <MultiBinding
+            Converter="{StaticResource EqualsConverter}">
+            <Binding
+              Path="$parent[Window].WindowState" />
+            <Binding
+              Source="{x:Static WindowState.Maximized}" />
+          </MultiBinding>
+        </ia:DataTriggerBehavior.Binding>
+        <ia:ChangePropertyAction TargetObject="{Binding #mainBorder}" PropertyName="Padding">
+          <ia:ChangePropertyAction.Value>
+            <Thickness>5</Thickness>
+          </ia:ChangePropertyAction.Value>
+        </ia:ChangePropertyAction>
+      </ia:DataTriggerBehavior>
+      <ia:DataTriggerBehavior Value="False">
+        <ia:DataTriggerBehavior.Binding>
+          <MultiBinding
+            Converter="{StaticResource EqualsConverter}">
+            <Binding
+              Path="$parent[Window].WindowState" />
+            <Binding
+              Source="{x:Static WindowState.Maximized}" />
+          </MultiBinding>
+        </ia:DataTriggerBehavior.Binding>
+        <ia:ChangePropertyAction TargetObject="{Binding #mainBorder}" PropertyName="Padding">
+          <ia:ChangePropertyAction.Value>
+            <Thickness>0</Thickness>
+          </ia:ChangePropertyAction.Value>
+        </ia:ChangePropertyAction>
+      </ia:DataTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <DockPanel>
+      <Grid
+        DockPanel.Dock="Top">
+        <Rectangle
+          IsHitTestVisible="False"
+          Height="{Binding $parent[Window].ExtendClientAreaTitleBarHeightHint}"
+          VerticalAlignment="Top"
+          Fill="#1fff" />
+        <Image
+          IsHitTestVisible="False"
+          Margin="5,0"
+          Height="{Binding $parent[Window].ExtendClientAreaTitleBarHeightHint}"
+          VerticalAlignment="Top"
+          HorizontalAlignment="Left"
+          Source="/assets/images/textIcon.png" />
+        <StackPanel
+          VerticalAlignment="Top"
+          Orientation="Horizontal"
+          HorizontalAlignment="Right">
+          <Button
+            Padding="2"
+            Command="{Binding EditSettings}"
+            ToolTip.Tip="{local:Resx settings}">
+            <local:Icon
+              IsSelected="{Binding $parent[Button].IsPointerOver}"
+              SecondaryBrush="#414143"
+              Classes="settings" />
+          </Button>
+          <Button
+            IsVisible="{Binding WithLogin}"
+            Content="{local:Resx connection}" />
+          <local:Minimize
+            Click="Minimize"
+            Padding="3,0" />
+          <local:Maximize
+            Click="Maximize"
+            Padding="3,0" />
+          <local:Close
+            Click="Close"
+            Padding="3,0" />
+        </StackPanel>
+      </Grid>
+      <Grid
+        DockPanel.Dock="Right">
+        <StackPanel
+          Margin="20"
+          HorizontalAlignment="Right"
+          VerticalAlignment="Center">
+          <TextBlock
+            Margin="5"
+            HorizontalAlignment="Center"
+            Text=" "
+            Name="recordingText">
+            <i:Interaction.Behaviors>
+              <ia:DataTriggerBehavior Binding="{Binding Recording}" Value="True">
+                <ia:ChangePropertyAction TargetObject="{Binding #recordingText}" PropertyName="Text" Value="{local:Resx recording}" />
+              </ia:DataTriggerBehavior>
+              <ia:DataTriggerBehavior Binding="{Binding Recording}" Value="False">
+                <ia:ChangePropertyAction TargetObject="{Binding #recordingText}" PropertyName="Text" Value=" " />
+              </ia:DataTriggerBehavior>
+            </i:Interaction.Behaviors>
+          </TextBlock>
+          <local:RecordButton
+            Margin="5"
+            Click="{Binding Record}"
+            Recording="{Binding Recording}"
+            Height="196"
+            Width="196" />
+        </StackPanel>
+      </Grid>
+      <Grid>
+        <StackPanel
+          Margin="5"
+          Orientation="Vertical"
+          VerticalAlignment="Center"
+          HorizontalAlignment="Left">
+          <TextBlock
+            Text="{Binding Source={local:Resx currentConfig}, StringFormat='{}{0} :'}" />
+          <StackPanel
+            Margin="20,5"
+            Orientation="Vertical"
+            HorizontalAlignment="Left">
+            <StackPanel
+              Orientation="Horizontal">
+              <TextBlock
+                Margin="2"
+                Text="•" />
+              <TextBlock
+                Margin="2"
+                Text="{Binding Path=Settings.Duration, Converter={StaticResource TimeSpanConverter}}" />
+            </StackPanel>
+            <ItemsControl
+              Items="{Binding Path=Settings.RecordingDevices}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel
+                    Orientation="Vertical" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel
+                    Orientation="Horizontal">
+                    <TextBlock
+                      Margin="2"
+                      VerticalAlignment="Center"
+                      Text="•" />
+                    <local:Icon
+                      ToolTip.Tip="{local:Resx captureDevice}"
+                      Margin="2"
+                      Classes="dynamic microphone">
+                      <local:Icon.IsVisible>
+                        <MultiBinding
+                          Converter="{StaticResource EqualsConverter}">
+                          <Binding
+                            Path="Device.DataFlow" />
+                          <Binding
+                            Source="{x:Static naudio:DataFlow.Capture}" />
+                        </MultiBinding>
+                      </local:Icon.IsVisible>
+                    </local:Icon>
+                    <local:Icon
+                      ToolTip.Tip="{local:Resx renderDevice}"
+                      Margin="2"
+                      Classes="dynamic speaker">
+                      <local:Icon.IsVisible>
+                        <MultiBinding
+                          Converter="{StaticResource EqualsConverter}">
+                          <Binding
+                            Path="Device.DataFlow" />
+                          <Binding
+                            Source="{x:Static naudio:DataFlow.Render}" />
+                        </MultiBinding>
+                      </local:Icon.IsVisible>
+                    </local:Icon>
+                    <TextBlock
+                      Margin="2"
+                      VerticalAlignment="Center"
+                      Text="{Binding Path=Device.FriendlyName}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel
+              IsVisible="{Binding Path=Settings.CanRecord, Converter={StaticResource ReverseBoolConverter}}"
+              Orientation="Horizontal">
+              <TextBlock
+                Margin="2"
+                Text="•" />
+              <TextBlock
+                Margin="2"
+                Classes="error"
+                Text="{local:Resx noDeviceSelected}" />
+            </StackPanel>
+            <local:TextButton
+              Margin="2"
+              Click="{Binding EditSettings}"
+              Text="{local:Resx edit}" />
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </DockPanel>
+  </Border>
 </Window>

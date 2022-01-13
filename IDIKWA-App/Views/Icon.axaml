@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             x:Class="IDIKWA_App.Icon">
+  <Canvas
+    Width="24"
+    Height="24"
+    Background="#01000000">
+    <Path
+      Name="primaryFill"
+      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+      Fill="{Binding $parent[UserControl].SecondaryBrush}"
+      Data="{Binding $parent[UserControl].PrimaryFill}"
+      StrokeThickness="1" />
+    <Path
+      Name="backgroundStroke"
+      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+      Fill="Transparent"
+      Data="{Binding $parent[UserControl].PrimaryStroke}"
+      StrokeThickness="1" />
+    <Path
+      Name="secondaryFill"
+      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+      Fill="{Binding $parent[UserControl].SecondaryBrush}"
+      Data="{Binding $parent[UserControl].SecondaryFill}"
+      StrokeThickness="1" />
+    <Path
+      Name="secondaryStroke"
+      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+      Fill="Transparent"
+      Data="{Binding $parent[UserControl].SecondaryStroke}"
+      StrokeThickness="1" />
+    <Path
+      Name="tertiaryFill"
+      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+      Fill="{Binding $parent[UserControl].SecondaryBrush}"
+      Data="{Binding $parent[UserControl].TertiaryFill}"
+      StrokeThickness="1" />
+    <Path
+      Name="tertiaryStroke"
+      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+      Fill="Transparent"
+      Data="{Binding $parent[UserControl].TertiaryStroke}"
+      StrokeThickness="1" />
+  </Canvas>
+</UserControl>

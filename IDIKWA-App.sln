@@ -3,16 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDIKWA-App", "IDIKWA-App\IDIKWA-App.csproj", "{E60D565C-805F-43DF-B190-81E37B3F86FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDIKWA-App", "IDIKWA-App\IDIKWA-App.csproj", "{E60D565C-805F-43DF-B190-81E37B3F86FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Portable|Any CPU = Portable|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E60D565C-805F-43DF-B190-81E37B3F86FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E60D565C-805F-43DF-B190-81E37B3F86FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E60D565C-805F-43DF-B190-81E37B3F86FC}.Portable|Any CPU.ActiveCfg = Portable|Any CPU
+		{E60D565C-805F-43DF-B190-81E37B3F86FC}.Portable|Any CPU.Build.0 = Portable|Any CPU
 		{E60D565C-805F-43DF-B190-81E37B3F86FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E60D565C-805F-43DF-B190-81E37B3F86FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
