@@ -20,7 +20,7 @@ namespace IDIKWA_App
         public static readonly StyledPropertyBase<IBrush?> CursorBrushProperty = AvaloniaProperty.Register<TimeSelection, IBrush?>(nameof(CursorBrush), null);
         public static readonly StyledPropertyBase<TimeSpan> DurationProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(Duration), TimeSpan.Zero);
         public static readonly StyledPropertyBase<IBrush?> GraduationBrushProperty = AvaloniaProperty.Register<TimeSelection, IBrush?>(nameof(GraduationBrush), null);
-        public static readonly StyledPropertyBase<double> HeaderSizeProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(HeaderSize), 30);
+        public static readonly StyledPropertyBase<double> HeaderSizeProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(HeaderSize), 40);
         public static readonly DirectPropertyBase<bool> IsDraggingProperty = AvaloniaProperty.RegisterDirect<TimeSelection, bool>(nameof(IsDragging), o => o.IsDragging);
         public static readonly StyledPropertyBase<TimeSpan> LeftBoundProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(LeftBound), TimeSpan.Zero);
         public static readonly StyledPropertyBase<Rectangle?> LeftRectangleProperty = AvaloniaProperty.Register<TimeSelection, Rectangle?>(nameof(LeftRectangle), null);
@@ -45,6 +45,7 @@ namespace IDIKWA_App
             LeftRectangleProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             RightRectangleProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             MaxCursorHeightProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
+            IsDraggingProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             HeaderSizeProperty.Changed.AddClassHandler<TimeSelection>(MeasurePropertyChanged);
         }
 
@@ -101,18 +102,18 @@ namespace IDIKWA_App
                 var bigIncrementMultiple = (Duration - time) / bigIncrement;
                 if (Math.Abs(bigIncrementMultiple - Math.Round(bigIncrementMultiple)) < .01)
                 {
-                    var text = new FormattedText($"-{(Duration - time):m\\:ss}", Typeface.Default, 11, TextAlignment.Left, TextWrapping.NoWrap, new Size());
-                    var offset = time > Duration * .95
-                        ? -text.Bounds.Width
-                        : time < Duration * .05
-                            ? 0
-                            : -text.Bounds.Width / 2;
-                    context.DrawText(GraduationBrush, new Point(x + offset, HeaderSize - 26), text);
-                    context.DrawLine(gradutionPen, new Point(x, HeaderSize - 10), new Point(x, HeaderSize));
+                    var text = new FormattedText($"-{(Duration - time):m\\:ss}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                    var offset = x;
+                    if (offset - text.Bounds.Width / 2 < 0)
+                        offset = text.Bounds.Width / 2;
+                    if (offset + text.Bounds.Width / 2 > Bounds.Width)
+                        offset = Bounds.Width - text.Bounds.Width / 2;
+                    context.DrawText(GraduationBrush, new Point(offset - text.Bounds.Width / 2, HeaderSize - 37), text);
+                    context.DrawLine(gradutionPen, new Point(x, HeaderSize - 20), new Point(x, HeaderSize));
                 }
                 else
                 {
-                    context.DrawLine(gradutionPen, new Point(x, HeaderSize - 5), new Point(x, HeaderSize));
+                    context.DrawLine(gradutionPen, new Point(x, HeaderSize - 10), new Point(x, HeaderSize));
                 }
             }
             {
@@ -311,6 +312,27 @@ namespace IDIKWA_App
                     RightRectangle.Width = Bounds.Width - x;
                 }
                 context.DrawGeometry(BoundsBrush, boundsPen, geometry);
+            }
+            if (isDragging)
+            {
+                if (draggedBound == 0)
+                {
+                    var x = LeftBound / Duration * Bounds.Width - 11;
+                    var text = new FormattedText($"-{(Duration - LeftBound):m\\:ss\\.ff}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                    if (x + text.Bounds.Width + 6 > Bounds.Width)
+                        x = Bounds.Width - 6 - text.Bounds.Width;
+                    context.FillRectangle(BoundsBrush, new Rect(x - 3, HeaderSize - 36, text.Bounds.Width + 6, 18));
+                    context.DrawText(BackgroundBrush, new Point(x, HeaderSize - 34), text);
+                }
+                else if (draggedBound == 1)
+                {
+                    var x = RightBound / Duration * Bounds.Width + 12;
+                    var text = new FormattedText($"-{(Duration - RightBound):m\\:ss\\.ff}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                    if (x + 3 > Bounds.Width)
+                        x = Bounds.Width - 3;
+                    context.FillRectangle(BoundsBrush, new Rect(x - 6 - text.Bounds.Width, HeaderSize - 36, text.Bounds.Width + 6, 18));
+                    context.DrawText(BackgroundBrush, new Point(x - 3 - text.Bounds.Width, HeaderSize - 34), text);
+                }
             }
         }
 
