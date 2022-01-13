@@ -28,5 +28,38 @@ namespace IDIKWA_App
                 menu.Open(control);
             }
         }
+
+        protected override void OnDataContextChanged(EventArgs e)
+        {
+            base.OnDataContextChanged(e);
+            if (DataContext is SamplesEditionViewModel viewmodel)
+                viewmodel.Window = this;
+        }
+
+        private void SaveClick(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SamplesEditionViewModel viewmodel)
+            {
+                viewmodel.Save();
+                Close();
+            }
+        }
+
+        private void CancelClick(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SamplesEditionViewModel viewmodel)
+            {
+                viewmodel.Cancel();
+                Close();
+            }
+        }
+
+        private async void SaveAsClick(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SamplesEditionViewModel viewmodel)
+            {
+                await viewmodel.SaveAs();
+            }
+        }
     }
 }

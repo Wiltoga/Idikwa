@@ -8,6 +8,12 @@ namespace IDIKWA_App
 {
     public class App : Application
     {
+        static App()
+        {
+            Factory = new SampleFactory();
+        }
+
+        public static SampleFactory Factory { get; }
         public static Settings? InitialSettings { get; private set; }
 
         public override void Initialize()

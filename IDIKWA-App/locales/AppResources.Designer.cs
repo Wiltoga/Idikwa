@@ -70,6 +70,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à All files.
+        /// </summary>
+        internal static string allFiles {
+            get {
+                return ResourceManager.GetString("allFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à bit/s.
         /// </summary>
         internal static string bitPerSec {
@@ -228,6 +237,15 @@ namespace IDIKWA_App.locales {
         internal static string minimize {
             get {
                 return ResourceManager.GetString("minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à mp3 files.
+        /// </summary>
+        internal static string mp3Files {
+            get {
+                return ResourceManager.GetString("mp3Files", resourceCulture);
             }
         }
         

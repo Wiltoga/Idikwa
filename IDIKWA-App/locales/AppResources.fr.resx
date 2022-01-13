@@ -120,6 +120,9 @@
   <data name="advanced" xml:space="preserve">
     <value>Avancé</value>
   </data>
+  <data name="allFiles" xml:space="preserve">
+    <value>Tous les fichiers</value>
+  </data>
   <data name="bitPerSec" xml:space="preserve">
     <value>bit/s</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="minimize" xml:space="preserve">
     <value>Réduire</value>
+  </data>
+  <data name="mp3Files" xml:space="preserve">
+    <value>Fichiers mp3</value>
   </data>
   <data name="noDeviceSelected" xml:space="preserve">
     <value>Aucun périphérique sélectionné</value>

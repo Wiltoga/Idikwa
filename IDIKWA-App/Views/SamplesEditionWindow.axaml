@@ -313,6 +313,7 @@
         HorizontalAlignment="Right"
         Orientation="Horizontal">
         <Button
+          Click="CancelClick"
           Margin="5"
           VerticalAlignment="Stretch">
           <TextBlock
@@ -324,6 +325,7 @@
           Orientation="Horizontal"
           Name="savePanel">
           <Button
+            Click="SaveClick"
             VerticalAlignment="Stretch"
             Padding="0">
             <StackPanel
@@ -347,6 +349,7 @@
                 PlacementTarget="{Binding #savePanel}"
                 PlacementMode="Bottom">
                 <MenuItem
+                  Click="SaveClick"
                   Header="{local:Resx save}">
                   <MenuItem.Icon>
                     <local:Icon
@@ -356,6 +359,7 @@
                   </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
+                  Click="SaveAsClick"
                   Header="{local:Resx saveAs}">
                   <MenuItem.Icon>
                     <local:Icon

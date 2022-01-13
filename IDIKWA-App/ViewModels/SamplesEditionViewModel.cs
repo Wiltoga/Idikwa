@@ -7,6 +7,7 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,9 @@ namespace IDIKWA_App
     {
         private CancellationTokenSource? PositionUpdaterTokenSource;
 
-        public SamplesEditionViewModel(IEnumerable<RecordViewModel> records)
+        public SamplesEditionViewModel(IEnumerable<RecordViewModel> records, SettingsViewModel settings)
         {
+            Settings = settings;
             TimeSpan lowest = records.First().Source.TotalTime;
             foreach (var item in records)
             {
@@ -117,11 +119,21 @@ namespace IDIKWA_App
 
         public float Scale { get; }
 
+        public SettingsViewModel Settings { get; }
+
+        [Reactive]
+        public Window? Window { get; set; }
+
         private Stream MasterMemory { get; }
 
         private ICommand PlayPause { get; }
 
         private ICommand StartStop { get; }
+
+        public void Cancel()
+        {
+            StopPlayers();
+        }
 
         public void Pause()
         {
@@ -140,6 +152,76 @@ namespace IDIKWA_App
             Playing = true;
         }
 
+        public void Save()
+        {
+            StopPlayers();
+            try
+            {
+                var filename = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3";
+                Directory.CreateDirectory(Settings.OutputPath);
+                var filepath = Path.Combine(Settings.OutputPath, filename);
+                using (var stream = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+                {
+                    Save(stream);
+                }
+                new Process
+                {
+                    StartInfo = new ProcessStartInfo("explorer.exe", $"/select,\"{filepath}\"")
+                    {
+                        UseShellExecute = true
+                    }
+                }.Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public async Task SaveAs()
+        {
+            StopPlayers();
+            var dialog = new SaveFileDialog
+            {
+                InitialFileName = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3",
+                Directory = Settings.OutputPath,
+                Filters = new List<FileDialogFilter>
+                {
+                    new FileDialogFilter
+                    {
+                         Name = new Resx("mp3Files").ProvideValue(null)?.ToString(),
+                         Extensions = new List<string>
+                         {
+                             "mp3"
+                         }
+                    },
+                    new FileDialogFilter
+                    {
+                         Name = new Resx("allFiles").ProvideValue(null)?.ToString(),
+                         Extensions = new List<string>
+                         {
+                             "*"
+                         }
+                    }
+                }
+            };
+            if (Window is not null)
+                if (await dialog.ShowAsync(Window) is string str)
+                {
+                    try
+                    {
+                        using (var stream = new FileStream(str, FileMode.Create, FileAccess.Write))
+                        {
+                            Save(stream);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+        }
+
         public void Start()
         {
             CurrentPosition = LeftBound;
@@ -153,6 +235,11 @@ namespace IDIKWA_App
             CurrentPosition = LeftBound;
             StopPlayers();
             Playing = false;
+        }
+
+        private void Save(Stream output)
+        {
+            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(LeftBound, RightBound - LeftBound, MasterVolume / 100f)), output, Settings.BitRate);
         }
 
         private void SetPlayers(TimeSpan time)

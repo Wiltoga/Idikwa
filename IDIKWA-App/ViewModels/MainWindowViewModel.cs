@@ -21,7 +21,6 @@ namespace IDIKWA_App
     {
         public MainWindowViewModel()
         {
-            Factory = new SampleFactory();
             Window = null;
             Settings = App.InitialSettings is not null
                 ? new SettingsViewModel(App.InitialSettings)
@@ -53,11 +52,9 @@ namespace IDIKWA_App
 
         public bool WithLogin => false;
 
-        private SampleFactory Factory { get; }
-
         public async Task Exit()
         {
-            await Factory.StopRecord();
+            await App.Factory.StopRecord();
         }
 
         public async Task RunEditSettingsAsync()
@@ -77,7 +74,7 @@ namespace IDIKWA_App
             if (Settings.RecordingDevices.Any() && Settings.Duration > TimeSpan.Zero)
                 try
                 {
-                    Factory.StartRecord(Settings.RecordingDevices.Select(device => device.Device), WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, Settings.Mono ? 1 : 2), Settings.Duration);
+                    App.Factory.StartRecord(Settings.RecordingDevices.Select(device => device.Device), WaveFormat.CreateIeeeFloatWaveFormat(Settings.SampleRate, Settings.Mono ? 1 : 2), Settings.Duration);
                     Recording = true;
                 }
                 catch (Exception e)
@@ -90,22 +87,8 @@ namespace IDIKWA_App
         {
             try
             {
-                var streams = await Factory.StopRecord();
+                var streams = await App.Factory.StopRecord();
                 Recording = false;
-                //var filename = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3";
-                //Directory.CreateDirectory(Settings.OutputPath);
-                //var filepath = Path.Combine(Settings.OutputPath, filename);
-                //using (var stream = new FileStream(filepath, FileMode.Create, FileAccess.Write))
-                //{
-                //    Factory.Save(streams, stream, Settings.BitRate);
-                //}
-                //new Process
-                //{
-                //    StartInfo = new ProcessStartInfo("explorer.exe", $"/select,\"{filepath}\"")
-                //    {
-                //        UseShellExecute = true
-                //    }
-                //}.Start();
                 var computationStream = streams.First().Item2;
                 if (computationStream.Length / computationStream.WaveFormat.AverageBytesPerSecond < 1)
                     return;
@@ -113,7 +96,8 @@ namespace IDIKWA_App
                 {
                     DataContext = new SamplesEditionViewModel(
                         streams
-                            .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)))
+                            .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)),
+                        Settings)
                     {
                         MasterVolume = Settings.MasterVolume
                     }
