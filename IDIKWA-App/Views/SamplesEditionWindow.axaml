@@ -59,6 +59,7 @@
       BoundsBrush="#8df"
       CursorBrush="Red"
       GraduationBrush="#5fff"
+      IsEditable="{Binding Path=Settings.AdvancedEdition}"
       Duration="{Binding Duration}"
       TimeCursor="{Binding CurrentPosition}"
       MaxCursorHeight="{Binding #samplesList.Bounds.Height}"
