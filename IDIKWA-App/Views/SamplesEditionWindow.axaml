@@ -112,7 +112,7 @@
                   Orientation="Vertical"
                   Minimum="0"
                   Maximum="100"
-                  Value="{Binding MasterVolume}" />
+                  Value="{Binding Path=Settings.MasterVolume}" />
                 <TextBlock
                   VerticalAlignment="Center"
                   Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
@@ -120,7 +120,7 @@
                 <TextBlock
                   VerticalAlignment="Center"
                   Margin="2"
-                  Text="{Binding MasterVolume, StringFormat='{}{0}%'}" />
+                  Text="{Binding Path=Settings.MasterVolume, StringFormat='{}{0}%'}" />
               </StackPanel>
             </DockPanel>
           </Border>
