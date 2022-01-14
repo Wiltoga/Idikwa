@@ -315,10 +315,13 @@ namespace IDIKWA_App
             }
             if (isDragging)
             {
+                var timeFormat = Duration > TimeSpan.FromSeconds(30)
+                    ? "m\\:ss"
+                    : "m\\:ss\\.ff";
                 if (draggedBound == 0)
                 {
                     var x = LeftBound / Duration * Bounds.Width - 11;
-                    var text = new FormattedText($"-{(Duration - LeftBound):m\\:ss\\.ff}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                    var text = new FormattedText($"-{(Duration - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
                     if (x + text.Bounds.Width + 6 > Bounds.Width)
                         x = Bounds.Width - 6 - text.Bounds.Width;
                     context.FillRectangle(BoundsBrush, new Rect(x - 3, HeaderSize - 36, text.Bounds.Width + 6, 18));
@@ -327,11 +330,29 @@ namespace IDIKWA_App
                 else if (draggedBound == 1)
                 {
                     var x = RightBound / Duration * Bounds.Width + 12;
-                    var text = new FormattedText($"-{(Duration - RightBound):m\\:ss\\.ff}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                    var text = new FormattedText($"-{(Duration - RightBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
                     if (x + 3 > Bounds.Width)
                         x = Bounds.Width - 3;
                     context.FillRectangle(BoundsBrush, new Rect(x - 6 - text.Bounds.Width, HeaderSize - 36, text.Bounds.Width + 6, 18));
                     context.DrawText(BackgroundBrush, new Point(x - 3 - text.Bounds.Width, HeaderSize - 34), text);
+                }
+                if ((RightBound - LeftBound) / Duration * Bounds.Width > 75)
+                {
+                    var text = new FormattedText($"{(RightBound - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                    var left = LeftBound / Duration * Bounds.Width + 3;
+                    var right = RightBound / Duration * Bounds.Width - 3;
+                    var center = (left + right) / 2;
+                    left = (int)left + .5f;
+                    right = (int)right + .5f;
+                    center = (int)center + .5f;
+                    context.FillRectangle(BoundsBrush, new Rect(center - text.Bounds.Width / 2 - 3, HeaderSize - 18, text.Bounds.Width + 6, 18));
+                    context.DrawText(BackgroundBrush, new Point(center - text.Bounds.Width / 2, HeaderSize - 15), text);
+                    context.DrawLine(boundsPen, new Point(left, HeaderSize - 9 - 6), new Point(left, HeaderSize - 9 + 6));
+                    context.DrawLine(boundsPen, new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 - 6), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 + 6));
+                    context.DrawLine(boundsPen, new Point(right, HeaderSize - 9 - 6), new Point(right, HeaderSize - 9 + 6));
+                    context.DrawLine(boundsPen, new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9 - 6), new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9 + 6));
+                    context.DrawLine(boundsPen, new Point(left, HeaderSize - 9.5f), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9.5f));
+                    context.DrawLine(boundsPen, new Point(right, HeaderSize - 9.5f), new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9.5f));
                 }
             }
         }
