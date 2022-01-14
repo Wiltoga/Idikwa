@@ -105,6 +105,7 @@ namespace IDIKWA_App
         [Reactive]
         public bool Playing { get; set; }
 
+        public ICommand PlayPause { get; }
         public IEnumerable<RecordViewModel> Records { get; }
 
         [Reactive]
@@ -114,14 +115,16 @@ namespace IDIKWA_App
 
         public SettingsViewModel Settings { get; }
 
+        public ICommand StartStop { get; }
+
         [Reactive]
         public Window? Window { get; set; }
 
         private Stream MasterMemory { get; }
 
-        private ICommand PlayPause { get; }
+        private TimeSpan VirtualLeftBound => Settings.AdvancedEdition ? LeftBound : TimeSpan.Zero;
 
-        private ICommand StartStop { get; }
+        private TimeSpan VirtualRightBound => Settings.AdvancedEdition ? RightBound : Duration;
 
         public void Cancel()
         {
@@ -136,11 +139,11 @@ namespace IDIKWA_App
 
         public void Play()
         {
-            if (CurrentPosition < LeftBound)
-                CurrentPosition = LeftBound;
-            else if (CurrentPosition > RightBound)
-                CurrentPosition = LeftBound;
-            if (SetPlayers(CurrentPosition))
+            if (CurrentPosition < VirtualLeftBound)
+                CurrentPosition = VirtualLeftBound;
+            else if (CurrentPosition > VirtualRightBound)
+                CurrentPosition = VirtualLeftBound;
+            if (SetPlayers())
             {
                 StartPlayers();
                 Playing = true;
@@ -219,8 +222,8 @@ namespace IDIKWA_App
 
         public void Start()
         {
-            CurrentPosition = LeftBound;
-            if (SetPlayers(CurrentPosition))
+            CurrentPosition = VirtualLeftBound;
+            if (SetPlayers())
             {
                 StartPlayers();
                 Playing = true;
@@ -229,21 +232,20 @@ namespace IDIKWA_App
 
         public void Stop()
         {
-            CurrentPosition = LeftBound;
-            StopPlayers();
+            CurrentPosition = VirtualLeftBound;
             Playing = false;
         }
 
         private void Save(Stream output)
         {
-            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(LeftBound, RightBound - LeftBound)), output, Settings.BitRate);
+            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(VirtualLeftBound, VirtualRightBound - VirtualLeftBound)), output, Settings.BitRate);
         }
 
-        private bool SetPlayers(TimeSpan time)
+        private bool SetPlayers()
         {
             foreach (var record in Records)
             {
-                if (!record.InitPlayer(time, RightBound - LeftBound))
+                if (!record.InitPlayer(CurrentPosition, VirtualRightBound - CurrentPosition))
                     return false;
             }
             return true;
