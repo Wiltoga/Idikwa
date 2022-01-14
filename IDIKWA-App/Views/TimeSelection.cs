@@ -22,7 +22,7 @@ namespace IDIKWA_App
         public static readonly StyledPropertyBase<IBrush?> GraduationBrushProperty = AvaloniaProperty.Register<TimeSelection, IBrush?>(nameof(GraduationBrush), null);
         public static readonly StyledPropertyBase<double> HeaderSizeProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(HeaderSize), 40);
         public static readonly DirectPropertyBase<bool> IsDraggingProperty = AvaloniaProperty.RegisterDirect<TimeSelection, bool>(nameof(IsDragging), o => o.IsDragging);
-        public static readonly StyledPropertyBase<bool> IsEditableProperty = AvaloniaProperty.Register<TimeSelection, bool>(nameof(IsEditable), true);
+        public static readonly StyledPropertyBase<bool?> IsEditableProperty = AvaloniaProperty.Register<TimeSelection, bool?>(nameof(IsEditable), null);
         public static readonly StyledPropertyBase<TimeSpan> LeftBoundProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(LeftBound), TimeSpan.Zero);
         public static readonly StyledPropertyBase<Rectangle?> LeftRectangleProperty = AvaloniaProperty.Register<TimeSelection, Rectangle?>(nameof(LeftRectangle), null);
         public static readonly StyledPropertyBase<double> MaxCursorHeightProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(MaxCursorHeight), double.PositiveInfinity);
@@ -47,7 +47,7 @@ namespace IDIKWA_App
             RightRectangleProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             MaxCursorHeightProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             IsDraggingProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
-            IsEditableProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
+            IsEditableProperty.Changed.AddClassHandler<TimeSelection>(IsEditablePropertyChanged);
             HeaderSizeProperty.Changed.AddClassHandler<TimeSelection>(MeasurePropertyChanged);
         }
 
@@ -67,7 +67,7 @@ namespace IDIKWA_App
             }
         }
 
-        public bool IsEditable { get => GetValue(IsEditableProperty); set => SetValue(IsEditableProperty, value); }
+        public bool? IsEditable { get => GetValue(IsEditableProperty); set => SetValue(IsEditableProperty, value); }
         public TimeSpan LeftBound { get => GetValue(LeftBoundProperty); set => SetValue(LeftBoundProperty, value); }
         public Rectangle? LeftRectangle { get => GetValue(LeftRectangleProperty); set => SetValue(LeftRectangleProperty, value); }
         public double MaxCursorHeight { get => GetValue(MaxCursorHeightProperty); set => SetValue(MaxCursorHeightProperty, value); }
@@ -124,7 +124,7 @@ namespace IDIKWA_App
                 x = (int)x - .5;
                 context.DrawLine(cursorPen, new Point(x, HeaderSize + 2), new Point(x, maxheight - 2));
             }
-            if (IsEditable)
+            if (IsEditable is true)
             {
                 {
                     var x = LeftBound / Duration * Bounds.Width;
@@ -422,7 +422,7 @@ namespace IDIKWA_App
         {
             base.OnPointerPressed(e);
             if (e.GetCurrentPoint(this).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed
-                && IsEditable)
+                && IsEditable is true)
             {
                 IsDragging = true;
                 var perc = e.GetCurrentPoint(this).Position.X / Bounds.Width;
@@ -440,6 +440,15 @@ namespace IDIKWA_App
             base.OnPointerReleased(e);
             if (e.GetCurrentPoint(this).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonReleased)
                 IsDragging = false;
+        }
+
+        private static void IsEditablePropertyChanged(TimeSelection sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is true)
+                sender.Cursor = new Cursor(StandardCursorType.SizeWestEast);
+            else
+                sender.Cursor = new Cursor(StandardCursorType.Arrow);
+            RenderPropertyChanged(sender, e);
         }
 
         private static void MeasurePropertyChanged(TimeSelection sender, AvaloniaPropertyChangedEventArgs e)

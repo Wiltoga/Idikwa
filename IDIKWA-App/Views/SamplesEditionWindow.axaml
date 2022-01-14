@@ -50,7 +50,6 @@
         Fill="#8000" />
     </Grid>
     <local:TimeSelection
-      Cursor="SizeWestEast"
       ZIndex="1"
       Name="timeSelection"
       Grid.RowSpan="2"
