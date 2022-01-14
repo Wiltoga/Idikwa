@@ -3,7 +3,7 @@
     <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
     <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
     <OutputType Condition="'$(Configuration)'=='Portable'">WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>IDIKWA_App</RootNamespace>
     <ApplicationIcon>assets\icons\logo.ico</ApplicationIcon>
