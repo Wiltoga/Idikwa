@@ -34,7 +34,7 @@
     </Grid.RowDefinitions>
     <Grid
       VerticalAlignment="Top"
-      Margin="205,0,5,0"
+      Margin="205,2,5,0"
       ZIndex="1"
       Grid.Row="1"
       Height="{Binding #samplesList.Bounds.Height}">
@@ -53,7 +53,7 @@
       ZIndex="1"
       Name="timeSelection"
       Grid.RowSpan="2"
-      Margin="205,0,5,0"
+      Margin="205,2,5,0"
       BackgroundBrush="#212124"
       BoundsBrush="#8df"
       CursorBrush="Red"

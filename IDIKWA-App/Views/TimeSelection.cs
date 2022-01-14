@@ -84,6 +84,7 @@ namespace IDIKWA_App
             var boundsPen = new Pen(BoundsBrush);
             var cursorPen = new Pen(CursorBrush);
             context.FillRectangle(BackgroundBrush, new Rect(new Point(0, 0), new Size(Bounds.Width, HeaderSize)));
+            context.DrawLine(gradutionPen, new Point(0, HeaderSize - .5f), new Point(Bounds.Width, HeaderSize - .5f));
             var smallIncrement = Duration >= TimeSpan.FromMinutes(4)
                 ? TimeSpan.FromSeconds(5)
                 : Duration >= TimeSpan.FromMinutes(2)
@@ -341,17 +342,17 @@ namespace IDIKWA_App
                         context.FillRectangle(BoundsBrush, new Rect(x - 6 - text.Bounds.Width, HeaderSize - 36, text.Bounds.Width + 6, 18));
                         context.DrawText(BackgroundBrush, new Point(x - 3 - text.Bounds.Width, HeaderSize - 34), text);
                     }
-                    if ((RightBound - LeftBound) / Duration * Bounds.Width > 75)
+                    if ((RightBound - LeftBound) / Duration * Bounds.Width > 60)
                     {
                         var text = new FormattedText($"{(RightBound - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
                         var left = LeftBound / Duration * Bounds.Width + 3;
-                        var right = RightBound / Duration * Bounds.Width - 3;
+                        var right = RightBound / Duration * Bounds.Width - 4;
                         var center = (left + right) / 2;
                         left = (int)left + .5f;
                         right = (int)right + .5f;
                         center = (int)center + .5f;
                         context.FillRectangle(BoundsBrush, new Rect(center - text.Bounds.Width / 2 - 3, HeaderSize - 18, text.Bounds.Width + 6, 18));
-                        context.DrawText(BackgroundBrush, new Point(center - text.Bounds.Width / 2, HeaderSize - 15), text);
+                        context.DrawText(BackgroundBrush, new Point(center - text.Bounds.Width / 2, HeaderSize - 16), text);
                         context.DrawLine(boundsPen, new Point(left, HeaderSize - 9 - 6), new Point(left, HeaderSize - 9 + 6));
                         context.DrawLine(boundsPen, new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 - 6), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 + 6));
                         context.DrawLine(boundsPen, new Point(right, HeaderSize - 9 - 6), new Point(right, HeaderSize - 9 + 6));
