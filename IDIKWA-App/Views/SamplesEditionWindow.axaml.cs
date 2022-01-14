@@ -47,11 +47,7 @@ namespace IDIKWA_App
 
         private void CancelClick(object sender, RoutedEventArgs e)
         {
-            if (DataContext is SamplesEditionViewModel viewmodel)
-            {
-                viewmodel.Cancel();
-                Close();
-            }
+            Close();
         }
 
         private async void SaveAsClick(object sender, RoutedEventArgs e)
@@ -59,6 +55,15 @@ namespace IDIKWA_App
             if (DataContext is SamplesEditionViewModel viewmodel)
             {
                 await viewmodel.SaveAs();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if (DataContext is SamplesEditionViewModel viewmodel)
+            {
+                viewmodel.Save();
             }
         }
     }
