@@ -64,7 +64,7 @@ namespace IDIKWA_App
             base.OnClosing(e);
             if (DataContext is SamplesEditionViewModel viewmodel)
             {
-                viewmodel.Save();
+                viewmodel.Cancel();
             }
         }
     }
