@@ -258,6 +258,10 @@ namespace IDIKWA_App
             if (VirtualRightBound == VirtualLeftBound)
                 return false;
             PositionUpdaterTokenSource = new CancellationTokenSource();
+            foreach (var record in Records)
+            {
+                record.Player.Play();
+            }
             Task.Run(() =>
             {
                 while (!PositionUpdaterTokenSource.IsCancellationRequested)
@@ -269,10 +273,6 @@ namespace IDIKWA_App
                     Thread.Sleep(10);
                 }
             }, PositionUpdaterTokenSource.Token);
-            foreach (var record in Records)
-            {
-                record.Player.Play();
-            }
             return true;
         }
 
@@ -281,7 +281,6 @@ namespace IDIKWA_App
             PositionUpdaterTokenSource?.Cancel();
             foreach (var record in Records)
             {
-                if (record.Player.PlaybackState != PlaybackState.Stopped)
                     record.Player.Stop();
             }
         }
