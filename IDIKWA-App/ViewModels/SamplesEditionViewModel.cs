@@ -152,7 +152,7 @@ namespace IDIKWA_App
 
         public void Save()
         {
-            StopPlayers();
+            Stop();
             try
             {
                 var filename = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3";
@@ -178,7 +178,6 @@ namespace IDIKWA_App
 
         public async Task SaveAs()
         {
-            StopPlayers();
             var dialog = new SaveFileDialog
             {
                 InitialFileName = $"{DateTime.Now:yyyy-MM-dd HH.mm.ss}.mp3",
@@ -206,6 +205,7 @@ namespace IDIKWA_App
             if (Window is not null)
                 if (await dialog.ShowAsync(Window) is string str)
                 {
+                    Pause();
                     try
                     {
                         using (var stream = new FileStream(str, FileMode.Create, FileAccess.Write))
@@ -217,6 +217,7 @@ namespace IDIKWA_App
                     {
                         Console.WriteLine(e);
                     }
+                    Play();
                 }
         }
 
