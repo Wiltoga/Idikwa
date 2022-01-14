@@ -23,9 +23,9 @@ namespace IDIKWA_App
             SourceAsSample = Source.ToSampleProvider();
             Offset = new OffsetWaveStream(Source);
             var deviceVolume = new VolumeSampleProvider(Offset.ToSampleProvider());
-            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => deviceVolume.Volume = value / 100f);
+            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => deviceVolume.Volume = VolumeComputation(value));
             VolumeOutput = new VolumeSampleProvider(deviceVolume);
-            this.WhenAnyValue(o => o.MasterVolume).Subscribe(value => VolumeOutput.Volume = value / 100f);
+            this.WhenAnyValue(o => o.MasterVolume).Subscribe(value => VolumeOutput.Volume = VolumeComputation(value));
             var samples = new float[50000];
             int samplesRead;
             AverageSamples = new float[TotalSampleReduction];
@@ -56,9 +56,13 @@ namespace IDIKWA_App
         public DeviceViewModel Origin { get; }
 
         public WasapiOut Player { get; set; }
+
         public WaveStream Source { get; }
+
         public ISampleProvider SourceAsSample { get; }
+
         public VolumeSampleProvider VolumeOutput { get; private set; }
+
         private OffsetWaveStream Offset { get; set; }
 
         public static float[] GetAverage(ISampleProvider samplesProvider)
@@ -104,6 +108,11 @@ namespace IDIKWA_App
             {
                 return false;
             }
+        }
+
+        private static float VolumeComputation(int initialVolume)
+        {
+            return initialVolume * initialVolume / 10000f;
         }
     }
 }
