@@ -21,11 +21,11 @@ namespace IDIKWA_App
             Source = source;
             Player = new WasapiOut();
             SourceAsSample = Source.ToSampleProvider();
-            var deviceVolume = new VolumeSampleProvider(SourceAsSample);
+            Offset = new OffsetWaveStream(Source);
+            var deviceVolume = new VolumeSampleProvider(Offset.ToSampleProvider());
             Origin.WhenAnyValue(o => o.Volume).Subscribe(value => deviceVolume.Volume = value / 100f);
             VolumeOutput = new VolumeSampleProvider(deviceVolume);
             this.WhenAnyValue(o => o.MasterVolume).Subscribe(value => VolumeOutput.Volume = value / 100f);
-            Offset = new OffsetSampleProvider(VolumeOutput);
             var samples = new float[50000];
             int samplesRead;
             AverageSamples = new float[TotalSampleReduction];
@@ -59,7 +59,7 @@ namespace IDIKWA_App
         public WaveStream Source { get; }
         public ISampleProvider SourceAsSample { get; }
         public VolumeSampleProvider VolumeOutput { get; private set; }
-        private OffsetSampleProvider Offset { get; set; }
+        private OffsetWaveStream Offset { get; set; }
 
         public static float[] GetAverage(ISampleProvider samplesProvider)
         {
@@ -82,23 +82,22 @@ namespace IDIKWA_App
 
         public IWaveProvider GetFinalProvider(TimeSpan offset, TimeSpan duration)
         {
-            Source.Seek(0, System.IO.SeekOrigin.Begin);
-            return new OffsetSampleProvider(VolumeOutput)
-            {
-                SkipOver = offset,
-                Take = duration
-            }.ToWaveProvider();
+            Offset.Offset = offset;
+            Offset.Duration = duration;
+            Offset.CurrentTime = TimeSpan.Zero;
+            return VolumeOutput.ToWaveProvider();
         }
 
         public bool InitPlayer(TimeSpan offset, TimeSpan duration)
         {
             try
             {
-                Source.Seek(0, System.IO.SeekOrigin.Begin);
-                Offset = new OffsetSampleProvider(VolumeOutput) { SkipOver = offset, Take = duration };
+                Offset.Offset = offset;
+                Offset.Duration = duration;
+                Offset.CurrentTime = TimeSpan.Zero;
                 Player.Dispose();
                 Player = new WasapiOut();
-                Player.Init(Offset);
+                Player.Init(VolumeOutput);
                 return true;
             }
             catch (Exception)

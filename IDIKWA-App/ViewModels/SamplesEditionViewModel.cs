@@ -270,10 +270,6 @@ namespace IDIKWA_App
             {
                 record.Player.Play();
             }
-            foreach (var record in Records)
-            {
-                record.Source.Seek(0, SeekOrigin.Begin);
-            }
         }
 
         private void StopPlayers()
