@@ -135,6 +135,9 @@
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="cancelRecording" xml:space="preserve">
+    <value>Cancel the recording</value>
+  </data>
   <data name="captureDevice" xml:space="preserve">
     <value>Recording device</value>
   </data>

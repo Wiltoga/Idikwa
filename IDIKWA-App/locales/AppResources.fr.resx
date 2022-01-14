@@ -135,6 +135,9 @@
   <data name="cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="cancelRecording" xml:space="preserve">
+    <value>Annuler l'enregistrement</value>
+  </data>
   <data name="captureDevice" xml:space="preserve">
     <value>Périphérique d'entrée</value>
   </data>

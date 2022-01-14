@@ -32,9 +32,13 @@ namespace IDIKWA_App
                 else
                     RunRecord();
             });
+            CancelRecording = CommandHandler.Create(async () => await RunCancelRecording());
             EditSettings = CommandHandler.Create(async () => await RunEditSettingsAsync());
             Recording = false;
         }
+
+        [Reactive]
+        public ICommand CancelRecording { get; private set; }
 
         [Reactive]
         public ICommand EditSettings { get; private set; }
@@ -55,6 +59,19 @@ namespace IDIKWA_App
         public async Task Exit()
         {
             await App.Factory.StopRecord();
+        }
+
+        public async Task RunCancelRecording()
+        {
+            try
+            {
+                await App.Factory.StopRecord();
+                Recording = false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public async Task RunEditSettingsAsync()

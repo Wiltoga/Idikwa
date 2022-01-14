@@ -142,6 +142,11 @@
             Recording="{Binding Recording}"
             Height="196"
             Width="196" />
+          <Button
+            Command="{Binding CancelRecording}"
+            IsEnabled="{Binding Recording}"
+            HorizontalAlignment="Center"
+            Content="{local:Resx cancelRecording}" />
         </StackPanel>
       </Grid>
       <Grid>

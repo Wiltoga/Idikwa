@@ -115,6 +115,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Cancel the recording.
+        /// </summary>
+        internal static string cancelRecording {
+            get {
+                return ResourceManager.GetString("cancelRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Recording device.
         /// </summary>
         internal static string captureDevice {
