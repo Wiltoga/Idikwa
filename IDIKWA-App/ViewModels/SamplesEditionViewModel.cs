@@ -233,6 +233,7 @@ namespace IDIKWA_App
 
         public void Stop()
         {
+            StopPlayers();
             CurrentPosition = VirtualLeftBound;
             Playing = false;
         }
