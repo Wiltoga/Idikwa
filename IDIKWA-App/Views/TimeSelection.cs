@@ -22,6 +22,7 @@ namespace IDIKWA_App
         public static readonly StyledPropertyBase<IBrush?> GraduationBrushProperty = AvaloniaProperty.Register<TimeSelection, IBrush?>(nameof(GraduationBrush), null);
         public static readonly StyledPropertyBase<double> HeaderSizeProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(HeaderSize), 40);
         public static readonly DirectPropertyBase<bool> IsDraggingProperty = AvaloniaProperty.RegisterDirect<TimeSelection, bool>(nameof(IsDragging), o => o.IsDragging);
+        public static readonly StyledPropertyBase<bool> IsEditableProperty = AvaloniaProperty.Register<TimeSelection, bool>(nameof(IsEditable), true);
         public static readonly StyledPropertyBase<TimeSpan> LeftBoundProperty = AvaloniaProperty.Register<TimeSelection, TimeSpan>(nameof(LeftBound), TimeSpan.Zero);
         public static readonly StyledPropertyBase<Rectangle?> LeftRectangleProperty = AvaloniaProperty.Register<TimeSelection, Rectangle?>(nameof(LeftRectangle), null);
         public static readonly StyledPropertyBase<double> MaxCursorHeightProperty = AvaloniaProperty.Register<TimeSelection, double>(nameof(MaxCursorHeight), double.PositiveInfinity);
@@ -46,6 +47,7 @@ namespace IDIKWA_App
             RightRectangleProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             MaxCursorHeightProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             IsDraggingProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
+            IsEditableProperty.Changed.AddClassHandler<TimeSelection>(RenderPropertyChanged);
             HeaderSizeProperty.Changed.AddClassHandler<TimeSelection>(MeasurePropertyChanged);
         }
 
@@ -65,6 +67,7 @@ namespace IDIKWA_App
             }
         }
 
+        public bool IsEditable { get => GetValue(IsEditableProperty); set => SetValue(IsEditableProperty, value); }
         public TimeSpan LeftBound { get => GetValue(LeftBoundProperty); set => SetValue(LeftBoundProperty, value); }
         public Rectangle? LeftRectangle { get => GetValue(LeftRectangleProperty); set => SetValue(LeftRectangleProperty, value); }
         public double MaxCursorHeight { get => GetValue(MaxCursorHeightProperty); set => SetValue(MaxCursorHeightProperty, value); }
@@ -121,239 +124,249 @@ namespace IDIKWA_App
                 x = (int)x - .5;
                 context.DrawLine(cursorPen, new Point(x, HeaderSize + 2), new Point(x, maxheight - 2));
             }
+            if (IsEditable)
             {
-                var x = LeftBound / Duration * Bounds.Width;
-                x = (int)x - .5;
-                var geometry = new PathGeometry();
-                var triangle = new PathFigure()
                 {
-                    StartPoint = new Point(x, HeaderSize + 2)
-                };
-                triangle.Segments = new PathSegments();
-                triangle.Segments.Add(new LineSegment()
+                    var x = LeftBound / Duration * Bounds.Width;
+                    x = (int)x - .5;
+                    var geometry = new PathGeometry();
+                    var triangle = new PathFigure()
+                    {
+                        StartPoint = new Point(x, HeaderSize + 2)
+                    };
+                    triangle.Segments = new PathSegments();
+                    triangle.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x, HeaderSize - 20)
+                    });
+                    triangle.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 12, HeaderSize - 20)
+                    });
+                    triangle.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 12, HeaderSize - 10)
+                    });
+                    var line = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x, HeaderSize + 2)
+                    };
+                    line.Segments = new PathSegments();
+                    line.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x, maxheight - 2)
+                    });
+                    var grip1 = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x - 10.5, HeaderSize - 18)
+                    };
+                    grip1.Segments = new PathSegments();
+                    grip1.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 9, HeaderSize - 18)
+                    });
+                    grip1.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 9, HeaderSize - 12)
+                    });
+                    grip1.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 10.5, HeaderSize - 12)
+                    });
+                    var grip2 = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x - 7.5, HeaderSize - 18)
+                    };
+                    grip2.Segments = new PathSegments();
+                    grip2.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 6, HeaderSize - 18)
+                    });
+                    grip2.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 6, HeaderSize - 9)
+                    });
+                    grip2.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 7.5, HeaderSize - 9)
+                    });
+                    var grip3 = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x - 4.5, HeaderSize - 18)
+                    };
+                    grip3.Segments = new PathSegments();
+                    grip3.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 3, HeaderSize - 18)
+                    });
+                    grip3.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 3, HeaderSize - 6)
+                    });
+                    grip3.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x - 4.5, HeaderSize - 6)
+                    });
+                    geometry.Figures.Add(triangle);
+                    geometry.Figures.Add(line);
+                    geometry.Figures.Add(grip1);
+                    geometry.Figures.Add(grip2);
+                    geometry.Figures.Add(grip3);
+                    if (LeftRectangle is not null)
+                    {
+                        LeftRectangle.Width = x;
+                    }
+                    context.DrawGeometry(BoundsBrush, boundsPen, geometry);
+                }
                 {
-                    Point = new Point(x, HeaderSize - 20)
-                });
-                triangle.Segments.Add(new LineSegment()
+                    var x = RightBound / Duration * Bounds.Width;
+                    x = (int)x - .5;
+                    var geometry = new PathGeometry();
+                    var triangle = new PathFigure()
+                    {
+                        StartPoint = new Point(x, HeaderSize + 2)
+                    };
+                    triangle.Segments = new PathSegments();
+                    triangle.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x, HeaderSize - 20)
+                    });
+                    triangle.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 12, HeaderSize - 20)
+                    });
+                    triangle.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 12, HeaderSize - 10)
+                    });
+                    var line = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x, HeaderSize + 2)
+                    };
+                    line.Segments = new PathSegments();
+                    line.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x, maxheight - 2)
+                    });
+                    var grip1 = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x + 10.5, HeaderSize - 18)
+                    };
+                    grip1.Segments = new PathSegments();
+                    grip1.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 9, HeaderSize - 18)
+                    });
+                    grip1.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 9, HeaderSize - 12)
+                    });
+                    grip1.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 10.5, HeaderSize - 12)
+                    });
+                    var grip2 = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x + 7.5, HeaderSize - 18)
+                    };
+                    grip2.Segments = new PathSegments();
+                    grip2.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 6, HeaderSize - 18)
+                    });
+                    grip2.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 6, HeaderSize - 9)
+                    });
+                    grip2.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 7.5, HeaderSize - 9)
+                    });
+                    var grip3 = new PathFigure()
+                    {
+                        IsClosed = false,
+                        StartPoint = new Point(x + 4.5, HeaderSize - 18)
+                    };
+                    grip3.Segments = new PathSegments();
+                    grip3.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 3, HeaderSize - 18)
+                    });
+                    grip3.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 3, HeaderSize - 6)
+                    });
+                    grip3.Segments.Add(new LineSegment()
+                    {
+                        Point = new Point(x + 4.5, HeaderSize - 6)
+                    });
+                    geometry.Figures.Add(triangle);
+                    geometry.Figures.Add(line);
+                    geometry.Figures.Add(grip1);
+                    geometry.Figures.Add(grip2);
+                    geometry.Figures.Add(grip3);
+                    if (RightRectangle is not null)
+                    {
+                        RightRectangle.Width = Bounds.Width - x;
+                    }
+                    context.DrawGeometry(BoundsBrush, boundsPen, geometry);
+                }
+                if (isDragging)
                 {
-                    Point = new Point(x - 12, HeaderSize - 20)
-                });
-                triangle.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 12, HeaderSize - 10)
-                });
-                var line = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x, HeaderSize + 2)
-                };
-                line.Segments = new PathSegments();
-                line.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x, maxheight - 2)
-                });
-                var grip1 = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x - 10.5, HeaderSize - 18)
-                };
-                grip1.Segments = new PathSegments();
-                grip1.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 9, HeaderSize - 18)
-                });
-                grip1.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 9, HeaderSize - 12)
-                });
-                grip1.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 10.5, HeaderSize - 12)
-                });
-                var grip2 = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x - 7.5, HeaderSize - 18)
-                };
-                grip2.Segments = new PathSegments();
-                grip2.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 6, HeaderSize - 18)
-                });
-                grip2.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 6, HeaderSize - 9)
-                });
-                grip2.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 7.5, HeaderSize - 9)
-                });
-                var grip3 = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x - 4.5, HeaderSize - 18)
-                };
-                grip3.Segments = new PathSegments();
-                grip3.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 3, HeaderSize - 18)
-                });
-                grip3.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 3, HeaderSize - 6)
-                });
-                grip3.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x - 4.5, HeaderSize - 6)
-                });
-                geometry.Figures.Add(triangle);
-                geometry.Figures.Add(line);
-                geometry.Figures.Add(grip1);
-                geometry.Figures.Add(grip2);
-                geometry.Figures.Add(grip3);
+                    var timeFormat = Duration > TimeSpan.FromSeconds(30)
+                        ? "m\\:ss"
+                        : "m\\:ss\\.ff";
+                    if (draggedBound == 0)
+                    {
+                        var x = LeftBound / Duration * Bounds.Width - 11;
+                        var text = new FormattedText($"-{(Duration - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                        if (x + text.Bounds.Width + 6 > Bounds.Width)
+                            x = Bounds.Width - 6 - text.Bounds.Width;
+                        context.FillRectangle(BoundsBrush, new Rect(x - 3, HeaderSize - 36, text.Bounds.Width + 6, 18));
+                        context.DrawText(BackgroundBrush, new Point(x, HeaderSize - 34), text);
+                    }
+                    else if (draggedBound == 1)
+                    {
+                        var x = RightBound / Duration * Bounds.Width + 12;
+                        var text = new FormattedText($"-{(Duration - RightBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                        if (x + 3 > Bounds.Width)
+                            x = Bounds.Width - 3;
+                        context.FillRectangle(BoundsBrush, new Rect(x - 6 - text.Bounds.Width, HeaderSize - 36, text.Bounds.Width + 6, 18));
+                        context.DrawText(BackgroundBrush, new Point(x - 3 - text.Bounds.Width, HeaderSize - 34), text);
+                    }
+                    if ((RightBound - LeftBound) / Duration * Bounds.Width > 75)
+                    {
+                        var text = new FormattedText($"{(RightBound - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
+                        var left = LeftBound / Duration * Bounds.Width + 3;
+                        var right = RightBound / Duration * Bounds.Width - 3;
+                        var center = (left + right) / 2;
+                        left = (int)left + .5f;
+                        right = (int)right + .5f;
+                        center = (int)center + .5f;
+                        context.FillRectangle(BoundsBrush, new Rect(center - text.Bounds.Width / 2 - 3, HeaderSize - 18, text.Bounds.Width + 6, 18));
+                        context.DrawText(BackgroundBrush, new Point(center - text.Bounds.Width / 2, HeaderSize - 15), text);
+                        context.DrawLine(boundsPen, new Point(left, HeaderSize - 9 - 6), new Point(left, HeaderSize - 9 + 6));
+                        context.DrawLine(boundsPen, new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 - 6), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 + 6));
+                        context.DrawLine(boundsPen, new Point(right, HeaderSize - 9 - 6), new Point(right, HeaderSize - 9 + 6));
+                        context.DrawLine(boundsPen, new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9 - 6), new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9 + 6));
+                        context.DrawLine(boundsPen, new Point(left, HeaderSize - 9.5f), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9.5f));
+                        context.DrawLine(boundsPen, new Point(right, HeaderSize - 9.5f), new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9.5f));
+                    }
+                }
+            }
+            else
+            {
                 if (LeftRectangle is not null)
-                {
-                    LeftRectangle.Width = x;
-                }
-                context.DrawGeometry(BoundsBrush, boundsPen, geometry);
-            }
-            {
-                var x = RightBound / Duration * Bounds.Width;
-                x = (int)x - .5;
-                var geometry = new PathGeometry();
-                var triangle = new PathFigure()
-                {
-                    StartPoint = new Point(x, HeaderSize + 2)
-                };
-                triangle.Segments = new PathSegments();
-                triangle.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x, HeaderSize - 20)
-                });
-                triangle.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 12, HeaderSize - 20)
-                });
-                triangle.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 12, HeaderSize - 10)
-                });
-                var line = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x, HeaderSize + 2)
-                };
-                line.Segments = new PathSegments();
-                line.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x, maxheight - 2)
-                });
-                var grip1 = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x + 10.5, HeaderSize - 18)
-                };
-                grip1.Segments = new PathSegments();
-                grip1.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 9, HeaderSize - 18)
-                });
-                grip1.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 9, HeaderSize - 12)
-                });
-                grip1.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 10.5, HeaderSize - 12)
-                });
-                var grip2 = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x + 7.5, HeaderSize - 18)
-                };
-                grip2.Segments = new PathSegments();
-                grip2.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 6, HeaderSize - 18)
-                });
-                grip2.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 6, HeaderSize - 9)
-                });
-                grip2.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 7.5, HeaderSize - 9)
-                });
-                var grip3 = new PathFigure()
-                {
-                    IsClosed = false,
-                    StartPoint = new Point(x + 4.5, HeaderSize - 18)
-                };
-                grip3.Segments = new PathSegments();
-                grip3.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 3, HeaderSize - 18)
-                });
-                grip3.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 3, HeaderSize - 6)
-                });
-                grip3.Segments.Add(new LineSegment()
-                {
-                    Point = new Point(x + 4.5, HeaderSize - 6)
-                });
-                geometry.Figures.Add(triangle);
-                geometry.Figures.Add(line);
-                geometry.Figures.Add(grip1);
-                geometry.Figures.Add(grip2);
-                geometry.Figures.Add(grip3);
+                    LeftRectangle.Width = 0;
                 if (RightRectangle is not null)
-                {
-                    RightRectangle.Width = Bounds.Width - x;
-                }
-                context.DrawGeometry(BoundsBrush, boundsPen, geometry);
-            }
-            if (isDragging)
-            {
-                var timeFormat = Duration > TimeSpan.FromSeconds(30)
-                    ? "m\\:ss"
-                    : "m\\:ss\\.ff";
-                if (draggedBound == 0)
-                {
-                    var x = LeftBound / Duration * Bounds.Width - 11;
-                    var text = new FormattedText($"-{(Duration - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
-                    if (x + text.Bounds.Width + 6 > Bounds.Width)
-                        x = Bounds.Width - 6 - text.Bounds.Width;
-                    context.FillRectangle(BoundsBrush, new Rect(x - 3, HeaderSize - 36, text.Bounds.Width + 6, 18));
-                    context.DrawText(BackgroundBrush, new Point(x, HeaderSize - 34), text);
-                }
-                else if (draggedBound == 1)
-                {
-                    var x = RightBound / Duration * Bounds.Width + 12;
-                    var text = new FormattedText($"-{(Duration - RightBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
-                    if (x + 3 > Bounds.Width)
-                        x = Bounds.Width - 3;
-                    context.FillRectangle(BoundsBrush, new Rect(x - 6 - text.Bounds.Width, HeaderSize - 36, text.Bounds.Width + 6, 18));
-                    context.DrawText(BackgroundBrush, new Point(x - 3 - text.Bounds.Width, HeaderSize - 34), text);
-                }
-                if ((RightBound - LeftBound) / Duration * Bounds.Width > 75)
-                {
-                    var text = new FormattedText($"{(RightBound - LeftBound).ToString(timeFormat)}", Typeface.Default, 12, TextAlignment.Left, TextWrapping.NoWrap, new Size());
-                    var left = LeftBound / Duration * Bounds.Width + 3;
-                    var right = RightBound / Duration * Bounds.Width - 3;
-                    var center = (left + right) / 2;
-                    left = (int)left + .5f;
-                    right = (int)right + .5f;
-                    center = (int)center + .5f;
-                    context.FillRectangle(BoundsBrush, new Rect(center - text.Bounds.Width / 2 - 3, HeaderSize - 18, text.Bounds.Width + 6, 18));
-                    context.DrawText(BackgroundBrush, new Point(center - text.Bounds.Width / 2, HeaderSize - 15), text);
-                    context.DrawLine(boundsPen, new Point(left, HeaderSize - 9 - 6), new Point(left, HeaderSize - 9 + 6));
-                    context.DrawLine(boundsPen, new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 - 6), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9 + 6));
-                    context.DrawLine(boundsPen, new Point(right, HeaderSize - 9 - 6), new Point(right, HeaderSize - 9 + 6));
-                    context.DrawLine(boundsPen, new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9 - 6), new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9 + 6));
-                    context.DrawLine(boundsPen, new Point(left, HeaderSize - 9.5f), new Point(center - text.Bounds.Width / 2 - 6, HeaderSize - 9.5f));
-                    context.DrawLine(boundsPen, new Point(right, HeaderSize - 9.5f), new Point(center + text.Bounds.Width / 2 + 6, HeaderSize - 9.5f));
-                }
+                    RightRectangle.Width = 0;
             }
         }
 
@@ -408,7 +421,8 @@ namespace IDIKWA_App
         protected override void OnPointerPressed(PointerPressedEventArgs e)
         {
             base.OnPointerPressed(e);
-            if (e.GetCurrentPoint(this).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
+            if (e.GetCurrentPoint(this).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed
+                && IsEditable)
             {
                 IsDragging = true;
                 var perc = e.GetCurrentPoint(this).Position.X / Bounds.Width;
