@@ -118,11 +118,10 @@ namespace IDIKWA_App
         public Window? Window { get; set; }
 
         private Stream MasterMemory { get; }
-        private ICommand PlayPause { get; }
-        private ICommand StartStop { get; }
-        private TimeSpan VirtualLeftBound => Settings.AdvancedEdition ? LeftBound : TimeSpan.Zero;
 
-        private TimeSpan VirtualRightBound => Settings.AdvancedEdition ? RightBound : Duration;
+        private ICommand PlayPause { get; }
+
+        private ICommand StartStop { get; }
 
         public void Cancel()
         {
@@ -137,10 +136,10 @@ namespace IDIKWA_App
 
         public void Play()
         {
-            if (CurrentPosition < VirtualLeftBound)
-                CurrentPosition = VirtualLeftBound;
-            else if (CurrentPosition > VirtualRightBound)
-                CurrentPosition = VirtualLeftBound;
+            if (CurrentPosition < LeftBound)
+                CurrentPosition = LeftBound;
+            else if (CurrentPosition > RightBound)
+                CurrentPosition = LeftBound;
             if (SetPlayers(CurrentPosition))
             {
                 StartPlayers();
@@ -220,7 +219,7 @@ namespace IDIKWA_App
 
         public void Start()
         {
-            CurrentPosition = VirtualLeftBound;
+            CurrentPosition = LeftBound;
             if (SetPlayers(CurrentPosition))
             {
                 StartPlayers();
@@ -230,21 +229,21 @@ namespace IDIKWA_App
 
         public void Stop()
         {
-            CurrentPosition = VirtualLeftBound;
+            CurrentPosition = LeftBound;
             StopPlayers();
             Playing = false;
         }
 
         private void Save(Stream output)
         {
-            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(VirtualLeftBound, VirtualRightBound - VirtualLeftBound)), output, Settings.BitRate);
+            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(LeftBound, RightBound - LeftBound)), output, Settings.BitRate);
         }
 
         private bool SetPlayers(TimeSpan time)
         {
             foreach (var record in Records)
             {
-                if (!record.InitPlayer(time, VirtualRightBound - VirtualLeftBound))
+                if (!record.InitPlayer(time, RightBound - LeftBound))
                     return false;
             }
             return true;
