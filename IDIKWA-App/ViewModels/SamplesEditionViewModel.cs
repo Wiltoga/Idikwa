@@ -145,8 +145,8 @@ namespace IDIKWA_App
                 CurrentPosition = VirtualLeftBound;
             if (SetPlayers())
             {
-                StartPlayers();
-                Playing = true;
+                if (StartPlayers())
+                    Playing = true;
             }
         }
 
@@ -225,8 +225,8 @@ namespace IDIKWA_App
             CurrentPosition = VirtualLeftBound;
             if (SetPlayers())
             {
-                StartPlayers();
-                Playing = true;
+                if (StartPlayers())
+                    Playing = true;
             }
         }
 
@@ -251,8 +251,10 @@ namespace IDIKWA_App
             return true;
         }
 
-        private void StartPlayers()
+        private bool StartPlayers()
         {
+            if (VirtualRightBound == VirtualLeftBound)
+                return false;
             PositionUpdaterTokenSource = new CancellationTokenSource();
             Task.Run(() =>
             {
@@ -269,6 +271,7 @@ namespace IDIKWA_App
             {
                 record.Player.Play();
             }
+            return true;
         }
 
         private void StopPlayers()
