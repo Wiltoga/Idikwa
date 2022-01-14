@@ -89,9 +89,6 @@ namespace IDIKWA_App
             });
         }
 
-        [Reactive]
-        public bool Advanced { get; set; }
-
         public float[] AverageMaster { get; }
 
         [Reactive]

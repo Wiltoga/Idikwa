@@ -146,7 +146,7 @@
           </Border>
         </DockPanel>
         <ItemsControl
-          IsVisible="{Binding Advanced}"
+          IsVisible="{Binding Path=Settings.AdvancedEdition}"
           Items="{Binding Records}">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
@@ -307,7 +307,7 @@
         DockPanel.Dock="Left"
         Margin="20"
         Content="{local:Resx advanced}"
-        IsChecked="{Binding Advanced, Mode=TwoWay}" />
+        IsChecked="{Binding Path=Settings.AdvancedEdition, Mode=TwoWay}" />
       <StackPanel
         Margin="5,20"
         HorizontalAlignment="Right"
