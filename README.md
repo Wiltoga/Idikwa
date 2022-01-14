@@ -24,7 +24,7 @@ To start recording, simply click on the big button on the right of the UI :
 
 When you click again on it, hit the ![image](https://user-images.githubusercontent.com/30344403/149584978-6d74f701-4b48-414d-9564-c255a953b98d.png) button on the popup. The record will be saved in a specific folder, under the `Idikwa` folder in your `Documents` as a `.mp3` file with the current date as name.
 
-#Screenshots
+# Screenshots
 
 ![image](https://user-images.githubusercontent.com/30344403/149585199-1e3dbb7c-1ff2-45c5-99ff-e3db2e8e7373.png)
 ![image](https://user-images.githubusercontent.com/30344403/149585244-2a7b9f4e-4656-4a84-bcdf-7b84259dbe38.png)
