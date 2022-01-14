@@ -10,12 +10,30 @@
     <StartupObject />
     <Configurations>Debug;Release;Portable</Configurations>
     <AssemblyName>Idikwa</AssemblyName>
+    <Authors>Nathan HANEN</Authors>
+    <Description>Audio recording software to catch the last seconds or minutes of recording.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Wiltoag/IDIKWA-App</PackageProjectUrl>
+    <PackageIcon>logo_x256.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryUrl>https://github.com/Wiltoag/IDIKWA-App</RepositoryUrl>
+    <Version>1.0.0</Version>
+    <Copyright>2022 Nathan HANEN</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Portable|AnyCPU'">
     <DefineConstants>PORTABLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="assets\icons\logo_x256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.10" />
