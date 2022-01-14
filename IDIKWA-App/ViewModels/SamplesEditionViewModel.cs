@@ -48,7 +48,6 @@ namespace IDIKWA_App
                 else
                     Start();
             });
-            MasterVolume = 100;
             Records = new ObservableCollection<RecordViewModel>(records);
             MasterMemory = new MemoryStream();
             var mixer = new MixingWaveProvider32(records.Select(record => record.Source));
@@ -81,11 +80,11 @@ namespace IDIKWA_App
             LeftBound = TimeSpan.Zero;
             RightBound = Duration;
             CurrentPosition = TimeSpan.Zero;
-            this.WhenAnyValue(o => o.MasterVolume).Subscribe(value =>
+            settings.WhenAnyValue(o => o.MasterVolume).Subscribe(value =>
             {
                 foreach (var record in Records)
                 {
-                    record.Player.Volume = value / 100f;
+                    record.MasterVolume = value;
                 }
             });
         }
@@ -105,9 +104,6 @@ namespace IDIKWA_App
         public TimeSpan LeftBound { get; set; }
 
         public ISampleProvider MasterCopy { get; }
-
-        [Reactive]
-        public int MasterVolume { get; set; }
 
         [Reactive]
         public bool Playing { get; set; }
@@ -147,9 +143,11 @@ namespace IDIKWA_App
                 CurrentPosition = LeftBound;
             else if (CurrentPosition > RightBound)
                 CurrentPosition = LeftBound;
-            SetPlayers(CurrentPosition);
-            StartPlayers();
-            Playing = true;
+            if (SetPlayers(CurrentPosition))
+            {
+                StartPlayers();
+                Playing = true;
+            }
         }
 
         public void Save()
@@ -225,9 +223,11 @@ namespace IDIKWA_App
         public void Start()
         {
             CurrentPosition = LeftBound;
-            SetPlayers(CurrentPosition);
-            StartPlayers();
-            Playing = true;
+            if (SetPlayers(CurrentPosition))
+            {
+                StartPlayers();
+                Playing = true;
+            }
         }
 
         public void Stop()
@@ -239,16 +239,17 @@ namespace IDIKWA_App
 
         private void Save(Stream output)
         {
-            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(LeftBound, RightBound - LeftBound, MasterVolume / 100f)), output, Settings.BitRate);
+            App.Factory.Save(Records.Select(rec => rec.GetFinalProvider(LeftBound, RightBound - LeftBound)), output, Settings.BitRate);
         }
 
-        private void SetPlayers(TimeSpan time)
+        private bool SetPlayers(TimeSpan time)
         {
             foreach (var record in Records)
             {
                 if (!record.InitPlayer(time, RightBound - LeftBound))
                     return false;
             }
+            return true;
         }
 
         private void StartPlayers()
@@ -268,6 +269,10 @@ namespace IDIKWA_App
             foreach (var record in Records)
             {
                 record.Player.Play();
+            }
+            foreach (var record in Records)
+            {
+                record.Source.Seek(0, SeekOrigin.Begin);
             }
         }
 

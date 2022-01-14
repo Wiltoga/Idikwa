@@ -21,9 +21,10 @@ namespace IDIKWA_App
             Source = source;
             Player = new WasapiOut();
             SourceAsSample = Source.ToSampleProvider();
-            VolumeOutput = new VolumeSampleProvider(SourceAsSample);
-            VolumeOutput.Volume = Origin.Volume / 100f;
-            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => VolumeOutput.Volume = value / 100f);
+            var deviceVolume = new VolumeSampleProvider(SourceAsSample);
+            Origin.WhenAnyValue(o => o.Volume).Subscribe(value => deviceVolume.Volume = value / 100f);
+            VolumeOutput = new VolumeSampleProvider(deviceVolume);
+            this.WhenAnyValue(o => o.MasterVolume).Subscribe(value => VolumeOutput.Volume = value / 100f);
             Offset = new OffsetSampleProvider(VolumeOutput);
             var samples = new float[50000];
             int samplesRead;
@@ -46,7 +47,11 @@ namespace IDIKWA_App
         public float[] AverageSamples { get; }
 
         public TimeSpan CurrentTime => Source.CurrentTime;
+
         public float HighestSample { get; }
+
+        [Reactive]
+        public int MasterVolume { get; set; }
 
         public DeviceViewModel Origin { get; }
 
@@ -75,16 +80,13 @@ namespace IDIKWA_App
             return result;
         }
 
-        public IWaveProvider GetFinalProvider(TimeSpan offset, TimeSpan duration, float masterVolume)
+        public IWaveProvider GetFinalProvider(TimeSpan offset, TimeSpan duration)
         {
             Source.Seek(0, System.IO.SeekOrigin.Begin);
-            return new VolumeSampleProvider(new OffsetSampleProvider(VolumeOutput)
+            return new OffsetSampleProvider(VolumeOutput)
             {
                 SkipOver = offset,
                 Take = duration
-            })
-            {
-                Volume = masterVolume
             }.ToWaveProvider();
         }
 

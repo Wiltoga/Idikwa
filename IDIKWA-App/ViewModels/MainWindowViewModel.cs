@@ -98,11 +98,9 @@ namespace IDIKWA_App
                         streams
                             .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)),
                         Settings)
-                    {
-                        MasterVolume = Settings.MasterVolume
-                    }
                 };
                 await dialog.ShowDialog(Window);
+                SettingsManager.Save(Settings.Model);
             }
             catch (Exception e)
             {
