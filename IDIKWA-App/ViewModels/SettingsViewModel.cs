@@ -116,7 +116,7 @@ namespace IDIKWA_App
                     BitRate = 64000,
                     SampleRate = 44100,
                     Mono = true,
-                    MasterVolume = 1,
+                    MasterVolume = 100,
                     OutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Idikwa")
                 };
                 var currentCulture = CultureInfo.CurrentCulture;
