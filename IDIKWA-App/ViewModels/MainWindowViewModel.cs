@@ -100,6 +100,7 @@ namespace IDIKWA_App
                         Settings)
                 };
                 await dialog.ShowDialog(Window);
+                SettingsManager.Save(Settings.Model);
             }
             catch (Exception e)
             {
