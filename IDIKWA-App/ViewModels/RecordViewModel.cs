@@ -88,13 +88,21 @@ namespace IDIKWA_App
             }.ToWaveProvider();
         }
 
-        public void InitPlayer(TimeSpan time)
+        public bool InitPlayer(TimeSpan offset, TimeSpan duration)
         {
-            Source.Seek(0, System.IO.SeekOrigin.Begin);
-            Offset = new OffsetSampleProvider(VolumeOutput) { SkipOver = time };
-            Player.Dispose();
-            Player = new WasapiOut();
-            Player.Init(Offset);
+            try
+            {
+                Source.Seek(0, System.IO.SeekOrigin.Begin);
+                Offset = new OffsetSampleProvider(VolumeOutput) { SkipOver = offset, Take = duration };
+                Player.Dispose();
+                Player = new WasapiOut();
+                Player.Init(Offset);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

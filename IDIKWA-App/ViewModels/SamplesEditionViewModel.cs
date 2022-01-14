@@ -246,8 +246,8 @@ namespace IDIKWA_App
         {
             foreach (var record in Records)
             {
-                record.InitPlayer(time);
-                record.Player.Volume = MasterVolume / 100f;
+                if (!record.InitPlayer(time, RightBound - LeftBound))
+                    return false;
             }
         }
 
@@ -260,9 +260,6 @@ namespace IDIKWA_App
                 {
                     var record = Records.First();
                     CurrentPosition = record.CurrentTime;
-                    if (CurrentPosition > RightBound)
-                        Stop();
-                    else
                     if (record.Player.PlaybackState == PlaybackState.Stopped)
                         Stop();
                     Thread.Sleep(10);
