@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="accept" xml:space="preserve">
+    <value>Accepter</value>
+  </data>
+  <data name="acceptEula" xml:space="preserve">
+    <value>J'accepte les termes de conditions générales d'utilisation</value>
+  </data>
   <data name="advanced" xml:space="preserve">
     <value>Avancé</value>
   </data>
@@ -153,6 +159,9 @@
   <data name="currentConfig" xml:space="preserve">
     <value>Configuration actuelle</value>
   </data>
+  <data name="deny" xml:space="preserve">
+    <value>Refuser</value>
+  </data>
   <data name="duration" xml:space="preserve">
     <value>Durée</value>
   </data>
@@ -161,6 +170,10 @@
   </data>
   <data name="en" xml:space="preserve">
     <value>Anglais</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="eula" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>fr\eula.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="fr" xml:space="preserve">
     <value>Français</value>

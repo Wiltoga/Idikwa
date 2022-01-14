@@ -61,6 +61,24 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Accept.
+        /// </summary>
+        internal static string accept {
+            get {
+                return ResourceManager.GetString("accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à I accept the terms in the license agreement.
+        /// </summary>
+        internal static string acceptEula {
+            get {
+                return ResourceManager.GetString("acceptEula", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Advanced.
         /// </summary>
         internal static string advanced {
@@ -169,6 +187,15 @@ namespace IDIKWA_App.locales {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Deny.
+        /// </summary>
+        internal static string deny {
+            get {
+                return ResourceManager.GetString("deny", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Duration.
         /// </summary>
         internal static string duration {
@@ -192,6 +219,17 @@ namespace IDIKWA_App.locales {
         internal static string en {
             get {
                 return ResourceManager.GetString("en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à By using this software, the user will be responsible of any retained information by using the audio recording, regarding him or anyone. The user can not, in any way, bear the responsibility to the software&apos;s creator.
+        ///
+        ///Any other person associated with a recording must be warned and has to explicitely agree to be recorded, eventually holding important or personal informations..
+        /// </summary>
+        internal static string eula {
+            get {
+                return ResourceManager.GetString("eula", resourceCulture);
             }
         }
         

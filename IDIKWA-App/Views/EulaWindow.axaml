@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="IDIKWA_App.EulaWindow"
+        xmlns:local="using:IDIKWA_App"
+        Width="600"
+        Height="400"
+        MinWidth="300"
+        MinHeight="200"
+        Title="Idikwa"
+        Icon="/assets/icons/logo.ico"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+  <Window.Styles>
+    <Style
+      Selector="Button.validate">
+      <Setter
+        Property="Background"
+        Value="#26f" />
+    </Style>
+    <Style
+      Selector="Button.validate:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter
+        Property="Background"
+        Value="#137" />
+    </Style>
+    <Style
+      Selector="Button.validate:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter
+        Property="Background"
+        Value="#39f" />
+    </Style>
+  </Window.Styles>
+  <DockPanel>
+    <StackPanel
+      Orientation="Vertical"
+      HorizontalAlignment="Center"
+      DockPanel.Dock="Bottom">
+      <CheckBox
+        Name="accept"
+        Content="{local:Resx acceptEula}" />
+      <StackPanel
+        HorizontalAlignment="Center"
+        Orientation="Horizontal">
+        <Button
+          Click="AcceptClick"
+          Margin="5"
+          IsEnabled="{Binding #accept.IsChecked}"
+          Classes="validate"
+          Content="{local:Resx accept}" />
+        <Button
+          Click="DenyClick"
+          Margin="5"
+          Content="{local:Resx deny}" />
+      </StackPanel>
+    </StackPanel>
+    <TextBox
+      TextWrapping="Wrap"
+      IsReadOnly="True"
+      Text="{local:Resx eula}" />
+  </DockPanel>
+</Window>

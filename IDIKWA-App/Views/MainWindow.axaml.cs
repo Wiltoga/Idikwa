@@ -18,6 +18,25 @@ namespace IDIKWA_App
                 viewmodel.Window = this;
         }
 
+        protected override async void OnOpened(EventArgs e)
+        {
+            base.OnOpened(e);
+#if !PORTABLE
+            if (App.InitialSettings?.Eula is not true)
+#endif
+            {
+                var eula = new EulaWindow();
+                if (await eula.ShowDialog<bool?>(this) is not true)
+                    Close();
+                else
+            if (DataContext is MainWindowViewModel viewmodel)
+                {
+                    viewmodel.Settings.EulaAccepted = true;
+                    SettingsManager.Save(viewmodel.Settings.Model);
+                }
+            }
+        }
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
