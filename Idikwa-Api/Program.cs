@@ -13,7 +13,7 @@ public class Program
         }
         catch (TimeoutException)
         {
-            Console.WriteLine("Idikwa not started");
+            Console.WriteLine("error:Idikwa not started");
             return;
         }
         var reader = new BinaryReader(pipe);
@@ -25,7 +25,7 @@ public class Program
         }
         catch (Exception)
         {
-            Console.WriteLine("Idikwa closed");
+            Console.WriteLine("error:Idikwa closed");
         }
         pipe.Dispose();
     }

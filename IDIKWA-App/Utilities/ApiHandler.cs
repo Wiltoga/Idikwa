@@ -1,8 +1,11 @@
 ﻿using Avalonia.Threading;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
@@ -64,7 +67,7 @@ idikwa-api --get-devices
                                 devices activation
 
 Usage :
---add-devices [devices]
+--add-devices <devices...>
 
 Devices :
 A list of all the devices to activate
@@ -77,7 +80,7 @@ idikwa-api --add-devices {0.0.0.00000000}.{5010a0b1-d565-4648-baa1-0090c83909cb}
                                 devices activation
 
 Usage :
---remove-devices [devices]
+--remove-devices <devices...>
 
 Devices :
 A list of all the devices to deactivate
@@ -187,7 +190,7 @@ Usage :
 Example :
 idikwa-api --get-sample-rate
 ----------------------------------------------------------------------------------------------
---set-duration               changes the duration of the recorded audio
+--set-duration                  changes the duration of the recorded audio
 
 Usage :
 --set-duration <new duration>
@@ -195,13 +198,41 @@ Usage :
 Example :
 idikwa-api --set-duration 0:02:30
 ----------------------------------------------------------------------------------------------
---get-duration               returns the duration of the recorded audio
+--get-duration                  returns the duration of the recorded audio
 
 Usage :
 --get-duration
 
 Example :
 idikwa-api --get-duration
+----------------------------------------------------------------------------------------------
+--wait-recording                wait until the recording state has changed, or until a
+                                timeout has reached (in milliseconds, optional). Also,
+                                returns the value of the recording state change.
+
+Usage :
+--wait-recording [<timeout>]
+
+Example :
+idikwa-api --wait-recording 1000
+----------------------------------------------------------------------------------------------
+--wait-setting                  wait until one of the given settings has changed, or until
+                                a timeout has reached (in milliseconds, optional). Also,
+                                returns the name of the setting changing.
+
+Usage :
+--wait-setting [<timeout>] <setting names...>
+
+Available settings :
+output
+bitrate
+mono
+sample-rate
+duration
+devices
+
+Example :
+idikwa-api --wait-setting 1000 sample-rate mono bitrate
 ----------------------------------------------------------------------------------------------
 ";
             if (args is not null)
@@ -369,6 +400,86 @@ idikwa-api --get-duration
                         }
                         break;
 
+                    case "--wait-recording":
+                        {
+                            var source = new TaskCompletionSource<bool>();
+                            var task = source.Task;
+                            int timeout = -1;
+                            if (args.Length > 1)
+                                int.TryParse(args[1], out timeout);
+                            if (timeout == 0)
+                                timeout = -1;
+                            var unsub = viewModel.ObservableForProperty(o => o.Recording).Subscribe(change => source.SetResult(change.Value));
+                            task.Wait(timeout);
+                            unsub.Dispose();
+                            if (task.IsCompleted)
+                                writer.Write(task.Result ? "true" : "false");
+                            else
+                                writer.Write("error:timeout reached");
+                        }
+                        break;
+
+                    case "--wait-setting":
+                        {
+                            var source = new TaskCompletionSource<string>();
+                            var task = source.Task;
+                            int timeout = -1;
+                            int index = 1;
+                            if (args.Length > 1)
+                                int.TryParse(args[index++], out timeout);
+                            if (timeout == 0)
+                            {
+                                timeout = -1;
+                                --index;
+                            }
+                            var propertyMapping = new Dictionary<string, string>()
+                            {
+                                {
+                                    "output",
+                                    nameof(SettingsViewModel.OutputPath)
+                                },
+                                {
+                                    "bitrate",
+                                    nameof(SettingsViewModel.BitRate)
+                                },
+                                {
+                                    "mono",
+                                    nameof(SettingsViewModel.Mono)
+                                },
+                                {
+                                    "sample-rate",
+                                    nameof(SettingsViewModel.SampleRate)
+                                },
+                                {
+                                    "duration",
+                                    nameof(SettingsViewModel.Duration)
+                                }
+                            };
+                            var observedProperties = args[index..].Where(x => propertyMapping.ContainsKey(x)).Select(x => propertyMapping[x]);
+                            PropertyChangedEventHandler basicSettingHandler = (sender, e) =>
+                            {
+                                if (e.PropertyName is not null && observedProperties.Contains(e.PropertyName))
+                                    source.SetResult(propertyMapping.First(prop => prop.Value == e.PropertyName).Key);
+                            };
+                            NotifyCollectionChangedEventHandler devicesHandler = (sender, e) =>
+                            {
+                                source.SetResult("devices");
+                            };
+                            var handleDevices = args[index..].Contains("devices");
+                            if (handleDevices)
+                                (viewModel.Settings.RecordingDevices as INotifyCollectionChanged).CollectionChanged += devicesHandler;
+                            viewModel.Settings.PropertyChanged += basicSettingHandler;
+                            task.Wait(timeout);
+                            if (handleDevices)
+                                (viewModel.Settings.RecordingDevices as INotifyCollectionChanged).CollectionChanged -= devicesHandler;
+                            viewModel.Settings.PropertyChanged -= basicSettingHandler;
+                            if (task.IsCompleted)
+                                writer.Write(task.Result);
+                            else
+                                writer.Write("error:timeout reached");
+                        }
+                        break;
+
                     case "":
                     case "--help":
                     case "help":
@@ -378,7 +489,7 @@ idikwa-api --get-duration
                         break;
 
                     default:
-                        writer.Write($"Unknown argument {args[0]}");
+                        writer.Write($"error:Unknown argument {args[0]}");
                         break;
                 }
             }
