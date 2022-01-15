@@ -25,6 +25,8 @@ namespace IDIKWA_App
         private readonly ReadOnlyObservableCollection<DeviceViewModel> recordingDevices;
         private readonly ReadOnlyObservableCollection<DeviceViewModel> renderDevices;
 
+        private TimeSpan duration;
+
         public SettingsViewModel()
         {
             Cultures = new ObservableCollection<CultureInfo>
@@ -163,8 +165,17 @@ namespace IDIKWA_App
 
         public ObservableCollection<CultureInfo> Cultures { get; }
 
-        [Reactive]
-        public TimeSpan Duration { get; set; }
+        public TimeSpan Duration
+        {
+            get => duration;
+            set
+            {
+                duration = value;
+                this.RaisePropertyChanged(nameof(Duration));
+                this.RaisePropertyChanged(nameof(DurationMinutes));
+                this.RaisePropertyChanged(nameof(DurationSeconds));
+            }
+        }
 
         public int DurationMinutes
         {
@@ -172,7 +183,6 @@ namespace IDIKWA_App
             set
             {
                 Duration = new TimeSpan(0, value, Duration.Seconds);
-                this.RaisePropertyChanged(nameof(DurationMinutes));
             }
         }
 
@@ -182,7 +192,6 @@ namespace IDIKWA_App
             set
             {
                 Duration = new TimeSpan(0, Duration.Minutes, value);
-                this.RaisePropertyChanged(nameof(DurationSeconds));
             }
         }
 

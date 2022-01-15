@@ -1,4 +1,5 @@
-﻿using NAudio.CoreAudioApi;
+﻿using Avalonia.Threading;
+using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -51,20 +52,13 @@ commands :
 ----------------------------------------------------------------------------------------------
 <none>, --help, help, -h, h     displays the help panel
 ----------------------------------------------------------------------------------------------
---get-devices                   displays the list of devices
+--get-devices                   displays the list of devices, JSON formatted
 
 Usage :
---get-devices [options]
-
-Options :
-<none>                          displays every device by default
-render                          displays the rendering devices
-capture                         displays the capturing devices
-active                          displays the currently selected devices
-inactive                        displays the currently inactive devices
+--get-devices
 
 Example :
-idikwa-api --get-devices active capture
+idikwa-api --get-devices
 ----------------------------------------------------------------------------------------------
 --add-devices                   activates the given devices, and display the successful
                                 devices activation
@@ -143,57 +137,81 @@ Usage :
 Example :
 idikwa-api --get-output
 ----------------------------------------------------------------------------------------------
+--set-bitrate                   changes the bitrate of mp3 encoded files
+
+Usage :
+--set-bitrate <new bitrate>
+
+Example :
+idikwa-api --set-bitrate 128000
+----------------------------------------------------------------------------------------------
+--get-bitrate                   returns the bitrate of mp3 encoded files
+
+Usage :
+--get-bitrate
+
+Example :
+idikwa-api --get-bitrate
+----------------------------------------------------------------------------------------------
+--set-mono                      changes the mono value. ""true"" for mono, ""false""
+                                for stereo
+
+Usage :
+--set-mono <new value>
+
+Example :
+idikwa-api --set-mono true
+----------------------------------------------------------------------------------------------
+--get-mono                      returns the mono value. ""true"" for mono, ""false""
+                                for stereo
+
+Usage :
+--get-mono
+
+Example :
+idikwa-api --get-mono
+----------------------------------------------------------------------------------------------
+--set-sample-rate               changes the sample rate of the recorded audio
+
+Usage :
+--set-sample-rate <new sample rate>
+
+Example :
+idikwa-api --set-sample-rate 44100
+----------------------------------------------------------------------------------------------
+--get-sample-rate               returns the sample rate of the recorded audio
+
+Usage :
+--get-sample-rate
+
+Example :
+idikwa-api --get-sample-rate
+----------------------------------------------------------------------------------------------
+--set-duration               changes the duration of the recorded audio
+
+Usage :
+--set-duration <new duration>
+
+Example :
+idikwa-api --set-duration 0:02:30
+----------------------------------------------------------------------------------------------
+--get-duration               returns the duration of the recorded audio
+
+Usage :
+--get-duration
+
+Example :
+idikwa-api --get-duration
+----------------------------------------------------------------------------------------------
 ";
             if (args is not null)
             {
                 switch (ValueAt(args, 0))
                 {
-                    case "--display-devices":
+                    case "--get-devices":
                         {
-                            const int RenderDevices = 1 << 0;
-                            const int CaptureDevices = 1 << 1;
-                            const int ActiveDevices = 1 << 2;
-                            const int InactiveDevices = 1 << 3;
-                            int selection = 0;
-
-                            for (int index = 1; args.Length > index; ++index)
-                                switch (ValueAt(args, index))
-                                {
-                                    case "capture":
-                                        selection |= CaptureDevices;
-                                        break;
-
-                                    case "render":
-                                        selection |= RenderDevices;
-                                        break;
-
-                                    case "active":
-                                        selection |= ActiveDevices;
-                                        break;
-
-                                    case "inactive":
-                                        selection |= InactiveDevices;
-                                        break;
-                                }
-
-                            if ((selection & (RenderDevices | CaptureDevices)) == 0)
-                                selection |= RenderDevices | CaptureDevices;
-                            if ((selection & (ActiveDevices | InactiveDevices)) == 0)
-                                selection |= ActiveDevices | InactiveDevices;
-
                             var devices = viewModel.Settings.AllDevices
-                                .Where(device =>
-                                {
-                                    if (((selection & RenderDevices) == 0) && device.DataFlow == DataFlow.Render)
-                                        return false;
-                                    if (((selection & CaptureDevices) == 0) && device.DataFlow == DataFlow.Capture)
-                                        return false;
-                                    if (((selection & ActiveDevices) == 0) && device.Recording)
-                                        return false;
-                                    if (((selection & InactiveDevices) == 0) && !device.Recording)
-                                        return false;
-                                    return true;
-                                }).Select(device => new
+                                .Select(device => new
                                 {
                                     name = device.Name,
                                     id = device.ID,
@@ -245,6 +263,30 @@ idikwa-api --get-output
                         }
                         break;
 
+                    case "--start-record":
+                        {
+                            if (!viewModel.Recording)
+                                _ = Dispatcher.UIThread.InvokeAsync(viewModel.RunRecord);
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--stop-record":
+                        {
+                            if (viewModel.Recording)
+                                _ = Dispatcher.UIThread.InvokeAsync(viewModel.RunCancelRecording);
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--capture-record":
+                        {
+                            if (viewModel.Recording)
+                                _ = Dispatcher.UIThread.InvokeAsync(viewModel.StopRecord);
+                            writer.Write("");
+                        }
+                        break;
+
                     case "--recording":
                         writer.Write(viewModel.Recording ? "true" : "false");
                         break;
@@ -260,6 +302,70 @@ idikwa-api --get-output
                     case "--get-output":
                         {
                             writer.Write(viewModel.Settings.OutputPath);
+                        }
+                        break;
+
+                    case "--set-bitrate":
+                        {
+                            int value;
+                            if (args.Length > 1 && int.TryParse(args[1], out value) && value > 0)
+                                viewModel.Settings.BitRate = value;
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--get-bitrate":
+                        {
+                            writer.Write(viewModel.Settings.BitRate.ToString());
+                        }
+                        break;
+
+                    case "--set-mono":
+                        {
+                            bool value;
+                            if (args.Length > 1 && bool.TryParse(args[1], out value))
+                                viewModel.Settings.Mono = value;
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--get-mono":
+                        {
+                            writer.Write(viewModel.Settings.Mono ? "true" : "false");
+                        }
+                        break;
+
+                    case "--set-sample-rate":
+                        {
+                            int value;
+                            if (args.Length > 1 && int.TryParse(args[1], out value) && value > 0)
+                                viewModel.Settings.SampleRate = value;
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--get-sample-rate":
+                        {
+                            writer.Write(viewModel.Settings.SampleRate.ToString());
+                        }
+                        break;
+
+                    case "--set-duration":
+                        {
+                            TimeSpan value;
+                            if (args.Length > 1 && TimeSpan.TryParse(args[1], out value) && value > TimeSpan.FromSeconds(1))
+                            {
+                                if (value > TimeSpan.FromMinutes(5))
+                                    value = TimeSpan.FromMinutes(5);
+                                viewModel.Settings.Duration = value;
+                            }
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--get-duration":
+                        {
+                            writer.Write(viewModel.Settings.Duration.ToString());
                         }
                         break;
 
