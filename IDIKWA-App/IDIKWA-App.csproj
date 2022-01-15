@@ -17,12 +17,13 @@
     <PackageIcon>logo_x256.png</PackageIcon>
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/Wiltoag/IDIKWA-App</RepositoryUrl>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Copyright>2022 Nathan HANEN</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Portable|AnyCPU'">
     <DefineConstants>PORTABLE</DefineConstants>
+    <Optimize>True</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <None Remove=".gitignore" />
