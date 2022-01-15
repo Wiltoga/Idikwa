@@ -105,7 +105,6 @@ namespace IDIKWA_App
             try
             {
                 var streams = await App.Factory.StopRecord();
-                Recording = false;
                 var computationStream = streams.First().Item2;
                 if (computationStream.Length / computationStream.WaveFormat.AverageBytesPerSecond < 1)
                     return;
@@ -116,13 +115,14 @@ namespace IDIKWA_App
                             .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)),
                         Settings)
                 };
-                await dialog.ShowDialog(Window);
-                SettingsManager.Save(Settings.Model);
+                dialog.Closed += (sender, e) => SettingsManager.Save(Settings.Model);
+                dialog.Show();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+            RunRecord();
         }
     }
 }

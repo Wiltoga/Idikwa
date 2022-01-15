@@ -16,8 +16,7 @@
         MinHeight="500"
         Title="Idikwa"
         Icon="/assets/icons/logo.ico"
-        WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="False">
+        WindowStartupLocation="CenterOwner">
   <Window.Resources>
     <local:EqualsConverter x:Key="EqualsConverter" />
     <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
