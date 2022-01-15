@@ -105,18 +105,21 @@ namespace IDIKWA_App
             try
             {
                 var streams = await App.Factory.StopRecord();
-                var computationStream = streams.First().Item2;
-                if (computationStream.Length / computationStream.WaveFormat.AverageBytesPerSecond < 1)
-                    return;
-                var dialog = new SamplesEditionWindow()
+                if (streams.Any())
                 {
-                    DataContext = new SamplesEditionViewModel(
-                        streams
-                            .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)),
-                        Settings)
-                };
-                dialog.Closed += (sender, e) => SettingsManager.Save(Settings.Model);
-                dialog.Show();
+                    var computationStream = streams.First().Item2;
+                    if (computationStream.Length / computationStream.WaveFormat.AverageBytesPerSecond < 1)
+                        return;
+                    var dialog = new SamplesEditionWindow()
+                    {
+                        DataContext = new SamplesEditionViewModel(
+                            streams
+                                .Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2)),
+                            Settings)
+                    };
+                    dialog.Closed += (sender, e) => SettingsManager.Save(Settings.Model);
+                    dialog.Show();
+                }
             }
             catch (Exception e)
             {
