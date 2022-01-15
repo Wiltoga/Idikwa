@@ -37,10 +37,10 @@ namespace IDIKWA_App
             }
             var args = JsonConvert.DeserializeObject<string[]>(request);
 
-            static T? ValueAt<T>(T[] array, int index) where T : class
+            static string ValueAt(string[] array, int index)
             {
                 if (array.Length <= index)
-                    return null;
+                    return "";
                 else
                     return array[index];
             }
