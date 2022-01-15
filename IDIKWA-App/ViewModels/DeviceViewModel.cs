@@ -16,10 +16,18 @@ namespace IDIKWA_App
             Device = device;
             Recording = recording;
             Volume = volume;
+            Name = Device.FriendlyName;
+            ID = Device.ID;
+            DataFlow = Device.DataFlow;
         }
+
+        public DataFlow DataFlow { get; }
 
         [Reactive]
         public MMDevice Device { get; private set; }
+
+        public string ID { get; }
+        public string Name { get; }
 
         [Reactive]
         public bool Recording { get; set; }

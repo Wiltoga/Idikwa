@@ -192,7 +192,7 @@ namespace IDIKWA_App
         [Reactive]
         public int MasterVolume { get; set; }
 
-        public Settings Model => new Settings(EulaAccepted, BitRate, MasterVolume, Devices.Items.Where(device => device.Volume < 100).ToDictionary(device => device.Device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.Device.ID).ToList(), SampleRate, Culture.Name, AdvancedEdition);
+        public Settings Model => new Settings(EulaAccepted, BitRate, MasterVolume, Devices.Items.Where(device => device.Volume < 100).ToDictionary(device => device.ID, device => device.Volume), Duration, Mono, OutputPath, Devices.Items.Where(device => device.Recording).Select(device => device.ID).ToList(), SampleRate, Culture.Name, AdvancedEdition);
 
         [Reactive]
         public bool Mono { get; set; }

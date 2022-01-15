@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Xaml.Interactions.Custom;
 using System;
+using System.Threading.Tasks;
 
 namespace IDIKWA_App
 {
@@ -33,6 +34,12 @@ namespace IDIKWA_App
                 {
                     viewmodel.Settings.EulaAccepted = true;
                     SettingsManager.Save(viewmodel.Settings.Model);
+                }
+            }
+            {
+                if (DataContext is MainWindowViewModel viewmodel)
+                {
+                    _ = new ApiHandler(viewmodel).StartAsync();
                 }
             }
         }
