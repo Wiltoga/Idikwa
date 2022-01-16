@@ -22,6 +22,7 @@ namespace IDIKWA_App
         public MainWindowViewModel()
         {
             Window = null;
+            QueuedSamples = new ObservableCollection<QueuedSampleViewModel>();
             Settings = App.InitialSettings is not null
                 ? new SettingsViewModel(App.InitialSettings)
                 : SettingsViewModel.Default;
@@ -32,16 +33,56 @@ namespace IDIKWA_App
                 else
                     RunRecord();
             });
+            QueueRecord = CommandHandler.Create(async () =>
+            {
+                if (Recording)
+                    await RunQueueRecord();
+            });
+            EditQueue = CommandHandler.Create(item =>
+            {
+                if (item is QueuedSampleViewModel queueItem)
+                    RunEditQueue(queueItem);
+            });
+            DeleteQueue = CommandHandler.Create(item =>
+            {
+                if (item is QueuedSampleViewModel queueItem)
+                    RunDeleteQueue(queueItem);
+            });
             CancelRecording = CommandHandler.Create(async () => await RunCancelRecording());
             EditSettings = CommandHandler.Create(async () => await RunEditSettingsAsync());
             Recording = false;
+            ShowQueue = false;
+            this.WhenAnyValue(o => o.ShowQueue).Subscribe(o =>
+            {
+                if (Window is not null)
+                {
+                    if (o)
+                        Window.Width += QueueWidth;
+                    else
+                        Window.Width -= QueueWidth;
+                }
+            });
         }
+
+        public static double QueueWidth { get; } = 150;
 
         [Reactive]
         public ICommand CancelRecording { get; private set; }
 
         [Reactive]
+        public ICommand DeleteQueue { get; private set; }
+
+        [Reactive]
+        public ICommand EditQueue { get; private set; }
+
+        [Reactive]
         public ICommand EditSettings { get; private set; }
+
+        [Reactive]
+        public ObservableCollection<QueuedSampleViewModel> QueuedSamples { get; private set; }
+
+        [Reactive]
+        public ICommand QueueRecord { get; private set; }
 
         [Reactive]
         public ICommand Record { get; private set; }
@@ -50,6 +91,9 @@ namespace IDIKWA_App
         public bool Recording { get; set; }
 
         public SettingsViewModel Settings { get; }
+
+        [Reactive]
+        public bool ShowQueue { get; set; }
 
         [Reactive]
         public Window? Window { get; set; }
@@ -84,6 +128,27 @@ namespace IDIKWA_App
             await dialog.ShowDialog(Window);
 
             SettingsManager.Save(Settings.Model);
+        }
+
+        public async Task RunQueueRecord()
+        {
+            try
+            {
+                var streams = await App.Factory.StopRecord();
+                if (streams.Any())
+                {
+                    var computationStream = streams.First().Item2;
+                    if (computationStream.Length / computationStream.WaveFormat.AverageBytesPerSecond < 1)
+                        return;
+                    ShowQueue = true;
+                    QueuedSamples.Add(new QueuedSampleViewModel(streams.Select(stream => new RecordViewModel(Settings.AllDevices.First(device => device.Device.ID == stream.Item1.ID), stream.Item2))));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            RunRecord();
         }
 
         public void RunRecord()
@@ -126,6 +191,24 @@ namespace IDIKWA_App
                 Console.WriteLine(e);
             }
             RunRecord();
+        }
+
+        private void RunDeleteQueue(QueuedSampleViewModel queueItem)
+        {
+            QueuedSamples.Remove(queueItem);
+        }
+
+        private void RunEditQueue(QueuedSampleViewModel queueItem)
+        {
+            QueuedSamples.Remove(queueItem);
+            var dialog = new SamplesEditionWindow()
+            {
+                DataContext = new SamplesEditionViewModel(
+                 queueItem.Records,
+                 Settings)
+            };
+            dialog.Closed += (sender, e) => SettingsManager.Save(Settings.Model);
+            dialog.Show();
         }
     }
 }

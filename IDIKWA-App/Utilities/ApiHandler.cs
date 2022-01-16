@@ -115,6 +115,15 @@ Usage :
 Example :
 idikwa-api --capture-record
 ----------------------------------------------------------------------------------------------
+--queue-record                  captures the current record and put it into the waiting
+                                queue for future edition
+
+Usage :
+--queue-record
+
+Example :
+idikwa-api --queue-record
+----------------------------------------------------------------------------------------------
 --recording                     returns true if the software is currently recording,
                                 false otherwise
 
@@ -314,6 +323,14 @@ idikwa-api --wait-setting 1000 sample-rate mono bitrate
                         {
                             if (viewModel.Recording)
                                 _ = Dispatcher.UIThread.InvokeAsync(viewModel.StopRecord);
+                            writer.Write("");
+                        }
+                        break;
+
+                    case "--queue-record":
+                        {
+                            if (viewModel.Recording)
+                                _ = Dispatcher.UIThread.InvokeAsync(viewModel.RunQueueRecord);
                             writer.Write("");
                         }
                         break;

@@ -38,6 +38,84 @@
 			  Value="#414143" />
 		</Style>
 		<Style
+		  Selector="local|Icon.trash">
+			<Setter
+			  Property="PrimaryFill">
+				<PathGeometry>
+					<PathFigure
+						StartPoint="6.5,2.5">
+						<LineSegment
+							Point="3.5,5.5" />
+						<LineSegment
+							Point="5.5,5.5" />
+						<LineSegment
+							Point="5.5,20.5" />
+						<LineSegment
+							Point="17.5,20.5" />
+						<LineSegment
+							Point="17.5,5.5" />
+						<LineSegment
+							Point="19.5,5.5" />
+						<LineSegment
+							Point="16.5,2.5" />
+					</PathFigure>
+				</PathGeometry>
+			</Setter>
+			<Setter
+				Property="SecondaryStroke">
+				<PathGeometry>
+					<PathFigure
+						IsClosed="False"
+						StartPoint="8.5,6.5">
+						<LineSegment
+							Point="8.5,18.5" />
+					</PathFigure>
+					<PathFigure
+						IsClosed="False"
+						StartPoint="11.5,6.5">
+						<LineSegment
+							Point="11.5,18.5" />
+					</PathFigure>
+					<PathFigure
+						IsClosed="False"
+						StartPoint="14.5,6.5">
+						<LineSegment
+							Point="14.5,18.5" />
+					</PathFigure>
+				</PathGeometry>
+			</Setter>
+		</Style>
+		<Style
+		  Selector="local|Icon.edit">
+			<Setter
+			  Property="PrimaryFill">
+				<PathGeometry>
+					<PathFigure
+						StartPoint="2.5,21.5">
+						<LineSegment
+							Point="5.5,15.5" />
+						<LineSegment
+							Point="18.5,2.5" />
+						<LineSegment
+							Point="21.5,5.5" />
+						<LineSegment
+							Point="8.5,18.5" />
+					</PathFigure>
+				</PathGeometry>
+			</Setter>
+			<Setter
+				Property="SecondaryStroke">
+				<PathGeometry>
+					<PathFigure
+						IsClosed="False"
+						StartPoint="5.5,15.5">
+						<LineSegment
+							Point="8.5,18.5" />
+					</PathFigure>
+				</PathGeometry>
+			</Setter>
+		</Style>
+		<Style
 		  Selector="local|Icon.down">
 			<Setter
 			  Property="PrimaryFill">
@@ -811,6 +889,18 @@
 			<Setter
 			  Property="PrimaryBrush"
 			  Value="#7AC1FF" />
+		</Style>
+		<Style
+		  Selector="local|Icon.edit:selected">
+			<Setter
+			  Property="PrimaryBrush"
+			  Value="#6CB5FF" />
+		</Style>
+		<Style
+		  Selector="local|Icon.trash:selected">
+			<Setter
+			  Property="PrimaryBrush"
+			  Value="#F44B56" />
 		</Style>
 	</Application.Styles>
 </Application>
