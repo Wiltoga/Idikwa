@@ -17,365 +17,365 @@
         Title="Idikwa"
         Icon="/assets/icons/logo.ico"
         WindowStartupLocation="CenterOwner">
-  <Window.Resources>
-    <local:EqualsConverter x:Key="EqualsConverter" />
-    <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
-  </Window.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition
-        MinHeight="{Binding #timeSelection.HeaderSize}"
-        Height="auto" />
-      <RowDefinition
-        Height="*" />
-      <RowDefinition
-        Height="auto" />
-    </Grid.RowDefinitions>
-    <Grid
-      VerticalAlignment="Top"
-      Margin="205,2,5,0"
-      ZIndex="1"
-      Grid.Row="1"
-      Height="{Binding #samplesList.Bounds.Height}">
-      <Rectangle
-        IsHitTestVisible="False"
-        Name="leftRectangle"
-        HorizontalAlignment="Left"
-        Fill="#8000" />
-      <Rectangle
-        IsHitTestVisible="False"
-        Name="rightRectangle"
-        HorizontalAlignment="Right"
-        Fill="#8000" />
-    </Grid>
-    <local:TimeSelection
-      ZIndex="1"
-      Name="timeSelection"
-      Grid.RowSpan="2"
-      Margin="205,2,5,0"
-      BackgroundBrush="#212124"
-      BoundsBrush="#8df"
-      CursorBrush="Red"
-      GraduationBrush="#5fff"
-      IsEditable="{Binding Path=Settings.AdvancedEdition}"
-      Duration="{Binding Duration}"
-      TimeCursor="{Binding CurrentPosition}"
-      MaxCursorHeight="{Binding #samplesList.Bounds.Height}"
-      LeftBound="{Binding LeftBound, Mode=TwoWay}"
-      RightBound="{Binding RightBound, Mode=TwoWay}"
-      LeftRectangle="{Binding #leftRectangle}"
-      RightRectangle="{Binding #rightRectangle}" />
-    <ScrollViewer
-      Name="samplesList"
-      VerticalAlignment="Top"
-      Margin="0,2"
-      Grid.Row="1"
-      VerticalScrollBarVisibility="Auto"
-      HorizontalScrollBarVisibility="Disabled">
-      <StackPanel
-        VerticalAlignment="Top"
-        Orientation="Vertical">
-        <DockPanel
-         Margin="2">
-          <Border
-            Width="200"
-            Margin="2"
-            BorderBrush="#3fff"
-            BorderThickness="1"
-            Background="#1fff"
-            DockPanel.Dock="Left">
-            <DockPanel>
-              <StackPanel
-                Background="#000"
-                DockPanel.Dock="Top"
-                Orientation="Horizontal"
-                ToolTip.Tip="{local:Resx master}">
-                <local:Icon
-                  Classes="master"
-                  IsSelected="True"
-                  Margin="2" />
-                <Label
-                  VerticalContentAlignment="Center"
-                  Padding="2"
-                  Content="{local:Resx master}" />
-                <!-- Just here to allocate empty space to stay in sync with the above samples -->
-                <local:Icon
-                  Margin="2" />
-              </StackPanel>
-              <StackPanel
-                Orientation="Horizontal">
-                <Slider
-                  TickPlacement="BottomRight"
-                  TickFrequency="10"
-                  Margin="2"
-                  Orientation="Vertical"
-                  Minimum="0"
-                  Maximum="100"
-                  Value="{Binding Path=Settings.MasterVolume}" />
-                <TextBlock
-                  VerticalAlignment="Center"
-                  Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
-                  Margin="2" />
-                <TextBlock
-                  VerticalAlignment="Center"
-                  Margin="2"
-                  Text="{Binding Path=Settings.MasterVolume, StringFormat='{}{0}%'}" />
-              </StackPanel>
-            </DockPanel>
-          </Border>
-          <Border
-            Margin="2"
-            BorderBrush="#3fff"
-            BorderThickness="1">
-            <Grid>
-              <local:GridPattern
-                Background="#1fff"
-                AlignmentX="Right"
-                AlignmentY="Center"
-                Stroke="#5fff"
-                PatternWidth="40"
-                PatternHeight="40" />
-              <local:SamplesViewer
-                MinHeight="150"
-                AverageSamples="{Binding AverageMaster}"
-                Scale="{Binding Scale}"
-                ClipToBounds="True"
-                Brush="#4f8" />
-            </Grid>
-          </Border>
-        </DockPanel>
-        <ItemsControl
-          IsVisible="{Binding Path=Settings.AdvancedEdition}"
-          Items="{Binding Records}">
-          <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-              <StackPanel
-                Orientation="Vertical" />
-            </ItemsPanelTemplate>
-          </ItemsControl.ItemsPanel>
-          <ItemsControl.ItemTemplate>
-            <DataTemplate
-              DataType="{x:Type local:RecordViewModel}">
-              <Grid
-                Margin="2">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition
-                    Width="auto" />
-                  <ColumnDefinition
-                    Width="*" />
-                </Grid.ColumnDefinitions>
-                <Border
-                  Margin="2"
-                  BorderBrush="#3fff"
-                  BorderThickness="1"
-                  Grid.Column="1">
-                  <Grid>
-                    <local:GridPattern
-                      Background="#1fff"
-                      AlignmentX="Right"
-                      AlignmentY="Center"
-                      Stroke="#5fff"
-                      PatternWidth="40"
-                      PatternHeight="40" />
-                    <local:SamplesViewer
-                      MinHeight="150"
-                    ClipToBounds="True"
-                    AverageSamples="{Binding AverageSamples}"
-                    Scale="{Binding $parent[Window].DataContext.Scale}"
-                    Brush="#f84" />
-                  </Grid>
-                </Border>
-                <Border
-                  Width="200"
-                  Margin="2"
-                  BorderBrush="#3fff"
-                  BorderThickness="1"
-                  Background="#1fff">
-                  <DockPanel>
-                    <StackPanel
-                      ClipToBounds="True"
-                      Background="#000"
-                      DockPanel.Dock="Top"
-                      Orientation="Horizontal"
-                      ToolTip.Tip="{Binding Origin.Device.FriendlyName}">
-                      <local:Icon
-                        IsSelected="True"
-                        Classes="sampleRate"
-                        Margin="2" />
-                      <local:Icon
-                        IsSelected="True"
-                        Margin="2"
-                        Classes="microphone">
-                        <local:Icon.IsVisible>
-                          <MultiBinding
-                            Converter="{StaticResource EqualsConverter}">
-                            <Binding
-                              Path="Origin.Device.DataFlow" />
-                            <Binding
-                              Source="{x:Static naudio:DataFlow.Capture}" />
-                          </MultiBinding>
-                        </local:Icon.IsVisible>
-                      </local:Icon>
-                      <local:Icon
-                        Margin="2"
-                        IsSelected="True"
-                        Classes="dynamic speaker">
-                        <local:Icon.IsVisible>
-                          <MultiBinding
-                            Converter="{StaticResource EqualsConverter}">
-                            <Binding
-                              Path="Origin.Device.DataFlow" />
-                            <Binding
-                              Source="{x:Static naudio:DataFlow.Render}" />
-                          </MultiBinding>
-                        </local:Icon.IsVisible>
-                      </local:Icon>
-                      <Label
-                        VerticalContentAlignment="Center"
-                        ZIndex="999"
-                        Background="#000"
-                        Padding="2"
-                        Content="{Binding Origin.Device.FriendlyName}" />
-                    </StackPanel>
-                    <StackPanel
-                      Orientation="Horizontal">
-                      <Slider
-                        TickPlacement="BottomRight"
-                        TickFrequency="10"
-                        Margin="2"
-                        Orientation="Vertical"
-                        Minimum="0"
-                        Maximum="100"
-                        Value="{Binding Origin.Volume}" />
-                      <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
-                        Margin="2" />
-                      <TextBlock
-                        VerticalAlignment="Center"
-                        Margin="2"
-                        Text="{Binding Origin.Volume, StringFormat='{}{0}%'}" />
-                    </StackPanel>
-                  </DockPanel>
-                </Border>
-              </Grid>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </StackPanel>
-    </ScrollViewer>
-    <DockPanel
-      Grid.Row="2">
-      <StackPanel
-        DockPanel.Dock="Top"
-        Margin="20"
-        Orientation="Horizontal"
-        HorizontalAlignment="Center">
-        <Button
-          Command="{Binding StartStop}">
-          <Grid>
-            <local:Icon
-              IsVisible="{Binding Playing, Converter={StaticResource ReverseBoolConverter}}"
-              ToolTip.Tip="{local:Resx start}"
-              IsSelected="{Binding $parent[Button].IsPointerOver}"
-              Classes="button start" />
-            <local:Icon
-              IsVisible="{Binding Playing}"
-              ToolTip.Tip="{local:Resx stop}"
-              IsSelected="{Binding $parent[Button].IsPointerOver}"
-              Classes="button stop" />
-          </Grid>
-        </Button>
-        <Button
-          Command="{Binding PlayPause}">
-          <Grid>
-            <local:Icon
-              IsVisible="{Binding Playing, Converter={StaticResource ReverseBoolConverter}}"
-              ToolTip.Tip="{local:Resx play}"
-              IsSelected="{Binding $parent[Button].IsPointerOver}"
-              Classes="button play" />
-            <local:Icon
-              IsVisible="{Binding Playing}"
-              ToolTip.Tip="{local:Resx pause}"
-              IsSelected="{Binding $parent[Button].IsPointerOver}"
-              Classes="button pause" />
-          </Grid>
-        </Button>
-      </StackPanel>
-      <CheckBox
-        DockPanel.Dock="Left"
-        Margin="20"
-        Content="{local:Resx advanced}"
-        IsChecked="{Binding Path=Settings.AdvancedEdition, Mode=TwoWay}" />
-      <StackPanel
-        Margin="5,20"
-        HorizontalAlignment="Right"
-        Orientation="Horizontal">
-        <Button
-          Click="CancelClick"
-          Margin="5"
-          VerticalAlignment="Stretch">
-          <TextBlock
-            VerticalAlignment="Center"
-            Text="{local:Resx cancel}" />
-        </Button>
-        <StackPanel
-          Margin="5"
-          Orientation="Horizontal"
-          Name="savePanel">
-          <Button
-            Click="SaveClick"
-            VerticalAlignment="Stretch"
-            Padding="0">
-            <StackPanel
-              Orientation="Horizontal">
-              <local:Icon
-                Margin="4"
-                Classes="button save"
-                IsSelected="{Binding #savePanel.IsPointerOver}" />
-              <TextBlock
-                Margin="0,0,5,0"
-                VerticalAlignment="Center"
-                Text="{local:Resx save}" />
-            </StackPanel>
-          </Button>
-          <Button
-            Click="SaveDownClick"
-            VerticalAlignment="Stretch"
-            Padding="-5">
-            <Button.Tag>
-              <ContextMenu
-                PlacementTarget="{Binding #savePanel}"
-                PlacementMode="Bottom">
-                <MenuItem
-                  Click="SaveClick"
-                  Header="{local:Resx save}">
-                  <MenuItem.Icon>
-                    <local:Icon
-                      Margin="-2"
-                      Classes="button save"
-                      IsSelected="{Binding $parent[MenuItem].IsPointerOver}" />
-                  </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
-                  Click="SaveAsClick"
-                  Header="{local:Resx saveAs}">
-                  <MenuItem.Icon>
-                    <local:Icon
-                      Margin="-2"
-                      Classes="button saveAs"
-                      IsSelected="{Binding $parent[MenuItem].IsPointerOver}" />
-                  </MenuItem.Icon>
-                </MenuItem>
-              </ContextMenu>
-            </Button.Tag>
-            <local:Icon
-              VerticalAlignment="Center"
-              Classes="button down"
-              IsSelected="{Binding $parent[Button].IsPointerOver}" />
-          </Button>
-        </StackPanel>
-      </StackPanel>
-    </DockPanel>
-  </Grid>
+	<Window.Resources>
+		<local:EqualsConverter x:Key="EqualsConverter" />
+		<local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition
+			  MinHeight="{Binding #timeSelection.HeaderSize}"
+			  Height="auto" />
+			<RowDefinition
+			  Height="*" />
+			<RowDefinition
+			  Height="auto" />
+		</Grid.RowDefinitions>
+		<Grid
+		  VerticalAlignment="Top"
+		  Margin="205,2,5,0"
+		  ZIndex="1"
+		  Grid.Row="1"
+		  Height="{Binding #samplesList.Bounds.Height}">
+			<Rectangle
+			  IsHitTestVisible="False"
+			  Name="leftRectangle"
+			  HorizontalAlignment="Left"
+			  Fill="#8000" />
+			<Rectangle
+			  IsHitTestVisible="False"
+			  Name="rightRectangle"
+			  HorizontalAlignment="Right"
+			  Fill="#8000" />
+		</Grid>
+		<local:TimeSelection
+		  ZIndex="1"
+		  Name="timeSelection"
+		  Grid.RowSpan="2"
+		  Margin="205,2,5,0"
+		  BackgroundBrush="#212124"
+		  BoundsBrush="#8df"
+		  CursorBrush="Red"
+		  GraduationBrush="#5fff"
+		  IsEditable="{Binding Path=Settings.AdvancedEdition}"
+		  Duration="{Binding Duration}"
+		  TimeCursor="{Binding CurrentPosition}"
+		  MaxCursorHeight="{Binding #samplesList.Bounds.Height}"
+		  LeftBound="{Binding LeftBound, Mode=TwoWay}"
+		  RightBound="{Binding RightBound, Mode=TwoWay}"
+		  LeftRectangle="{Binding #leftRectangle}"
+		  RightRectangle="{Binding #rightRectangle}" />
+		<ScrollViewer
+		  Name="samplesList"
+		  VerticalAlignment="Top"
+		  Margin="0,2"
+		  Grid.Row="1"
+		  VerticalScrollBarVisibility="Auto"
+		  HorizontalScrollBarVisibility="Disabled">
+			<StackPanel
+			  VerticalAlignment="Top"
+			  Orientation="Vertical">
+				<DockPanel
+				 Margin="2">
+					<Border
+					  Width="200"
+					  Margin="2"
+					  BorderBrush="#3fff"
+					  BorderThickness="1"
+					  Background="#1fff"
+					  DockPanel.Dock="Left">
+						<DockPanel>
+							<StackPanel
+							  Background="#000"
+							  DockPanel.Dock="Top"
+							  Orientation="Horizontal"
+							  ToolTip.Tip="{local:Resx master}">
+								<local:Icon
+								  Classes="master"
+								  IsSelected="True"
+								  Margin="2" />
+								<Label
+								  VerticalContentAlignment="Center"
+								  Padding="2"
+								  Content="{local:Resx master}" />
+								<!-- Just here to allocate empty space to stay in sync with the above samples -->
+								<local:Icon
+								  Margin="2" />
+							</StackPanel>
+							<StackPanel
+							  Orientation="Horizontal">
+								<Slider
+								  TickPlacement="BottomRight"
+								  TickFrequency="10"
+								  Margin="2"
+								  Orientation="Vertical"
+								  Minimum="0"
+								  Maximum="100"
+								  Value="{Binding Path=Settings.MasterVolume}" />
+								<TextBlock
+								  VerticalAlignment="Center"
+								  Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
+								  Margin="2" />
+								<TextBlock
+								  VerticalAlignment="Center"
+								  Margin="2"
+								  Text="{Binding Path=Settings.MasterVolume, StringFormat='{}{0}%'}" />
+							</StackPanel>
+						</DockPanel>
+					</Border>
+					<Border
+					  Margin="2"
+					  BorderBrush="#3fff"
+					  BorderThickness="1">
+						<Grid>
+							<local:GridPattern
+							  Background="#1fff"
+							  AlignmentX="Right"
+							  AlignmentY="Center"
+							  Stroke="#5fff"
+							  PatternWidth="40"
+							  PatternHeight="40" />
+							<local:SamplesViewer
+							  MinHeight="150"
+							  AverageSamples="{Binding AverageMaster}"
+							  Scale="{Binding Scale}"
+							  ClipToBounds="True"
+							  Brush="#4f8" />
+						</Grid>
+					</Border>
+				</DockPanel>
+				<ItemsControl
+				  IsVisible="{Binding Path=Settings.AdvancedEdition}"
+				  Items="{Binding Records}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel
+							  Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate
+						  DataType="{x:Type local:RecordViewModel}">
+							<Grid
+							  Margin="2">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition
+									  Width="auto" />
+									<ColumnDefinition
+									  Width="*" />
+								</Grid.ColumnDefinitions>
+								<Border
+								  Margin="2"
+								  BorderBrush="#3fff"
+								  BorderThickness="1"
+								  Grid.Column="1">
+									<Grid>
+										<local:GridPattern
+										  Background="#1fff"
+										  AlignmentX="Right"
+										  AlignmentY="Center"
+										  Stroke="#5fff"
+										  PatternWidth="40"
+										  PatternHeight="40" />
+										<local:SamplesViewer
+										  MinHeight="150"
+										ClipToBounds="True"
+										AverageSamples="{Binding AverageSamples}"
+										Scale="{Binding $parent[Window].DataContext.Scale}"
+										Brush="#f84" />
+									</Grid>
+								</Border>
+								<Border
+								  Width="200"
+								  Margin="2"
+								  BorderBrush="#3fff"
+								  BorderThickness="1"
+								  Background="#1fff">
+									<DockPanel>
+										<StackPanel
+										  ClipToBounds="True"
+										  Background="#000"
+										  DockPanel.Dock="Top"
+										  Orientation="Horizontal"
+										  ToolTip.Tip="{Binding Origin.Device.FriendlyName}">
+											<local:Icon
+											  IsSelected="True"
+											  Classes="sampleRate"
+											  Margin="2" />
+											<local:Icon
+											  IsSelected="True"
+											  Margin="2"
+											  Classes="microphone">
+												<local:Icon.IsVisible>
+													<MultiBinding
+													  Converter="{StaticResource EqualsConverter}">
+														<Binding
+														  Path="Origin.Device.DataFlow" />
+														<Binding
+														  Source="{x:Static naudio:DataFlow.Capture}" />
+													</MultiBinding>
+												</local:Icon.IsVisible>
+											</local:Icon>
+											<local:Icon
+											  Margin="2"
+											  IsSelected="True"
+											  Classes="dynamic speaker">
+												<local:Icon.IsVisible>
+													<MultiBinding
+													  Converter="{StaticResource EqualsConverter}">
+														<Binding
+														  Path="Origin.Device.DataFlow" />
+														<Binding
+														  Source="{x:Static naudio:DataFlow.Render}" />
+													</MultiBinding>
+												</local:Icon.IsVisible>
+											</local:Icon>
+											<Label
+											  VerticalContentAlignment="Center"
+											  ZIndex="999"
+											  Background="#000"
+											  Padding="2"
+											  Content="{Binding Origin.Device.FriendlyName}" />
+										</StackPanel>
+										<StackPanel
+										  Orientation="Horizontal">
+											<Slider
+											  TickPlacement="BottomRight"
+											  TickFrequency="10"
+											  Margin="2"
+											  Orientation="Vertical"
+											  Minimum="0"
+											  Maximum="100"
+											  Value="{Binding Origin.Volume}" />
+											<TextBlock
+											  VerticalAlignment="Center"
+											  Text="{Binding Source={local:Resx volume}, StringFormat='{}{0} :'}"
+											  Margin="2" />
+											<TextBlock
+											  VerticalAlignment="Center"
+											  Margin="2"
+											  Text="{Binding Origin.Volume, StringFormat='{}{0}%'}" />
+										</StackPanel>
+									</DockPanel>
+								</Border>
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</ScrollViewer>
+		<DockPanel
+		  Grid.Row="2">
+			<StackPanel
+			  DockPanel.Dock="Top"
+			  Margin="20"
+			  Orientation="Horizontal"
+			  HorizontalAlignment="Center">
+				<Button
+				  Command="{Binding StartStop}">
+					<Grid>
+						<local:Icon
+						  IsVisible="{Binding Playing, Converter={StaticResource ReverseBoolConverter}}"
+						  ToolTip.Tip="{local:Resx start}"
+						  IsSelected="{Binding $parent[Button].IsPointerOver}"
+						  Classes="button start" />
+						<local:Icon
+						  IsVisible="{Binding Playing}"
+						  ToolTip.Tip="{local:Resx stop}"
+						  IsSelected="{Binding $parent[Button].IsPointerOver}"
+						  Classes="button stop" />
+					</Grid>
+				</Button>
+				<Button
+				  Command="{Binding PlayPause}">
+					<Grid>
+						<local:Icon
+						  IsVisible="{Binding Playing, Converter={StaticResource ReverseBoolConverter}}"
+						  ToolTip.Tip="{local:Resx play}"
+						  IsSelected="{Binding $parent[Button].IsPointerOver}"
+						  Classes="button play" />
+						<local:Icon
+						  IsVisible="{Binding Playing}"
+						  ToolTip.Tip="{local:Resx pause}"
+						  IsSelected="{Binding $parent[Button].IsPointerOver}"
+						  Classes="button pause" />
+					</Grid>
+				</Button>
+			</StackPanel>
+			<CheckBox
+			  DockPanel.Dock="Left"
+			  Margin="20"
+			  Content="{local:Resx advanced}"
+			  IsChecked="{Binding Path=Settings.AdvancedEdition, Mode=TwoWay}" />
+			<StackPanel
+			  Margin="5,20"
+			  HorizontalAlignment="Right"
+			  Orientation="Horizontal">
+				<Button
+				  Click="CancelClick"
+				  Margin="5"
+				  VerticalAlignment="Stretch">
+					<TextBlock
+					  VerticalAlignment="Center"
+					  Text="{local:Resx cancel}" />
+				</Button>
+				<StackPanel
+				  Margin="5"
+				  Orientation="Horizontal"
+				  Name="savePanel">
+					<Button
+					  Click="SaveClick"
+					  VerticalAlignment="Stretch"
+					  Padding="0">
+						<StackPanel
+						  Orientation="Horizontal">
+							<local:Icon
+							  Margin="4"
+							  Classes="button save"
+							  IsSelected="{Binding #savePanel.IsPointerOver}" />
+							<TextBlock
+							  Margin="0,0,5,0"
+							  VerticalAlignment="Center"
+							  Text="{local:Resx save}" />
+						</StackPanel>
+					</Button>
+					<Button
+					  Click="SaveDownClick"
+					  VerticalAlignment="Stretch"
+					  Padding="-5">
+						<Button.Tag>
+							<ContextMenu
+							  PlacementTarget="{Binding #savePanel}"
+							  PlacementMode="Bottom">
+								<MenuItem
+								  Click="SaveClick"
+								  Header="{local:Resx save}">
+									<MenuItem.Icon>
+										<local:Icon
+										  Margin="-2"
+										  Classes="button save"
+										  IsSelected="{Binding $parent[MenuItem].IsPointerOver}" />
+									</MenuItem.Icon>
+								</MenuItem>
+								<MenuItem
+								  Click="SaveAsClick"
+								  Header="{local:Resx saveAs}">
+									<MenuItem.Icon>
+										<local:Icon
+										  Margin="-2"
+										  Classes="button saveAs"
+										  IsSelected="{Binding $parent[MenuItem].IsPointerOver}" />
+									</MenuItem.Icon>
+								</MenuItem>
+							</ContextMenu>
+						</Button.Tag>
+						<local:Icon
+						  VerticalAlignment="Center"
+						  Classes="button down"
+						  IsSelected="{Binding $parent[Button].IsPointerOver}" />
+					</Button>
+				</StackPanel>
+			</StackPanel>
+		</DockPanel>
+	</Grid>
 </Window>

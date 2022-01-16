@@ -6,45 +6,45 @@
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              x:Class="IDIKWA_App.Icon">
-  <Canvas
-    Width="24"
-    Height="24"
-    Background="#01000000">
-    <Path
-      Name="primaryFill"
-      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
-      Fill="{Binding $parent[UserControl].SecondaryBrush}"
-      Data="{Binding $parent[UserControl].PrimaryFill}"
-      StrokeThickness="1" />
-    <Path
-      Name="backgroundStroke"
-      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
-      Fill="Transparent"
-      Data="{Binding $parent[UserControl].PrimaryStroke}"
-      StrokeThickness="1" />
-    <Path
-      Name="secondaryFill"
-      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
-      Fill="{Binding $parent[UserControl].SecondaryBrush}"
-      Data="{Binding $parent[UserControl].SecondaryFill}"
-      StrokeThickness="1" />
-    <Path
-      Name="secondaryStroke"
-      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
-      Fill="Transparent"
-      Data="{Binding $parent[UserControl].SecondaryStroke}"
-      StrokeThickness="1" />
-    <Path
-      Name="tertiaryFill"
-      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
-      Fill="{Binding $parent[UserControl].SecondaryBrush}"
-      Data="{Binding $parent[UserControl].TertiaryFill}"
-      StrokeThickness="1" />
-    <Path
-      Name="tertiaryStroke"
-      Stroke="{Binding $parent[UserControl].PrimaryBrush}"
-      Fill="Transparent"
-      Data="{Binding $parent[UserControl].TertiaryStroke}"
-      StrokeThickness="1" />
-  </Canvas>
+	<Canvas
+	  Width="24"
+	  Height="24"
+	  Background="#01000000">
+		<Path
+		  Name="primaryFill"
+		  Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+		  Fill="{Binding $parent[UserControl].SecondaryBrush}"
+		  Data="{Binding $parent[UserControl].PrimaryFill}"
+		  StrokeThickness="1" />
+		<Path
+		  Name="backgroundStroke"
+		  Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+		  Fill="Transparent"
+		  Data="{Binding $parent[UserControl].PrimaryStroke}"
+		  StrokeThickness="1" />
+		<Path
+		  Name="secondaryFill"
+		  Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+		  Fill="{Binding $parent[UserControl].SecondaryBrush}"
+		  Data="{Binding $parent[UserControl].SecondaryFill}"
+		  StrokeThickness="1" />
+		<Path
+		  Name="secondaryStroke"
+		  Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+		  Fill="Transparent"
+		  Data="{Binding $parent[UserControl].SecondaryStroke}"
+		  StrokeThickness="1" />
+		<Path
+		  Name="tertiaryFill"
+		  Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+		  Fill="{Binding $parent[UserControl].SecondaryBrush}"
+		  Data="{Binding $parent[UserControl].TertiaryFill}"
+		  StrokeThickness="1" />
+		<Path
+		  Name="tertiaryStroke"
+		  Stroke="{Binding $parent[UserControl].PrimaryBrush}"
+		  Fill="Transparent"
+		  Data="{Binding $parent[UserControl].TertiaryStroke}"
+		  StrokeThickness="1" />
+	</Canvas>
 </UserControl>

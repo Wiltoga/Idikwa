@@ -18,292 +18,292 @@
         d:DataContext="{x:Static local:SettingsViewModel.Default}"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False">
-  <Window.Resources>
-    <local:ResxConverter x:Key="ResxConverter" />
-    <local:KiloIntConverter x:Key="KiloIntConverter" />
-    <local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
-    <DataTemplate
-      x:Key="KiloInt">
-      <TextBlock
-        Text="{Binding Converter={StaticResource KiloIntConverter}}" />
-    </DataTemplate>
-  </Window.Resources>
-  <Window.DataTemplates>
-    <DataTemplate
-      DataType="{x:Type local:DeviceViewModel}">
-      <CheckBox
-        Padding="5,0"
-        IsThreeState="False"
-        HorizontalAlignment="Stretch"
-        IsChecked="{Binding Path=Recording, Mode=TwoWay}">
-        <TextBlock
-          Text="{Binding Path=Device.FriendlyName}" />
-      </CheckBox>
-    </DataTemplate>
-    <DataTemplate
-      DataType="{x:Type global:CultureInfo}">
-      <TextBlock
-        Text="{Binding Name, Converter={StaticResource ResxConverter}}" />
-    </DataTemplate>
-  </Window.DataTemplates>
-  <Window.Styles>
-    <Style Selector="ListBoxItem">
-      <Setter Property="Padding" Value="0" />
-      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    </Style>
-  </Window.Styles>
-  <DockPanel>
-    <ScrollViewer
-      HorizontalScrollBarVisibility="Disabled"
-      VerticalScrollBarVisibility="Auto">
-      <StackPanel
-        Orientation="Vertical">
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Left"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx language}"
-              Classes="dynamic language" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <StackPanel
-            Orientation="Horizontal">
-            <ComboBox
-              Margin="5"
-              VerticalAlignment="Center"
-              Items="{Binding Cultures}"
-              SelectedItem="{Binding Culture, Mode=TwoWay}" />
-            <local:Icon
-              Margin="3,0"
-              Classes="dynamic warning"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx requiresRestart}" />
-          </StackPanel>
-        </DockPanel>
-        <local:Separator
-          Margin="5" />
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Top"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx renderDevices}"
-              Classes="dynamic speaker" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx renderDevices}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <ListBox
-            HorizontalAlignment="Left"
-            Margin="5,5,150,5"
-            MaxHeight="200"
-            MaxWidth="400"
-            Items="{Binding RenderDevices}" />
-        </DockPanel>
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Top"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx captureDevices}"
-              Classes="dynamic microphone" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx captureDevices}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <ListBox
-            HorizontalAlignment="Left"
-            Margin="5,5,150,5"
-            MaxHeight="200"
-            MaxWidth="400"
-            Items="{Binding CaptureDevices}" />
-        </DockPanel>
-        <local:Separator
-          Margin="5" />
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Left"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx outputDir}"
-              Classes="dynamic folderClosed" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx outputDir}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <Button
-            Command="{Binding BrowseOutputDir}"
-            Padding="1"
-            DockPanel.Dock="Right"
-            Margin="5">
-            <StackPanel
-              Orientation="Horizontal">
-              <local:Icon
-                Margin="5,0"
-                IsSelected="{Binding $parent[Button].IsPointerOver}"
-                SecondaryBrush="#414143"
-                Classes="folderOpen" />
-              <TextBlock
-                VerticalAlignment="Center"
-                Text="{local:Resx browse}"
-                Margin="5" />
-            </StackPanel>
-          </Button>
-          <TextBox
-            Margin="5"
-            Text="{Binding OutputPath, Mode=TwoWay}" />
-        </DockPanel>
-        <local:Separator
-          Margin="5" />
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Left"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx duration}"
-              Classes="dynamic chrono" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx duration}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <StackPanel
-            Orientation="Horizontal">
-            <NumericUpDown
-              Name="minutes"
-              Maximum="5"
-              Minimum="0"
-              Value="{Binding DurationMinutes, Mode=TwoWay}"
-              Margin="5">
-              <i:Interaction.Behaviors>
-                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0">
-                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Minimum" Value="1" />
-                </ia:DataTriggerBehavior>
-                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0" ComparisonCondition="NotEqual">
-                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Minimum" Value="0" />
-                </ia:DataTriggerBehavior>
-                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="5">
-                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Maximum" Value="0" />
-                </ia:DataTriggerBehavior>
-                <ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="5" ComparisonCondition="NotEqual">
-                  <ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Maximum" Value="59" />
-                </ia:DataTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </NumericUpDown>
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text=":" />
-            <NumericUpDown
-              Name="seconds"
-              Maximum="59"
-              Minimum="0"
-              Value="{Binding DurationSeconds, Mode=TwoWay}"
-              Increment="15"
-              Margin="5">
-              <i:Interaction.Behaviors>
-                <ia:DataTriggerBehavior Binding="{Binding #seconds.Maximum}" Value="-1" ComparisonCondition="NotEqual">
-                  <ia:CallMethodAction TargetObject="{Binding}" MethodName="DurationMaxChanged" />
-                </ia:DataTriggerBehavior>
-                <ia:DataTriggerBehavior Binding="{Binding #seconds.Minimum}" Value="-1" ComparisonCondition="NotEqual">
-                  <ia:CallMethodAction TargetObject="{Binding}" MethodName="DurationMinChanged" />
-                </ia:DataTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </NumericUpDown>
-          </StackPanel>
-        </DockPanel>
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Left"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx stereo}"
-              Classes="dynamic stereo" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx stereo}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <CheckBox
-            Margin="5"
-            IsChecked="{Binding Mono, Mode=TwoWay, Converter={StaticResource ReverseBoolConverter}}" />
-        </DockPanel>
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Left"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx sampleRate}"
-              Classes="dynamic sampleRate" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx sampleRate}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <StackPanel
-            Orientation="Horizontal">
-            <ComboBox
-              Margin="5"
-              Items="{x:Static local:SampleFactory.RecommendedSampleRates}"
-              SelectedItem="{Binding SampleRate, Mode=TwoWay}"
-              ItemTemplate="{StaticResource KiloInt}" />
-            <TextBlock
-              VerticalAlignment="Center"
-              Margin="5"
-              Text="{local:Resx hz}" />
-          </StackPanel>
-        </DockPanel>
-        <local:Separator
-          Margin="5" />
-        <DockPanel>
-          <StackPanel
-            DockPanel.Dock="Left"
-            Orientation="Horizontal">
-            <local:Icon
-              Margin="3,0"
-              VerticalAlignment="Center"
-              ToolTip.Tip="{local:Resx bitRate}"
-              Classes="dynamic bitRate" />
-            <TextBlock
-              Margin="5"
-              VerticalAlignment="Center"
-              Text="{Binding Source={local:Resx bitRate}, StringFormat='{}{0} :'}" />
-          </StackPanel>
-          <StackPanel
-            Orientation="Horizontal">
-            <ComboBox
-              Margin="5"
-              Items="{x:Static local:SampleFactory.RecommendedBitRates}"
-              SelectedItem="{Binding BitRate, Mode=TwoWay}"
-              ItemTemplate="{StaticResource KiloInt}" />
-            <TextBlock
-              VerticalAlignment="Center"
-              Margin="5"
-              Text="{local:Resx bitPerSec}" />
-          </StackPanel>
-        </DockPanel>
-      </StackPanel>
-    </ScrollViewer>
-  </DockPanel>
+	<Window.Resources>
+		<local:ResxConverter x:Key="ResxConverter" />
+		<local:KiloIntConverter x:Key="KiloIntConverter" />
+		<local:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+		<DataTemplate
+		  x:Key="KiloInt">
+			<TextBlock
+			  Text="{Binding Converter={StaticResource KiloIntConverter}}" />
+		</DataTemplate>
+	</Window.Resources>
+	<Window.DataTemplates>
+		<DataTemplate
+		  DataType="{x:Type local:DeviceViewModel}">
+			<CheckBox
+			  Padding="5,0"
+			  IsThreeState="False"
+			  HorizontalAlignment="Stretch"
+			  IsChecked="{Binding Path=Recording, Mode=TwoWay}">
+				<TextBlock
+				  Text="{Binding Path=Device.FriendlyName}" />
+			</CheckBox>
+		</DataTemplate>
+		<DataTemplate
+		  DataType="{x:Type global:CultureInfo}">
+			<TextBlock
+			  Text="{Binding Name, Converter={StaticResource ResxConverter}}" />
+		</DataTemplate>
+	</Window.DataTemplates>
+	<Window.Styles>
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		</Style>
+	</Window.Styles>
+	<DockPanel>
+		<ScrollViewer
+		  HorizontalScrollBarVisibility="Disabled"
+		  VerticalScrollBarVisibility="Auto">
+			<StackPanel
+			  Orientation="Vertical">
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Left"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx language}"
+						  Classes="dynamic language" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx language}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<StackPanel
+					  Orientation="Horizontal">
+						<ComboBox
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Items="{Binding Cultures}"
+						  SelectedItem="{Binding Culture, Mode=TwoWay}" />
+						<local:Icon
+						  Margin="3,0"
+						  Classes="dynamic warning"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx requiresRestart}" />
+					</StackPanel>
+				</DockPanel>
+				<local:Separator
+				  Margin="5" />
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Top"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx renderDevices}"
+						  Classes="dynamic speaker" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx renderDevices}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<ListBox
+					  HorizontalAlignment="Left"
+					  Margin="5,5,150,5"
+					  MaxHeight="200"
+					  MaxWidth="400"
+					  Items="{Binding RenderDevices}" />
+				</DockPanel>
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Top"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx captureDevices}"
+						  Classes="dynamic microphone" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx captureDevices}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<ListBox
+					  HorizontalAlignment="Left"
+					  Margin="5,5,150,5"
+					  MaxHeight="200"
+					  MaxWidth="400"
+					  Items="{Binding CaptureDevices}" />
+				</DockPanel>
+				<local:Separator
+				  Margin="5" />
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Left"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx outputDir}"
+						  Classes="dynamic folderClosed" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx outputDir}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<Button
+					  Command="{Binding BrowseOutputDir}"
+					  Padding="1"
+					  DockPanel.Dock="Right"
+					  Margin="5">
+						<StackPanel
+						  Orientation="Horizontal">
+							<local:Icon
+							  Margin="5,0"
+							  IsSelected="{Binding $parent[Button].IsPointerOver}"
+							  SecondaryBrush="#414143"
+							  Classes="folderOpen" />
+							<TextBlock
+							  VerticalAlignment="Center"
+							  Text="{local:Resx browse}"
+							  Margin="5" />
+						</StackPanel>
+					</Button>
+					<TextBox
+					  Margin="5"
+					  Text="{Binding OutputPath, Mode=TwoWay}" />
+				</DockPanel>
+				<local:Separator
+				  Margin="5" />
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Left"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx duration}"
+						  Classes="dynamic chrono" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx duration}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<StackPanel
+					  Orientation="Horizontal">
+						<NumericUpDown
+						  Name="minutes"
+						  Maximum="5"
+						  Minimum="0"
+						  Value="{Binding DurationMinutes, Mode=TwoWay}"
+						  Margin="5">
+							<i:Interaction.Behaviors>
+								<ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0">
+									<ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Minimum" Value="1" />
+								</ia:DataTriggerBehavior>
+								<ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="0" ComparisonCondition="NotEqual">
+									<ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Minimum" Value="0" />
+								</ia:DataTriggerBehavior>
+								<ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="5">
+									<ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Maximum" Value="0" />
+								</ia:DataTriggerBehavior>
+								<ia:DataTriggerBehavior Binding="{Binding #minutes.Value}" Value="5" ComparisonCondition="NotEqual">
+									<ia:ChangePropertyAction TargetObject="{Binding #seconds}" PropertyName="Maximum" Value="59" />
+								</ia:DataTriggerBehavior>
+							</i:Interaction.Behaviors>
+						</NumericUpDown>
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text=":" />
+						<NumericUpDown
+						  Name="seconds"
+						  Maximum="59"
+						  Minimum="0"
+						  Value="{Binding DurationSeconds, Mode=TwoWay}"
+						  Increment="15"
+						  Margin="5">
+							<i:Interaction.Behaviors>
+								<ia:DataTriggerBehavior Binding="{Binding #seconds.Maximum}" Value="-1" ComparisonCondition="NotEqual">
+									<ia:CallMethodAction TargetObject="{Binding}" MethodName="DurationMaxChanged" />
+								</ia:DataTriggerBehavior>
+								<ia:DataTriggerBehavior Binding="{Binding #seconds.Minimum}" Value="-1" ComparisonCondition="NotEqual">
+									<ia:CallMethodAction TargetObject="{Binding}" MethodName="DurationMinChanged" />
+								</ia:DataTriggerBehavior>
+							</i:Interaction.Behaviors>
+						</NumericUpDown>
+					</StackPanel>
+				</DockPanel>
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Left"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx stereo}"
+						  Classes="dynamic stereo" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx stereo}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<CheckBox
+					  Margin="5"
+					  IsChecked="{Binding Mono, Mode=TwoWay, Converter={StaticResource ReverseBoolConverter}}" />
+				</DockPanel>
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Left"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx sampleRate}"
+						  Classes="dynamic sampleRate" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx sampleRate}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<StackPanel
+					  Orientation="Horizontal">
+						<ComboBox
+						  Margin="5"
+						  Items="{x:Static local:SampleFactory.RecommendedSampleRates}"
+						  SelectedItem="{Binding SampleRate, Mode=TwoWay}"
+						  ItemTemplate="{StaticResource KiloInt}" />
+						<TextBlock
+						  VerticalAlignment="Center"
+						  Margin="5"
+						  Text="{local:Resx hz}" />
+					</StackPanel>
+				</DockPanel>
+				<local:Separator
+				  Margin="5" />
+				<DockPanel>
+					<StackPanel
+					  DockPanel.Dock="Left"
+					  Orientation="Horizontal">
+						<local:Icon
+						  Margin="3,0"
+						  VerticalAlignment="Center"
+						  ToolTip.Tip="{local:Resx bitRate}"
+						  Classes="dynamic bitRate" />
+						<TextBlock
+						  Margin="5"
+						  VerticalAlignment="Center"
+						  Text="{Binding Source={local:Resx bitRate}, StringFormat='{}{0} :'}" />
+					</StackPanel>
+					<StackPanel
+					  Orientation="Horizontal">
+						<ComboBox
+						  Margin="5"
+						  Items="{x:Static local:SampleFactory.RecommendedBitRates}"
+						  SelectedItem="{Binding BitRate, Mode=TwoWay}"
+						  ItemTemplate="{StaticResource KiloInt}" />
+						<TextBlock
+						  VerticalAlignment="Center"
+						  Margin="5"
+						  Text="{local:Resx bitPerSec}" />
+					</StackPanel>
+				</DockPanel>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
 </Window>

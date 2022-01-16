@@ -7,36 +7,36 @@
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="IDIKWA_App.Separator">
-  <UserControl.Resources>
-    <SolidColorBrush
-      x:Key="color">
-      #2fff
-    </SolidColorBrush>
-  </UserControl.Resources>
-  <i:Interaction.Behaviors>
-    <ia:DataTriggerBehavior Binding="{Binding $self.Orientation}" Value="Horizontal">
-      <ia:ChangePropertyAction TargetObject="{Binding #vertical}" PropertyName="IsVisible" Value="False" />
-      <ia:ChangePropertyAction TargetObject="{Binding #horizontal}" PropertyName="IsVisible" Value="True" />
-    </ia:DataTriggerBehavior>
-    <ia:DataTriggerBehavior Binding="{Binding $self.Orientation}" Value="Vertical">
-      <ia:ChangePropertyAction TargetObject="{Binding #vertical}" PropertyName="IsVisible" Value="True" />
-      <ia:ChangePropertyAction TargetObject="{Binding #horizontal}" PropertyName="IsVisible" Value="False" />
-    </ia:DataTriggerBehavior>
-  </i:Interaction.Behaviors>
-  <Grid>
-    <Rectangle
-      IsVisible="True"
-      Name="horizontal"
-      Height="1"
-      Margin="5,0"
-      VerticalAlignment="Center"
-      Fill="{StaticResource color}" />
-    <Rectangle
-      IsVisible="False"
-      Name="vertical"
-      Width="1"
-      Margin="0,5"
-      HorizontalAlignment="Center"
-      Fill="{StaticResource color}" />
-  </Grid>
+	<UserControl.Resources>
+		<SolidColorBrush
+		  x:Key="color">
+			#2fff
+		</SolidColorBrush>
+	</UserControl.Resources>
+	<i:Interaction.Behaviors>
+		<ia:DataTriggerBehavior Binding="{Binding $self.Orientation}" Value="Horizontal">
+			<ia:ChangePropertyAction TargetObject="{Binding #vertical}" PropertyName="IsVisible" Value="False" />
+			<ia:ChangePropertyAction TargetObject="{Binding #horizontal}" PropertyName="IsVisible" Value="True" />
+		</ia:DataTriggerBehavior>
+		<ia:DataTriggerBehavior Binding="{Binding $self.Orientation}" Value="Vertical">
+			<ia:ChangePropertyAction TargetObject="{Binding #vertical}" PropertyName="IsVisible" Value="True" />
+			<ia:ChangePropertyAction TargetObject="{Binding #horizontal}" PropertyName="IsVisible" Value="False" />
+		</ia:DataTriggerBehavior>
+	</i:Interaction.Behaviors>
+	<Grid>
+		<Rectangle
+		  IsVisible="True"
+		  Name="horizontal"
+		  Height="1"
+		  Margin="5,0"
+		  VerticalAlignment="Center"
+		  Fill="{StaticResource color}" />
+		<Rectangle
+		  IsVisible="False"
+		  Name="vertical"
+		  Width="1"
+		  Margin="0,5"
+		  HorizontalAlignment="Center"
+		  Fill="{StaticResource color}" />
+	</Grid>
 </UserControl>

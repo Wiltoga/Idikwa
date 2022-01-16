@@ -5,11 +5,11 @@
              xmlns:local="using:IDIKWA_App"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="IDIKWA_App.TextButton">
-  <TextBlock
-    VerticalAlignment="Top"
-    HorizontalAlignment="Left"
-    Foreground="#88f"
-    Cursor="Hand"
-    TextDecorations="Underline"
-    Text="{Binding $parent[UserControl].Text}" />
+	<TextBlock
+	  VerticalAlignment="Top"
+	  HorizontalAlignment="Left"
+	  Foreground="#88f"
+	  Cursor="Hand"
+	  TextDecorations="Underline"
+	  Text="{Binding $parent[UserControl].Text}" />
 </UserControl>

@@ -10,43 +10,43 @@
              ToolTip.Tip="{local:Resx startRecord}"
              d:DesignHeight="120"
              Cursor="Hand">
-  <local:BlankButton
-    Name="mainButton"
-    Command="{Binding $parent[UserControl].Click}">
-    <Grid>
-      <Ellipse
-        Name="circle"
-        StrokeThickness="5"
-        Stroke="#2fff"
-        Fill="#6000">
-        <i:Interaction.Behaviors>
-          <ia:DataTriggerBehavior Binding="{Binding #mainButton.IsPointerOver}" Value="True">
-            <ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Fill" Value="#1fff" />
-          </ia:DataTriggerBehavior>
-          <ia:DataTriggerBehavior Binding="{Binding #mainButton.IsPointerOver}" Value="False">
-            <ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Fill" Value="#6000" />
-          </ia:DataTriggerBehavior>
-          <ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="True">
-            <ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Stroke" Value="Red" />
-          </ia:DataTriggerBehavior>
-          <ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="False">
-            <ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Stroke" Value="#2fff" />
-          </ia:DataTriggerBehavior>
-        </i:Interaction.Behaviors>
-      </Ellipse>
-      <Image
-        Name="img"
-        Margin="16"
-        Source="/assets/images/recordOff.png">
-        <i:Interaction.Behaviors>
-          <ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="True">
-            <ia:ChangePropertyAction TargetObject="{Binding #img}" PropertyName="Source" Value="{local:BitmapAsset /assets/images/recordOn.png}" />
-          </ia:DataTriggerBehavior>
-          <ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="False">
-            <ia:ChangePropertyAction TargetObject="{Binding #img}" PropertyName="Source" Value="{local:BitmapAsset /assets/images/recordOff.png}" />
-          </ia:DataTriggerBehavior>
-        </i:Interaction.Behaviors>
-      </Image>
-    </Grid>
-  </local:BlankButton>
+	<local:BlankButton
+	  Name="mainButton"
+	  Command="{Binding $parent[UserControl].Click}">
+		<Grid>
+			<Ellipse
+			  Name="circle"
+			  StrokeThickness="5"
+			  Stroke="#2fff"
+			  Fill="#6000">
+				<i:Interaction.Behaviors>
+					<ia:DataTriggerBehavior Binding="{Binding #mainButton.IsPointerOver}" Value="True">
+						<ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Fill" Value="#1fff" />
+					</ia:DataTriggerBehavior>
+					<ia:DataTriggerBehavior Binding="{Binding #mainButton.IsPointerOver}" Value="False">
+						<ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Fill" Value="#6000" />
+					</ia:DataTriggerBehavior>
+					<ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="True">
+						<ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Stroke" Value="Red" />
+					</ia:DataTriggerBehavior>
+					<ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="False">
+						<ia:ChangePropertyAction TargetObject="{Binding #circle}" PropertyName="Stroke" Value="#2fff" />
+					</ia:DataTriggerBehavior>
+				</i:Interaction.Behaviors>
+			</Ellipse>
+			<Image
+			  Name="img"
+			  Margin="16"
+			  Source="/assets/images/recordOff.png">
+				<i:Interaction.Behaviors>
+					<ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="True">
+						<ia:ChangePropertyAction TargetObject="{Binding #img}" PropertyName="Source" Value="{local:BitmapAsset /assets/images/recordOn.png}" />
+					</ia:DataTriggerBehavior>
+					<ia:DataTriggerBehavior Binding="{Binding $parent[UserControl].Recording}" Value="False">
+						<ia:ChangePropertyAction TargetObject="{Binding #img}" PropertyName="Source" Value="{local:BitmapAsset /assets/images/recordOff.png}" />
+					</ia:DataTriggerBehavior>
+				</i:Interaction.Behaviors>
+			</Image>
+		</Grid>
+	</local:BlankButton>
 </UserControl>

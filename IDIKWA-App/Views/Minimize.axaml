@@ -9,50 +9,50 @@
                    Background="#01000000"
                    x:Class="IDIKWA_App.Minimize"
                    ToolTip.Tip="{local:Resx minimize}">
-  <ContentControl
-    VerticalAlignment="Center"
-    HorizontalAlignment="Center"
-    Width="16"
-    Height="16"
-    Margin="4">
-    <i:Interaction.Behaviors>
-      <ia:DataTriggerBehavior
-        Binding="{Binding $parent[0].IsPointerOver}"
-        Value="True">
-        <ia:ChangePropertyAction
-          TargetObject="{Binding #shape}"
-          PropertyName="Fill"
-          Value="#aaf" />
-      </ia:DataTriggerBehavior>
-      <ia:DataTriggerBehavior
-        Binding="{Binding $parent[0].IsPointerOver}"
-        Value="False">
-        <ia:ChangePropertyAction
-          TargetObject="{Binding #shape}"
-          PropertyName="Fill"
-          Value="#8fff" />
-      </ia:DataTriggerBehavior>
-      <ia:DataTriggerBehavior
-        Binding="{Binding $parent[0].IsPressed}"
-        Value="True">
-        <ia:ChangePropertyAction
-          TargetObject="{Binding #shape}"
-          PropertyName="Fill"
-          Value="#aaaf" />
-      </ia:DataTriggerBehavior>
-      <ia:DataTriggerBehavior
-        Binding="{Binding $parent[0].IsPressed}"
-        Value="False">
-        <ia:ChangePropertyAction
-          TargetObject="{Binding #shape}"
-          PropertyName="Fill"
-          Value="#aaf" />
-      </ia:DataTriggerBehavior>
-    </i:Interaction.Behaviors>
-    <Rectangle
-      Name="shape"
-      VerticalAlignment="Center"
-      Fill="#8fff"
-      Height="2" />
-  </ContentControl>
+	<ContentControl
+	  VerticalAlignment="Center"
+	  HorizontalAlignment="Center"
+	  Width="16"
+	  Height="16"
+	  Margin="4">
+		<i:Interaction.Behaviors>
+			<ia:DataTriggerBehavior
+			  Binding="{Binding $parent[0].IsPointerOver}"
+			  Value="True">
+				<ia:ChangePropertyAction
+				  TargetObject="{Binding #shape}"
+				  PropertyName="Fill"
+				  Value="#aaf" />
+			</ia:DataTriggerBehavior>
+			<ia:DataTriggerBehavior
+			  Binding="{Binding $parent[0].IsPointerOver}"
+			  Value="False">
+				<ia:ChangePropertyAction
+				  TargetObject="{Binding #shape}"
+				  PropertyName="Fill"
+				  Value="#8fff" />
+			</ia:DataTriggerBehavior>
+			<ia:DataTriggerBehavior
+			  Binding="{Binding $parent[0].IsPressed}"
+			  Value="True">
+				<ia:ChangePropertyAction
+				  TargetObject="{Binding #shape}"
+				  PropertyName="Fill"
+				  Value="#aaaf" />
+			</ia:DataTriggerBehavior>
+			<ia:DataTriggerBehavior
+			  Binding="{Binding $parent[0].IsPressed}"
+			  Value="False">
+				<ia:ChangePropertyAction
+				  TargetObject="{Binding #shape}"
+				  PropertyName="Fill"
+				  Value="#aaf" />
+			</ia:DataTriggerBehavior>
+		</i:Interaction.Behaviors>
+		<Rectangle
+		  Name="shape"
+		  VerticalAlignment="Center"
+		  Fill="#8fff"
+		  Height="2" />
+	</ContentControl>
 </local:BlankButton>

@@ -13,52 +13,52 @@
         Icon="/assets/icons/logo.ico"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False">
-  <Window.Styles>
-    <Style
-      Selector="Button.validate">
-      <Setter
-        Property="Background"
-        Value="#26f" />
-    </Style>
-    <Style
-      Selector="Button.validate:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter
-        Property="Background"
-        Value="#137" />
-    </Style>
-    <Style
-      Selector="Button.validate:pressed /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter
-        Property="Background"
-        Value="#39f" />
-    </Style>
-  </Window.Styles>
-  <DockPanel>
-    <StackPanel
-      Orientation="Vertical"
-      HorizontalAlignment="Center"
-      DockPanel.Dock="Bottom">
-      <CheckBox
-        Name="accept"
-        Content="{local:Resx acceptEula}" />
-      <StackPanel
-        HorizontalAlignment="Center"
-        Orientation="Horizontal">
-        <Button
-          Click="AcceptClick"
-          Margin="5"
-          IsEnabled="{Binding #accept.IsChecked}"
-          Classes="validate"
-          Content="{local:Resx accept}" />
-        <Button
-          Click="DenyClick"
-          Margin="5"
-          Content="{local:Resx deny}" />
-      </StackPanel>
-    </StackPanel>
-    <TextBox
-      TextWrapping="Wrap"
-      IsReadOnly="True"
-      Text="{local:Resx eula}" />
-  </DockPanel>
+	<Window.Styles>
+		<Style
+		  Selector="Button.validate">
+			<Setter
+			  Property="Background"
+			  Value="#26f" />
+		</Style>
+		<Style
+		  Selector="Button.validate:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter
+			  Property="Background"
+			  Value="#137" />
+		</Style>
+		<Style
+		  Selector="Button.validate:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter
+			  Property="Background"
+			  Value="#39f" />
+		</Style>
+	</Window.Styles>
+	<DockPanel>
+		<StackPanel
+		  Orientation="Vertical"
+		  HorizontalAlignment="Center"
+		  DockPanel.Dock="Bottom">
+			<CheckBox
+			  Name="accept"
+			  Content="{local:Resx acceptEula}" />
+			<StackPanel
+			  HorizontalAlignment="Center"
+			  Orientation="Horizontal">
+				<Button
+				  Click="AcceptClick"
+				  Margin="5"
+				  IsEnabled="{Binding #accept.IsChecked}"
+				  Classes="validate"
+				  Content="{local:Resx accept}" />
+				<Button
+				  Click="DenyClick"
+				  Margin="5"
+				  Content="{local:Resx deny}" />
+			</StackPanel>
+		</StackPanel>
+		<TextBox
+		  TextWrapping="Wrap"
+		  IsReadOnly="True"
+		  Text="{local:Resx eula}" />
+	</DockPanel>
 </Window>
