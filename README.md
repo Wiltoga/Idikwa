@@ -1,5 +1,7 @@
 ![Idikwa](https://user-images.githubusercontent.com/30344403/149578992-7e9cfae6-c4c3-4570-8c09-1b20a4e503db.png)
 
+**!! IMPORTANT !!** ⚠️ Idikwa is being remade under a new name, **Nidikwa** (New Idikwa), tho I'm not sure. It will be created with WPF and with overall an similar use of the software with many new features, maybe less bugs, but more performant ! It may also have more features on the long run, if I care about the project for longer than a few months.
+
 # What is Idikwa ?
 
 Idikwa is a recording software aimed to capture the most recent audio played on any peripheral. You can then save to sample to a `.mp3` file.
